@@ -439,16 +439,16 @@ SRR531818.61708-G88ZSJI01AVPPR-2    Bacteria(100);Acidobacteria(99);Acidobacteri
 >
 {: .hands_on}
 
-We probably also want to know the taxonomy for each of our OTUs. We can get the consensus taxonomy for each OTU using the `Classify.otu` command:
+私たちはまた OTU のそれぞれの分類について知りたくなるでしょう。`Classify.otu` コマンドを使うことで各 OTU のコンセンサスな分類を得ることができます:
 
-> ### {% icon hands_on %} ハンズオン: Classify the OTUs
+> ### {% icon hands_on %} ハンズオン: OTU を分類する
 >
 > 3. **Classify.otu** {% icon tool %} で次のように設定する
->   - "list" to output from `Cluster.split`
->   - "count" to the count table from `Pre.cluster`
->   - "Select Taxonomy from" to `History`
->   - "taxonomy" to the taxonomy output from `Classify.seqs`
->   - "label" to `0.03`
+>   - "list" には `Cluster.split` のアウトプットを選択する
+>   - "count" には `Pre.cluster` の count table を選択する
+>   - "Select Taxonomy from" → `History`
+>   - "taxonomy" には `Classify.seqs` のアウトプットである taxonomy を選択する
+>   - "label" → `0.03`
 {: .hands_on}
 
 > ### {% icon question %} Questions
@@ -462,50 +462,47 @@ We probably also want to know the taxonomy for each of our OTUs. We can get the 
 >    {: .solution }
 {: .question}
 
-## Visualization
+## 視覚化
 
-We have now determined our OTUs and classified them, but looking at a long text file is not very informative.
-Let's visualize our data using Krona:
+OTU を決定して分類しましたが、長いテキストファイルを見ることはあまり有益ではありません。
+Krona を利用してデータを視覚化しましょう:
 
 > ### {% icon hands_on %} ハンズオン: Krona
 >
->  First we convert our mothur taxonomy file to a format compatible with Krona
+>  まずは mothur の taxonomy ファイルを Krona と互換性のある形式に変換します
 >
 > - **Taxonomy-to-Krona** {% icon tool %} で次のように設定する
->   - "Taxonomy file" to the taxonomy output from Classify.otu (note: this is a collection input)
+>   - "Taxonomy file" には Classify.otu の taxonomy アウトプットを選択する（注意: これはコレクションのインプットです）
 >
 > - **Krona pie chart** {% icon tool %} で次のように設定する
 >   - "Type of input" to `Tabular`
->   - "Input file" to taxonomy output from Taxonomy-to-Krona (collection)
+>   - "Input file" には Taxonomy-to-Krona の taxonomy アウトプット（コレクション）を選択する
 {: .hands_on}
 
-The result is an HTML file with an interactive visualization, for instance try clicking
-on one of the rings in the image or playing around with some of the settings.
+結果はインタラクティブに視覚化できる HTML ファイルです、例えば画像内のリングの 1 つをクリックしてみたり設定をいじってみて遊んでみましょう。
 
 ![Krona output](../../images/krona.png)
 
-This produced a single plot for both your samples, but what if you want to compare
-the two samples?
+これで両方のサンプルによる単一のプロットが生成されましたが、2 つのサンプルを比較したい場合はどうすればよいのでしょうか？
 
-> ### {% icon hands_on %} ハンズオン: Per-sample Krona plots
+> ### {% icon hands_on %} ハンズオン: サンプルごとの Krona プロット
 >
 > 1. **Classify.otu** {% icon tool %}
 >
->    Hit the rerun button on the `Classify.otu` job in your history and see if you can find settings that will give you per-sample taxonomy data
+>    ヒストリーの `Classify.otu` ジョブの再実行ボタンを押してサンプルごとの分類データを取得する設定があるかどうか見てください
 >
 > 2. **Krona** {% icon tool %}
 >
->    Now use this new output collection to create per-sample Krona plots
+>    この新しいアウトプットコレクションを使用してサンプルごとの Krona プロットを作成しましょう 
 >
 {: .hands_on}
 
-In this new Krona output you can switch between the combined plot and the per-sample plots via the selector in the top-left corner.
+この新しい Krona アウトプットでは結合されたプロットとサンプルごとのプロットを左上隅のセレクターで切り替えることができます。
 
 > ### {% icon question %} Question
-> Which soil sample had a higher percentage of Acidobacteria, anguil or pampa? what were the respective percentages?
+> anguil または pampa のどちらの土壌サンプルが、Acidobacteria の割合が高いでしょうか？それぞれの割合は何パーセントでしょうか？
 > > ### {% icon solution %} Solution
-> > The anguil sample had a higher proportion of Acidobacteria. The exact percentages can be found by looking at the pie charts at the
-> > top right-hand corner after clicking on the label Acidobacteria. For anguil the percentage is 36%, for the pampa sample it is 26%.
+> > anguil のサンプルの方が Acidobacteria の割合がより高かった。正確なパーセンテージは Acidobacteria  のラベルをクリックした後、右上隅の円グラフを見ることで確認することができます。anguil のパーセントは 36% で、pampa のサンプルは 26% です。
 > >
 > ![krona plot with acidobactaria highlighted](../../images/krona-multisample.png)
 >
@@ -513,21 +510,21 @@ In this new Krona output you can switch between the combined plot and the per-sa
 {: .question}
 
 
-To further explore the community structure, we can visualize it with dedicated tools such as Phinch.
+コミュニティの構造をさらに調べるために、Phinch などの専用のツールで視覚化することができます。
 
-> ### {% icon hands_on %} ハンズオン: Visualization of the community structure with Phinch
+> ### {% icon hands_on %} ハンズオン: Phinch でコミュニティの構造を視覚化する
 >
 > 1. **Make.biom** {% icon tool %} で次のように設定する
->   - "shared" to `Make.shared` output
->   - "constaxonomy" to taxonomy output from the first run of `Classify.otu` (collection)
-> 1. Expand the dataset and click on the "view biom at phinch" link
+>   - "shared" → `Make.shared` のアウトプット
+>   - "constaxonomy" には最初に実行した際の `Classify.otu` の taxonomy アウトプット（コレクション）を選択する
+> 1. データセットを展開し "view biom at phinch" のリンクをクリックする
 >
->     > ### {% icon comment %} Comment
+>     > ### {% icon comment %} コメント
 >     >
->     > If this link is not present on your Galaxy, you can download the generated BIOM file and upload directly to Phinch server at [http://phinch.org](http://phinch.org).
+>     > このリンクが Galaxy に存在しない場合は、生成された BIOM ファイルをダウンロードして [http://phinch.org](http://phinch.org) の Phinch サーバーに直接アップロードすることができます。
 >    {: .comment}
 >
-> 2. Play with the several interactive visualisations:
+> 2. いくつかのインタラクティブな視覚化で遊びましょう:
 >
 > ![Phinch website interface](../../../../shared/images/phinch_overviewpage.png "Phinch visualizations")
 >
