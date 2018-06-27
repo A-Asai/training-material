@@ -432,10 +432,10 @@ SRR531818.61708-G88ZSJI01AVPPR-2    Bacteria(100);Acidobacteria(99);Acidobacteri
 > ### {% icon hands_on %} ハンズオン: OTU の abundance を推定する
 >
 > 2. **Make.shared** {% icon tool %} で次のように設定する
->   - "Select input type" to `OTU list`
->   - "list" to list output from `Cluster.split`
->   - "name file or count table" to the count table from `Pre.cluster`
->   - "label" to `0.03`
+>   - "Select input type" → `OTU list`
+>   - "list" には `Cluster.split` のアウトプットである list を選択する
+>   - "name file or count table" には `Pre.cluster` の count table を選択する
+>   - "label" → `0.03`
 >
 {: .hands_on}
 
