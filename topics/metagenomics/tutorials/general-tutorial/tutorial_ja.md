@@ -371,7 +371,7 @@ training set を使用して配列を分類してみようと思います。こ�
 
 > ### {% icon hands_on %} ハンズオン: 配列を系統ごとに分類する
 >
-> 1. Import the `trainset16_022016.pds.fasta` and `trainset16_022016.pds.tax` in your history
+> 1. `trainset16_022016.pds.fasta` と `trainset16_022016.pds.tax` をヒストリーにインポートする
 >
 >    ```
 >    https://zenodo.org/record/815875/files/trainset16_022016.pds.fasta
@@ -379,18 +379,18 @@ training set を使用して配列を分類してみようと思います。こ�
 >    ```
 >
 > 2. **Classify.seqs** {% icon tool %} で次のように設定する
->   - "fasta" to the fasta output from `Pre.cluster`
->   - "Select Reference Template from" to `History`
->   - "reference" to `trainset16_022016.pds.fasta` from your history
->   - "Select Taxonomy from" to `History`
->   - "taxonomy" to `trainset16_022016.pds.tax` from your history
->   - "count" to the count table from `Pre.cluster`
+>   - "fasta" には `Pre.cluster` のアウトプットである fasta を選択する
+>   - "Select Reference Template from" → `History`
+>   - "reference" にはヒストリーから `trainset16_022016.pds.fasta` を選択する
+>   - "Select Taxonomy from" → `History`
+>   - "taxonomy" にはヒストリーから `trainset16_022016.pds.tax` を選択する
+>   - "count" には `Pre.cluster` の count table を選択する
 >
-> This step may take a couple of minutes, now may be a good time to grab a cup of tea :coffee:
+> このステップは数分かかるかもしれないので、終わるまでお茶でも飲んで一息つきましょう :coffee:
 >
 {: .hands_on}
 
-Have a look at the taxonomy output.
+taxonomy のアウトプットを見てみましょう。
 
 ```
 name    taxonomy
@@ -406,30 +406,30 @@ SRR651839.13044-HXY9DLL01ETN7L-2    Bacteria(100);Proteobacteria(100);Alphaprote
 SRR531818.61708-G88ZSJI01AVPPR-2    Bacteria(100);Acidobacteria(99);Acidobacteria_Gp6(99);Gp6(99);unclassified;unclassified;
 ```
 
-You will see that every read now has a classification.
+すべての配列が現在分類されていることが分かります。
 
-The next step is then to use this information to know the abundance of the different found taxons. This consists of three steps:
-1. first all individual sequences are classified, and get assigned a confidence score (0-100%)
-2. next, sequences are grouped at 97% identity threshold (not using taxonomy info)
-3. finally, for each cluster, a consensus classification is determined based on the classification of the individual sequences and taking their confidence scores into account
+次のステップではこの情報を用いて発見された異なる分類群の豊富さを調べます。これは 3 つのステップからなります:
+1. 初めにすべての個々の配列を分類し、confidence score (0-100%) を割り当てる
+2. 次に、配列を 97% を同一性の閾値として（分類学的な情報は使用しないで）グループ分けする
+3. 最後に、各クラスターについて、個々の配列の分類に基づき confidence scores を考慮したコンセンサスな分類を定める
 
-> ### {% icon hands_on %} ハンズオン: Assign sequences to OTUs
+> ### {% icon hands_on %} ハンズオン: OTU に配列を割り当てる
 >
 > 1. **Cluster.split** {% icon tool %} で次のように設定する
->   - "Split by" to `Classification using fasta`
->   - "fasta" to the fasta output from `Pre.cluster`
->   - "taxonomy" to the taxonomy output from `Classify.seqs`
->   - "count" to the count table output from `Pre.cluster`
->   - "Clustering method" to `Average Neighbour`
->   - "cutoff" to `0.15`
+>   - "Split by" → `Classification using fasta`
+>   - "fasta" には `Pre.cluster` の fasta アウトプットを選択する
+>   - "taxonomy" には `Classify.seqs` の taxonomy アウトプットを選択する
+>   - "count" には `Pre.cluster` のアウトプットである count table を選択する
+>   - "Clustering method" → `Average Neighbor`
+>   - "cutoff" → `0.15`
 >
 {: .hands_on}
 
-We obtain a table with the columns being the different identified OTUs, the rows the different distances and the cells the ids of the sequences identified for these OTUs for the different distances.
+列に識別された OTU がそれぞれ表記され、行を距離ごとに分け、セルにこれらの OTU に距離ごとに識別された配列の ID を記した表を取得しました。
 
-Next we want to know how many sequences are in each OTU from each group with a distance of 0.03 (97% similarity). We can do this using the `Make.shared` command with the 0.03 cutoff level:
+次に各グループの各 OTU に 0.03（97％の類似性）の距離の配列がいくつあるか調べます。`Make.shared` のコマンドで cutoff level を 0.03 にしてこれを知ることができます:
 
-> ### {% icon hands_on %} ハンズオン: Estimate OTU abundance
+> ### {% icon hands_on %} ハンズオン: OTU の abundance を推定する
 >
 > 2. **Make.shared** {% icon tool %} で次のように設定する
 >   - "Select input type" to `OTU list`
