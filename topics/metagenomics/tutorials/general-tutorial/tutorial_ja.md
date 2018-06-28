@@ -530,22 +530,22 @@ Krona を利用してデータを視覚化しましょう:
 >
 {: .hands_on}
 
-Once we have information about the community structure (OTUs with taxonomic structure), we can do more analysis on it: estimation of the diversity of micro-organism, comparison fo diversity between samples, analysis of populations, ... We will not go into detail of such analyses here but you follow our tutorials on amplicon data analyses to learn about them.
+コミュニティの構造についての情報（分類学的な構造である OTU ）を得られたので、これを使って以下のより多くの解析を行うことができます: 微生物の多様性の推定、サンプル間の多様性の比較、集団の解析、... このような解析の詳細はここにはありませんがアンプリコンデータ解析に関するチュートリアルに従って学んでください。
 
-# Shotgun metagenomics data
+# ショットガンメタゲノミクスデータ
 
-In the previous section, we see how to analyze amplicon data to extract the community structure. Such information can also be extracted from shotgun metagenomic data.
+ここまでのセクションでは、アンプリコンデータを解析してコミュニティ構造を得る方法を解説しています。そのような情報はショットガンメタゲノミクスデータからも得ることができます。 
 
-In shotgun data, full genomes of the micro-organisms in the environment are sequenced (not only the 16S or 18S). We can then have access to the rRNA (only a small part of the genomes), but also to the genes of the micro-organisms. Using this information, we can try to answer to questions "What are the micro-organisms doing?" in addition to the question "What micro-organisms are present?".
+ショットガンのデータでは、環境内の微生物のフルゲノム（16S または 18S だけでない）をシーケンスしています。なので rRNA （ゲノムのほんの一部）だけでなく、微生物の遺伝子にもアクセスできます。この情報を使うことで、「微生物が何をしていますか？」という質問に加えて「どのような微生物が存在しているのか？」という質問に答えることができます。
 
-In this second part, we will use a metagenomic sample of the Pampas Soil ([SRR606451](https://www.ebi.ac.uk/metagenomics/projects/SRP016633/samples/SRS372043/runs/SRR606451/results/versions/2.0)).
+この第 2 部では、Pampas の土壌のメタゲノムサンプル ([SRR606451](https://www.ebi.ac.uk/metagenomics/projects/SRP016633/samples/SRS372043/runs/SRR606451/results/versions/2.0)) を利用します。
 
-## Data upload
+## データのアップロード
 
-> ### {% icon hands_on %} ハンズオン: Data upload
+> ### {% icon hands_on %} ハンズオン: データのアップロード
 >
-> 1. Create a new history
-> 2. Import the `SRR606451_pampa` Fasta file from [Zenodo](http://zenodo.org/record/815875) or from the data library (in "Analyses of metagenomics data")
+> 1. 新しいヒストリーを作成する
+> 2. `SRR606451_pampa` の Fasta ファイルを [Zenodo](http://zenodo.org/record/815875) からまたは（"Analyses of metagenomics data" の）データライブラリからインポートする 
 >
 >    ```
 >    https://zenodo.org/record/815875/files/SRR606451_pampa.fasta
@@ -553,31 +553,31 @@ In this second part, we will use a metagenomic sample of the Pampas Soil ([SRR60
 >
 {: .hands_on}
 
-## Extraction of taxonomic information
+## 分類学的な情報を抽出する
 
-As for amplicon data, we can extract taxonomic and community structure information from shotgun data. Different approaches can be used:
+アンプリコンデータでのように、ショットガンデータから分類学的な情報やコミュニティ構造の情報を得ることができます。異なる手法を使うことができます:
 
-- Same approaches as for amplicon data with identification and classification of OTUs
+- OTU の同定や分類をアンプリコンデータの時と同じ手法で行う
 
-    Such approaches imply a first step of sequence sorting to extract only the 16S and 18S sequences on which the same tools as for amplicon data. However, rRNA sequences represent a low proportion (< 1%) of the shotgun sequences so such an approach is not the most statistically supported
+    上のような手法というのは第一段階としてアンプリコンデータと同じツールで 16S および 18S 配列のみを抽出することで配列を整理することを意味している。しかしながら、rRNA 配列はショットガンシーケンスでの割合が低い（＜1％）ので、このような手法は統計的にほぼ支持されていません。 
 
-- Assignation of taxonomy on the whole sequences using databases with marker genes
+- マーカー遺伝子のデータベースを用いた全配列の taxonomy の割り当て 
 
-In this tutorial, we use the second approach with MetaPhlAn2. This tools is using a database of ~1M unique clade-specific marker genes (not only the rRNA genes) identified from ~17,000 reference (bacterial, archeal, viral and eukaryotic) genomes.
+このチュートリアルでは、MetaPhlAn2 を用いて 2 番目の手法を利用します。このツールでは ~17,000 のリファレンス（細菌、古細菌、ウイルス、そして真核生物の）ゲノムから同定された ~1M の一意なクレード特異的マーカー遺伝子のデータベースを使用しています。
 
-> ### {% icon hands_on %} ハンズオン: Taxonomic assignation with MetaPhlAn2
+> ### {% icon hands_on %} ハンズオン: MetaPhlAn2 での分類学的な割り当て
 >
-> 1. **MetaPhlAN2** {% icon tool %} with
->    - "Input file" to the imported file
->    - "Database with clade-specific marker genes" to `locally cached`
->    - "Cached database with clade-specific marker genes" to `MetaPhlAn2 clade-specific marker genes`
+> 1. **MetaPhlAN2** {% icon tool %} で
+>    - "Input file" にはインポートしたファイルを選択する
+>    - "Database with clade-specific marker genes" → `locally cached`
+>    - "Cached database with clade-specific marker genes" → `MetaPhlAn2 clade-specific marker genes`
 >
-> This step may take a couple of minutes :coffee:
+> このステップは数分ほど時間がかかることがあります :coffee:
 {: .hands_on}
 
-3 files are generated:
+3 つのファイルが生成されます:
 
-- A tabular file with the community structure
+- コミュニティ構造を示す表形式のファイル 
 
     ```
     #SampleID   Metaphlan2_Analysis
@@ -588,31 +588,31 @@ In this tutorial, we use the second approach with MetaPhlAn2. This tools is usin
     k__Bacteria|p__Actinobacteria|c__Actinobacteria 13.79288
     ```
 
-    Each line contains a taxa and its relative abundance found for our sample. The file starts with high level taxa (kingdom: `k__`) and go to more precise taxa.
+    各行には分類群とそのサンプルに関係する豊富さが書かれています。ファイルは高レベルの分類群（界: `k__`）から始まり、より正確な分類群が後ろに続きます。 
 
 
-- A BIOM file with the same information as the previous file but in BIOM format
+- 上のファイルと情報は同じですが BIOM 形式である BIOM ファイル 
 
-    It can be used then by mothur and other tools requiring community structure information in BIOM format
+    これは mothur や BIOM 形式のコミュニティ構造の情報を必要とするその他のツールで使用することができます
 
-- A SAM file with the results of the mapping of the sequences on the reference database
+- リファレンスデータベース上の配列のマッピングの結果を含む SAM ファイル 
 
 > ### {% icon question %} Questions
 >
-> 1. What is the most precise level we have access to with MetaPhlAn2?
-> 2. What are the two orders found in our sample?
-> 3. What is the most abundant family in our sample?
+> 1. MetaPhlAn2 でアクセスできる最も正確なレベルは何ですか？
+> 2. 私たちのサンプルで見つかった 2 つの部類は何ですか？ 
+> 3. 私たちのサンプルで最も豊富な一群は何ですか？
 >
 >    > ### {% icon solution %} Solution
->    > 1. We have access to species level
->    > 2. Pseudomonadales and Solirubrobacterales are found in our sample
->    > 3. The most abundant family is Pseudomonadaceae with 86.21 % of the assigned sequences
+>    > 1. 種のレベルまでアクセスできます 
+>    > 2. 私たちのサンプルでは Pseudomonadales と Solirubrobacterales が見つかりました
+>    > 3. 最も豊富な一群は Pseudomonadaceae で割り当てられた配列の 86.21 % です
 >    {: .solution }
 {: .question}
 
-Even if the output of MetaPhlAn2 is bit easier to parse than the BIOM file, we want to visualize and explore the community structure with KRONA
+MetaPhlAn2 のアウトプットが BIOM ファイルより解析が簡単であっても、KRONA を用いてコミュニティ構造を視覚化して調べてみようと思います
 
-> ### {% icon hands_on %} ハンズオン: Interactive visualization with KRONA
+> ### {% icon hands_on %} ハンズオン: KRONA でインタラクティブに視覚化する
 >
 > 1. **Format MetaPhlAn2 output for Krona** {% icon tool %} with
 >    - "Input file" to `Community profile` output of `MetaPhlAn2`
