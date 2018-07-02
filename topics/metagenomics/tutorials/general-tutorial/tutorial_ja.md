@@ -614,39 +614,39 @@ MetaPhlAn2 のアウトプットが BIOM ファイルより解析が簡単であ
 
 > ### {% icon hands_on %} ハンズオン: KRONA でインタラクティブに視覚化する
 >
-> 1. **Format MetaPhlAn2 output for Krona** {% icon tool %} with
->    - "Input file" to `Community profile` output of `MetaPhlAn2`
+> 1. **Format MetaPhlAn2 output for Krona** {% icon tool %} で
+>    - "Input file" には `MetaPhlAn2` のアウトプットである `Community profile` を選択する
 >
-> 2. **KRONA pie chart** {% icon tool %} with
+> 2. **KRONA pie chart** {% icon tool %} で
 >    - "What is the type of your input data" as `MetaPhlan`
->    - "Input file" to the output of `Format MetaPhlAn2`
+>    - "Input file" には `Format MetaPhlAn2` のアウトプットを選択する 
 >
 {: .hands_on}
 
-## Extraction of functional information
+## 機能情報の抽出
 
-We would like now to answer the question "What are the micro-organisms doing?" or "Which functions are done by the micro-organisms in the environment?".
+私たちは今「微生物は何をしていますか？」や「どのような機能が環境中の微生物によって行われていますか？」という質問に答えようと思います。 
 
-In the shotgun data, we have access to the gene sequences from the full genome. We use that to identify the genes, associate them to a function, build pathways, etc to investigate the functional part of the community.
+ショットガンデータでは、フルゲノムから遺伝子配列にアクセスすることができます。私たちは、遺伝子を同定し、それらを機能で関連付けて、経路を構築するなど、それらを用いてコミュニティの機能的な部分を調査します。
 
-> ### {% icon hands_on %} ハンズオン: Metabolism function identification
+> ### {% icon hands_on %} ハンズオン: 代謝機能の同定
 >
-> 1. **HUMAnN2** {% icon tool %} with
->    - "Input sequence file" to the imported sequence file
->    - "Use of a custom taxonomic profile" to `Yes`
->    - "Taxonomic profile file" to `Community profile` output of `MetaPhlAn2`
->    - "Nucleotide database" to `Locally cached`
->    - "Nucleotide database" to `Full`
->    - "Protein database" to `Locally cached`
->    - "Protein database" to `Full UniRef50`
->    - "Search for uniref50 or uniref90 gene families?" to `uniref50`
->    - "Database to use for pathway computations" to `MetaCyc`
+> 1. **HUMAnN2** {% icon tool %} で
+>    - "Input sequence file" にはインポートした配列ファイルを選択する
+>    - "Use of a custom taxonomic profile" → `Yes`
+>    - "Taxonomic profile file" には `MetaPhlAn2` の `Community profile` アウトプットを選択する
+>    - "Nucleotide database" → `Locally cached`
+>    - "Nucleotide database" → `Full`
+>    - "Protein database" → `Locally cached`
+>    - "Protein database" → `Full UniRef50`
+>    - "Search for uniref50 or uniref90 gene families?" → `uniref50`
+>    - "Database to use for pathway computations" → `MetaCyc`
 >    - "Advanced Options"
->    - "Remove stratification from output" to `Yes`
+>    - "Remove stratification from output" → `Yes`
 >
->    This step is long so we generated the output for you!
+>    このステップは時間がかかるので、あなたのためにアウトプットを作成しておきました！
 >
-> 2. Import the 3 files whose the name is starting with "humann2"
+> 2. 名前が "humann2" で始まる 3 つのファイルをインポートする
 >
 >    ```
 >    https://zenodo.org/record/815875/files/humann2_gene_families_abundance.tsv
@@ -655,11 +655,11 @@ In the shotgun data, we have access to the gene sequences from the full genome. 
 >    ```
 {: .hands_on}
 
-HUMAnN2 generates 3 files
+HUMAnN2 は 3 つのファイルを生成します
 
-- A file with the abundance of gene families
+- 遺伝子群の存在量についてのファイルA file with the abundance of gene families
 
-    Gene family abundance is reported in RPK (reads per kilobase) units to normalize for gene length. It reflects the relative gene (or transcript) copy number in the community.
+    遺伝子群の存在量は遺伝子の長さを統一するために RPK（キロベースあたりのリード数）単位で記録されています。これはコミュニティ内の相対的な遺伝子（または転写物）のコピー数を反映しています。
 
     "UNMAPPED" value is the total number of reads which remain unmapped after both alignment steps (nucleotide and translated search). Since other gene features in the table are quantified in RPK units, "UNMAPPED" can be interpreted as a single unknown gene of length 1 kilobase recruiting all reads that failed to map to known sequences.
 
