@@ -453,12 +453,12 @@ SRR531818.61708-G88ZSJI01AVPPR-2    Bacteria(100);Acidobacteria(99);Acidobacteri
 
 > ### {% icon question %} Questions
 >
-> 1. How many OTUs with taxonomic assignation are found for the Anguil sample? And for the Pampa sample?
-> 2. What is the annotation of first OTU and its size?
+> 1. 分類的に Anguil サンプルに帰属している OTU はいくつありますか？また Pampa サンプルではいくつありますか？
+> 2. アノテーションの1つ目の OTU は何ですか？またそのサイズは？
 >
 >    > ### {% icon solution %} Solution
->    > 1. 2,195 for Anguil and 2,472 for Pampa ("tax.summary")
->    > 2. Otu00001 is associated to 929 sequences and to Bacteria (kingdom), Verrucomicrobia (phylum), Spartobacteria (class) in "taxonomy" file
+>    > 1. 2,195 が Anguil のもので 2,472 が Pampa のものです ("tax.summary")
+>    > 2. Otu00001 は 929 配列で細菌（界）、Verrucomicrobia (門), Spartobacteria (類) の  "taxonomy" ファイルに関連付けられています。
 >    {: .solution }
 {: .question}
 
@@ -661,53 +661,53 @@ HUMAnN2 は 3 つのファイルを生成します
 
     遺伝子群の存在量は遺伝子の長さを統一するために RPK（キロベースあたりのリード数）単位で記録されています。これはコミュニティ内の相対的な遺伝子（または転写物）のコピー数を反映しています。
 
-    "UNMAPPED" value is the total number of reads which remain unmapped after both alignment steps (nucleotide and translated search). Since other gene features in the table are quantified in RPK units, "UNMAPPED" can be interpreted as a single unknown gene of length 1 kilobase recruiting all reads that failed to map to known sequences.
+    "UNMAPPED" 値は両方のアライメントのステップ（ヌクレオチドと翻訳産物の検索）の後にマッピングされないままであるリードの総計です。表中の他の遺伝子の特徴は RPK 単位で定量化されているので、"UNMAPPED" は既知の配列にマッピングできなかったすべてのリードをリクルートされる長さ 1 kb のシングルの未知の遺伝子と解釈することができます。
 
-- A file with the coverage of pathways
+- 経路の範囲についてのファイル
 
-    Pathway coverage provides an alternative description of the presence (1) and absence (0) of pathways in a community, independent of their quantitative abundance.
+    経路のカバレッジは量的な存在量とは無関係に、コミュニティ内に経路が存在するか（1）存在しないか（0）を代わりに記述しています。 
 
-- A file with the abundance of pathways
+- 経路の存在量についてのファイル
 
 > ### {% icon question %} Questions
 >
-> How many gene families and pathways have been identified?
+> いくつの遺伝子群と経路が特定されましたか？
 >
 >    > ### {% icon solution %} Solution
->    > 44 gene families but no pathways are identified
+>    > 44 の遺伝子群が特定されましたが経路は特定されませんでした
 >    {: .solution }
 {: .question}
 
-The RPK for the gene families are quite difficult to interpret in term of relative abundance. We decide then to normalize the values
+遺伝子群についての RPK は相対的な存在量の点で解釈するのが非常に難しいです。次に値を標準化して決定します。
 
-> ### {% icon hands_on %} ハンズオン: Normalize the gene family abundances
+> ### {% icon hands_on %} ハンズオン: 遺伝子群の存在量を標準化する
 >
 > 1. **Renormalize a HUMAnN2 generated table** {% icon tool %} with
->    - "Gene/pathway table" to the gene family table generated with `HUMAnN2`
->    - "Normalization scheme" to `Relative abundance`
->    - "Normalization level" to `Normalization of all levels by community total`
+>    - "Gene/pathway table" には `HUMAnN2` で生成された遺伝子群の table を選択する
+>    - "Normalization scheme" → `Relative abundance`
+>    - "Normalization level" → `Normalization of all levels by community total`
 >
 >  > ### {% icon question %} Questions
 >  >
->  > 1. Which percentage of sequences has not be assigned to a gene family?
->  > 2. What is the most abundant gene family?
+>  > 1. 遺伝子群に割り当てられていない配列の割合はどれくらいですか？ 
+>  > 2. 最も豊富に存在する遺伝子群は何ですか？ 
 >  >
 >  >    > ### {% icon solution %} Solution
->  >    > 1. 55% of the sequences has not be assigned to a gene family
->  >    > 2. The most abundant gene family with 25% of sequences is a putative secreted protein
+>  >    > 1. 55% の配列が遺伝子群に割り当てられていませんでした
+>  >    > 2. 配列の 25％ を有する最も豊富に存在する遺伝子群は推定分泌タンパク質である
 >  >    {: .solution }
 >  {: .question}
 {: .hands_on}
 
-With the previous analyses, we investigate "Which micro-organims are present in my sample?" and "What function are done by the micro-organisms in my sample?". We can go further in these analyses (for example with combination of functional and taxonomic results). We did not detail that in this tutorial but you can found more analyses in our tutorials on shotgun metagenomic data analyses.
+これまでの解析では、「サンプル内にはどのような微生物が存在していますか？」や「サンプル内の微生物がどのような機能を果たしていますか？」について調べていました。私たちは（例えば機能的な結果と分類的な結果の組み合わせ）のようなこれらの解析をさらに進めることができます。このチュートリアルでは詳しく説明しませんでしたがショットガンメタゲノムデータ解析についてのチュートリアルではより多くの解析法を知ることができます。
 
-# Conclusion
+# 結論
 {:.no_toc}
 
-We can summarize the analyses with amplicon and shotgun metagenomic data:
+アンプリコンとショットガンのメタゲノムデータの解析についてまとめることができました:
 
 ![Scheme to sum up the analysis](../../images/general-tutorial-scheme.png)
 
-Both analyses are quite complex! However, in this tutorial, we only showed simple cases of metagenomics data analysis with subset of real data.
+両方とも解析はかなり複雑です！しかし、このチュートリアルでは、実際のデータのサブセットを使用したメタゲノミクスデータ解析の簡単なケースのみを紹介しました。
 
-Check our other tutorials to learn more in details how to analyze metagenomics data.
+私たちの他のチュートリアルをチェックしてメタゲノムデータ解析のより詳細なやり方について学んでみてください。
