@@ -4,110 +4,110 @@ topic_name: transcriptomics
 tutorial_name: ref-based
 ---
 
-# Introduction
+# 前書き
 {:.no_toc}
 
-In the study of [Brooks *et al.* 2011](http://genome.cshlp.org/content/21/2/193.long), the Pasilla (PS) gene, *Drosophila* homologue of the Human splicing regulators Nova-1 and Nova-2 Proteins, was depleted in *Drosophila melanogaster* by RNAi. The authors wanted to identify exons that are regulated by Pasilla gene using RNA sequencing data.
+[Brooks * et al。* 2011]（http://genome.cshlp.org/content/21/2/193.long）の研究では、Pasilla（PS）遺伝子、ヒトスプライシングの* Drosophila *ホモログ レギュレーターNova-1およびNova-2 Proteinsは、* Drosophila melanogaster *でRNAiにより枯渇しました。 著者らは、RNAシークエンシングデータを用いてPasilla遺伝子によって調節されるエキソンを同定することを望んでいた。
 
-Total RNA was isolated and used for preparing either single-end or paired-end RNA-seq libraries for treated (PS depleted) samples and untreated samples. These libraries were sequenced to obtain a collection of RNA sequencing reads for each sample. The effects of Pasilla gene depletion on splicing events can then be analyzed by comparison of RNA sequencing data of the treated (PS depleted) and the untreated samples.
+全RNAを単離し、処理した（PSを枯渇させた）試料および未処理の試料について、片末端または対末端RNA-seqライブラリーのいずれかを調製するために使用した。 これらのライブラリーを配列決定して、各サンプルのRNA配列決定読み取りのコレクションを得た。 次いで、スプライシング事象に対するパシラ遺伝子枯渇の影響を、処理された（PS枯渇）および未処理サンプルのRNA配列決定データの比較によって分析することができる。
 
-The genome of *Drosophila melanogaster* is known and assembled. It can be used as reference genome to ease this analysis.  In a reference based RNA-seq data analysis, the reads are aligned (or mapped) against a reference genome, *Drosophila melanogaster* here, to significantly improve the ability to reconstruct transcripts and then identify differences of expression between several conditions.
+* Drosophila melanogaster *のゲノムは既知であり、組み立てられています。 この解析を容易にするために、参照ゲノムとして使用することができます。 リファレンスベースのRNA-seqデータ解析では、転写物を再構成する能力を大幅に改善し、次にいくつかの条件の間の発現の差異を同定するために、参照ゲノム* Drosophila melanogaster *に対して、読み取りを整列させる（またはマッピングする）。
 
-> ### Agenda
+> ### 議題
 >
-> In this tutorial, we will deal with:
+> このチュートリアルでは、:
 >
 > 1. TOC
 > {:toc}
 >
 {: .agenda}
 
-# Pretreatments
+# 前処理
 
-## Data upload
+## データアップロード
 
-The original data is available at NCBI Gene Expression Omnibus (GEO) under accession number [GSE18508](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508).
+元のデータは、受託番号[GSE18508]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508）でNCBI Gene Expression Omnibus（GEO）で入手可能である。
 
-We will look at the 7 first samples:
+最初の7つのサンプルを見てみましょう：
 
-- 3 treated samples with Pasilla (PS) gene depletion: [GSM461179](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461179), [GSM461180](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461180), [GSM461181](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461181)
-- 4 untreated samples: [GSM461176](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461176), [GSM461177](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461177), [GSM461178](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461178), [GSM461182](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461182)
+- Pasilla（PS）遺伝子が欠乏した3つの処理サンプル：[GSM461179]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461179）、[GSM461180]（https： /www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461180）、[GSM461181]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi？ acc = GSM461181）
+- 4つの未処理サンプル：[GSM461176]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461176）、[GSM461177]（https：//www.ncbi.nlm。 nih.gov/geo/query/acc.cgi?acc=GSM461177）、[GSM461178]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461178）、[GSM461182 ]（https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461182）
 
-Each sample constitutes a separate biological replicate of the corresponding condition (treated or untreated). Moreover, two of the treated and two of the untreated samples are from a paired-end sequencing assay, while the remaining samples are from a single-end sequencing experiment.
+各サンプルは、対応する状態（処置または未処置）の別個の生物学的複製物を構成する。 さらに、処理された2つのサンプルおよび未処理のサンプルの2つは、ペアエンドシーケンシングアッセイ由来であり、残りのサンプルは、シングルエンドシーケンシング実験由来である。
 
-We have extracted sequences from the Sequence Read Archive (SRA) files to build FASTQ files.
+Sequence Read Archive（SRA）ファイルからシーケンスを抽出し、FASTQファイルを構築しました。
 
-> ### {% icon hands_on %} Hands-on: Data upload
+> ### {% icon hands_on %} ハンズオン: データアップロード
 >
-> 1. Create a new history for this RNA-seq exercise
-> 2. Import a FASTQ file pair (*e.g.*  `GSM461177_untreat_paired_chr4_R1.fastq` and `GSM461177_untreat_paired_chr4_R2.fastq`)
->     * Option 1: From a shared data library if available (ask your instructor)
->     * Option 2: From [Zenodo](https://dx.doi.org/10.5281/zenodo.290221)
+> 1. このRNA-seqエクササイズの新しい履歴を作成する
+> 2. FASTQファイルのペアをインポートする（例：* `GSM461177_untreat_paired_chr4_R1.fastq`と` GSM461177_untreat_paired_chr4_R2.fastq`）
+>     * オプション1：共有データライブラリから利用可能な場合（インストラクタにお尋ねください）
+>     * オプション2：[Zenodo]（https://dx.doi.org/10.5281/zenodo.290221）から
 >
->    > ### {% icon tip %} Tip: Importing data via links
+>    > ### {% icon tip %} ヒント：リンクを介したデータのインポート
 >    >
->    > * Copy the link location
->    > * Open the Galaxy Upload Manager
->    > * Select **Paste/Fetch Data**
->    > * Paste the link into the text field
->    > * Press **Start**    
+>    > * リンクの場所をコピーする
+>    > * Galaxy Upload Managerを開く
+>    > * **データのペースト/フェッチ**を選択
+>    > * リンクをテキストフィールドに貼り付ける
+>    > * **スタート**を押してください    
 >    {: .tip}
 >
-> 3. Once the data file is in your history, verify that the datatype is `fastqsanger`, not `fastq`.
->    If the datatype is `fastq`, please change the file type to `fastqsanger`
+> 3. データファイルがヒストリに入ったら、データ型が `fastq`ではなく` fastqsanger`であることを確認します。
+>    データ型が `fastq`の場合は、ファイルタイプを` fastqsanger`に変更してください
 >
->    > ### {% icon tip %} Tip: Changing the datatype
->    > * Click on the pencil button displayed in your dataset in the history
->    > * Choose **Datatype** on the top
->    > * Select `fastqsanger`
->    > * Press **Save**
+>    > ### {% icon tip %} ヒント：データ型の変更
+>    > * 履歴のデータセットに表示されている鉛筆ボタンをクリックします
+>    > * 上部に**データタイプ**を選択してください
+>    > * `fastqsanger`を選択してください
+>    > * プレス**保存**
 >    {: .tip}
 >
-> 4. Edit the "Database/Build" to select `dm3`
-> 5. Rename the datasets according to the samples
+> 4. "データベース/ビルド"を編集して `dm3`を選択してください
+> 5. サンプルに応じてデータセットの名前を変更する
 >
 {: .hands_on}
 
-Both files contain the reads that belong to chromosome 4 of a paired-end sample. The sequences are raw sequences from the sequencing machine, without any pretreatments. They need to be controlled for their quality.
+両方のファイルには、ペアエンドのサンプルの第4染色体に属する読み取りが含まれています。 配列は、前処理なしで配列決定装置からの生の配列である。 彼らは彼らの品質のために制御する必要があります。
 
-## Quality control
+## 品質管理
 
-For quality control, we use similar tools as described in [NGS-QC tutorial]({{site.baseurl}}/topics/sequence-analysis): [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Trim Galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/).
+品質管理に関しては、[NGS-QCチュートリアル]（{{site.baseurl}} / topics / sequence-analysis）に記載されている同様のツールを使用します：[FastQC]（https://www.bioinformatics.babraham.ac.uk / projects / fastqc /）と[Trim Galore]（https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/）を参照してください。
 
-> ### {% icon hands_on %} Hands-on: Quality control
+> ### {% icon hands_on %} ハンズオン: 品質管理
 >
-> 1. **FastQC** {% icon tool %}: Run FastQC on both FASTQ files to control the quality of the reads
+> 1. ** FastQC ** {％icon tool％}：両方のFASTQファイルでFastQCを実行して、読み取りの品質を制御します
 >
->    > ### {% icon question %} Questions
+>    > ### {% icon question %} 質問
 >    >
->    > 1. What is the read length?
->    > 2. Is there anything that you find striking when you compare the two reports?
+>    > 1. 読んだ長さは何ですか？
+>    > 2. 2つのレポートを比較すると、目立つものはありますか？
 >    >
 >    >    <details>
->    >    <summary>Click to view answers</summary>
+>    >    <summary> クリックして回答を表示 </summary>
 >    >    <ol type="1">
->    >    <li>The read length is 37 bp</li>
->    >    <li>Both reports for GSM461177_untreat_paired_chr4_R1 and for GSM461177_untreat_paired_chr4_R2 are quite ok. For GSM461177_untreat_paired_chr4_R1, there are several warnings and an issue with the Kmer content. For GSM461177_untreat_paired_chr4_R2, the quality in the 2nd tile is bad (maybe because of an issue during sequencing). We need to be careful for the quality treatment and to do it with paired-end information</li>
+>    >    <li> 読み取りの長さは37 bpです </li>
+>    >    <li> GSM461177_untreat_paired_chr4_R1とGSM461177_untreat_paired_chr4_R2の両方のレポートは大丈夫です。 GSM461177_untreat_paired_chr4_R1には、いくつかの警告があり、Kmerのコンテンツに問題があります。 GSM461177_untreat_paired_chr4_R2では、2番目のタイルの品質が悪いです（シーケンス時に問題が発生した可能性があります）。 私たちは質の高い治療に注意し、ペアの情報でそれを行う必要があります </li>
 >    >    </ol>
 >    >    </details>
 >    {: .question}
 >
-> 2. **Trim Galore** {% icon tool %}: Treat for the quality of sequences by running Trim Galore
->      - Indicate that we are dealing with *paired-end* datasets
+> 2. **Trim Galore** {% icon tool %}: Trim Galoreを実行してシーケンスの品質を扱う
+>      - *ペアエンド*データセットを扱っていることを示します
 >
->    > ### {% icon question %} Questions
+>    > ### {% icon question %} 質問
 >    >
->    > Why is Trim Galore run once on the paired-end dataset and not twice on each dataset?
+>    > Trim Galoreはペアデータセットで一度実行され、各データセットで2回実行されないのはなぜですか？
 >    >
 >    > <details>
->    > <summary>Click to view answers</summary>
->    > Trim Galore can remove sequences if they become too short during the trimming process. For paired-end files Trim Galore! removes entire sequence pairs if one (or both) of the two reads became shorter than the set length cutoff. Reads of a read-pair that are longer than a given threshold but for which the partner read has become too short can optionally be written out to single-end files. This ensures that the information of a read pair is not lost entirely if only one read is of good quality.
+>    > <summary>クリックして回答を表示</summary>
+>    > Trim Galoreは、トリミング処理中にシーケンスが短すぎるとシーケンスを削除できます。 ペアエンドファイルの場合は、Trim Galore！ 2つの読み取りの一方（または両方）が、設定された長さのカットオフよりも短くなった場合、全配列対を除去する。 指定されたしきい値よりも長いが、パートナー読取りが短くなった読取りペアの読取りは、オプションでシングルエンド・ファイルに書き込むことができます。 これにより、1つの読み取りが良質であれば、読み取りペアの情報が完全に失われないことが保証されます。
 >    > </details>
 >    {: .question}
 >
-> 3. **FastQC** {% icon tool %}: Re-run FastQC on Trim Galore's outputs and inspect the differences
+> 3. **FastQC** {% icon tool %}: Trim Galoreの出力でFastQCを再実行し、違いを調べる
 >
->    > ### {% icon question %} Questions
+>    > ### {% icon question %} 質問
 >    >
 >    > 1. How did trimming affect the read lengths?
 >    > 2. Are there other reported characteristics impacted by Trim Galore?
