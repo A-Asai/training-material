@@ -53,7 +53,7 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 >           > * **Start** を押す   
 >           {: .tip}
 >           
->           You can directly paste:
+>           以下から直接ペーストすることができます:
 >
 >           ```
 >           https://zenodo.org/record/1185122/files/GSM461177_1.fastqsanger
@@ -62,94 +62,94 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 >           https://zenodo.org/record/1185122/files/GSM461180_2.fastqsanger
 >           ```
 >
-> 3. Rename the datasets according to the samples
-> 4. Check that the datatype is `fastqsanger` (**not** `fastq`).
->    If the datatype is `fastq`, please change the file type to `fastqsanger`
+> 3. サンプルごとにデータセットの名前を変更する
+> 4. データタイプが `fastqsanger` であることを確認する（ `fastq` では**ありません**）。
+>    データタイプが `fastq` の場合は、ファイルタイプを `fastqsanger` に変更してください。
 >
->    > ### {% icon tip %} Tip: Changing the datatype
->    > * Click on the pencil button displayed in your dataset in the history
->    > * Choose **Datatype** on the top
->    > * Select `fastqsanger`
->    > * Press **Save**
+>    > ### {% icon tip %} Tip: データタイプを変更する
+>    > * ヒストリーのデータセットに表示されている鉛筆ボタンをクリックする
+>    > * 上部にある **Datatype** を選択する
+>    > * `fastqsanger` を選択する
+>    > * **Save** を押す
 >    {: .tip}
 >
-> 5. Add to each database a tag corresponding to the name of the sample (`#GSM461177` or `#GSM461180`)
+> 5. 各データベースにサンプル名に対応するタグを追加する (`#GSM461177` または `#GSM461180`)
 > 
->    > ### {% icon tip %} Tip: Adding a tag
->    > * Click on the dataset
->    > * Click on <i class="fa fa-tags"></i> **Edit dataset tags** 
->    > * Add the tag starting with `#`
+>    > ### {% icon tip %} Tip: タグを追加する
+>    > * データセットをクリックする
+>    > * <i class="fa fa-tags"></i> **Edit dataset tags** をクリックする
+>    > * `#` で始まるタグを追加する
 >    >    
->    >     The tags starting with `#` will be automatically propagated to the outputs of tools using this dataset.
+>    >     `#` で始まるタグはこのデータセットを使うことでツールのアウトプットに自動的に伝播されます。
 >    >  
->    > * Check that the tag is apparing below the dataset name
+>    > * タグがデータセット名の下に表示されていることを確認してください
 >    > 
 >    {: .tip}
 {: .hands_on}
 
-The sequences are raw data from the sequencing machine, without any pretreatments. They need to be assessed for their quality.
+この配列はシークエンシング機からの生データであり、前処理を何もしていません。これらのデータは質のために評価する必要があります。
 
-## Quality control
+## クオリティコントロール
 
-For quality control, we use similar tools as described in [NGS-QC tutorial]({{site.baseurl}}/topics/sequence-analysis): [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Trim Galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/).
+クオリティコントロールに関しては、[NGS-QC tutorial]({{site.baseurl}}/topics/sequence-analysis) に記載されている同様のツールを使用します: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) と [Trim Galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) 。
 
-> ### {% icon hands_on %} Hands-on: Quality control
+> ### {% icon hands_on %} Hands-on: クオリティコントロール
 >
-> 1. **FastQC** {% icon tool %}: Run FastQC on the FASTQ files to control the quality of the reads
+> 1. **FastQC** {% icon tool %}: FASTQ ファイルで FastQC を実行してリードのクオリティをコントロールする
 >       - "Short read data from your current history"
->           - Click on "Multiple datasets"
->           - Select all raw datasets
+>           - "Multiple datasets" をクリックする
+>           - 全ての生データを選択する
 >
 >       > ### {% icon tip %} Tip
 >       >
->       > You can select several files by keeping the CTRL (or COMMAND) key pressed and clicking on the interesting files
+>       > CTRL（または COMMAND）キーを押しながら興味のあるファイルをクリックすると複数のファイルを選択できます
 >       {: .tip}
 >
-> 2. Inspect on the generated webpage for `GSM461177_1` sample
+> 2. 生成された `GSM461177_1` サンプルのウェブページを調べましょう
 >
 >    > ### {% icon question %} Questions
 >    >
->    > What is the read length?
+>    > リードの長さは何ですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > The read length is 37 bp
+>    >    > リードの長さは 37 bp です
 >    >    >
 >    >    {: .solution}
 >    >
 >    {: .question}
 >
-> 3. **MultiQC** {% icon tool %}: Aggregate the FastQC reports with
->      - "Which tool was used generate logs?" to `FastQC`
->      - "Type of FastQC output?" to `Raw data`
->      - "FastQC output" to the generated `Raw data` files (multiple datasets)
+> 3. **MultiQC** {% icon tool %}: で次の設定で FastQC のレポートを集計する 
+>      - "Which tool was used generate logs?" → `FastQC`
+>      - "Type of FastQC output?" → `Raw data`
+>      - "FastQC output" には生成された `Raw data` ファイル (multiple datasets) を選択する
 >
-> 4. Inspect the webpage output from MultiQC
+> 4. MultiQC のアウトプットであるウェブページを調べましょう
 >
 >    > ### {% icon question %} Questions
 >    >
->    > What is the quality for the sequences for the different files?
+>    > それぞれのファイルの配列のクオリティはどうですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > Everything seems ok for 3 of the files. But for GSM461180_2, the quality seems to decrease quite a lot at the end of the sequences
+>    >    > 3つのファイルは全て正常のようです。しかし GSM461180_2 では、末端の配列でクオリティがかなり低下するようです。
 >    >    >
 >    >    {: .solution}
 >    >
 >    {: .question}
 >
-> 2. **Trim Galore** {% icon tool %}: Treat for the quality of sequences by running Trim Galore! with
->      - "Is this library paired- or single-end?" to `Paired-end`
->      - First "Reads in FASTQ format" to both `_1` fastqsanger datasets (multiple datasets)
->      - Second "Reads in FASTQ format" to both `_2` fastqsanger datasets (multiple datasets)
+> 2. **Trim Galore** {% icon tool %}: Trim Galore! を実行して配列のクオリティを扱いましょう
+>      - "Is this library paired- or single-end?" → `Paired-end`
+>      - 1つ目の "Reads in FASTQ format" には `_1` の fastqsanger データセットを両方とも選択する (multiple datasets)
+>      - 2つ目の "Reads in FASTQ format" には `_2` の fastqsanger データセットを両方とも選択する(multiple datasets)
 >
 >    > ### {% icon question %} Questions
 >    >
->    > Why do we run Trim Galore! only once on a paired-end dataset and not twice, once for each dataset?
+>    > Trim Galore! において各データセットで1回ずつの2回実行するのではなく、ペアエンドデータセットで一度だけ実行するのは何故ですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > Trim Galore can remove sequences if they become too short during the trimming process. For paired-end files Trim Galore! removes entire sequence pairs if one (or both) of the two reads became shorter than the set length cutoff. Reads of a read-pair that are longer than a given threshold but for which the partner read has become too short can optionally be written out to single-end files. This ensures that the information of a read pair is not lost entirely if only one read is of good quality.
+>    >    > Trim Galore はトリミング処理中に配列が短すぎると配列を除去することができます。ペアエンドファイルでは Trim Galore! は、2つのリードの一方（または両方）が設定された長さのカットオフよりも短くなった場合、全配列対を除去します。指定した閾値よりも長いものの、対となるリードがとても短い場合のペアリードの読み取りはオプションとしてシングルエンドのファイルに書き込むことができます。これにより1つのリードさえクオリティが良ければ、ペアリードの情報が完全に失われないことが保証されています。
 >    >    >
 >    >    {: .solution}
 >    >
@@ -157,21 +157,21 @@ For quality control, we use similar tools as described in [NGS-QC tutorial]({{si
 >
 {: .hands_on}
 
-As the genome of *Drosophila melanogaster* is known and assembled, we can use this information and map the sequences on this genome to identify the effects of *Pasilla* gene depletion on splicing events.
+*キイロショウジョウバエ*のゲノムは既知でありアセンブリされているため、この情報を使ってこのゲノム上の配列をマッピングしてスプライシング現象による *Pasilla* 遺伝子の欠乏の影響を同定することができます。
 
-# Mapping
+# マッピング
 
-To make sense of the reads, we need to determine to which genes they belong. The first step is to determine their positions within the *Drosophila melanogaster* genome. This process is known as aligning or 'mapping' the reads to a reference.
+リードを理解するために、これらのリードがどの遺伝子に属しているかを決定する必要があります。最初のステップでは*キイロショウジョウバエ*のゲノム内での位置を明らかにしましょう。このプロセスではリードをリファレンスにアラインメントまたは 'マッピング' することとして知られている。
 
 > ### {% icon comment %} Comment
 >
-> Do you want to learn more about the principles behind mapping? Follow our [training]({{site.baseurl}}/topics/sequence-analysis/)
+> マッピングの原理についてもっと学びたいですか？私たちの [トレーニング]({{site.baseurl}}/topics/sequence-analysis/) を見てみましょう。
 {: .comment}
 
-Because in the case of a eukaryotic transcriptome, most reads originate from processed mRNAs lacking introns, they cannot be simply mapped back to the genome as we normally do for DNA data. Instead the reads must be separated into two categories:
+真核生物の転写産物の場合、ほとんどのリードはイントロンのないプロセシングされた mRNAs に由来しているため、通常は DNA データのように単純にゲノムをマッピングすることはできません。代わりにリードを2つのカテゴリーに分ける必要があります:
 
-- Reads that map entirely within exons
-- Reads that cannot be mapped within an exon across their entire length because they span two or more exons
+- エキソン内で完全にマッピングされるリード 
+- 2つ以上のエキソンにまたがるためエキソン内の全長にわたってマッピングすることができないリード 
 
 ![Five types of RNA-seq reads](../../images/five_type_rna_seq_reads.png "The five types of RNA-seq reads (Figure 1a from Kim et al, Nat Methods, 2015)")
 
