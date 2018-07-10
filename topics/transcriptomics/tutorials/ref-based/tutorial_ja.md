@@ -4,57 +4,53 @@ topic_name: transcriptomics
 tutorial_name: ref-based
 ---
 
-# Introduction
+# イントロダクション
 {:.no_toc}
 
-In the study of [Brooks *et al.* 2011](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3032923/), the *Pasilla* (*PS*) gene, *Drosophila* homologue of the Human splicing regulators Nova-1 and Nova-2 Proteins, was depleted in *Drosophila melanogaster* by RNAi. The authors wanted to identify exons that are regulated by *Pasilla* gene using RNA sequencing data.
+[Brooks *et al.* 2011](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3032923/) の研究によると、 *Pasilla* (*PS*) 遺伝子、ヒトスプライシング調節因子 Nova-1 および Nova-2 タンパク質の*ショウジョウバエ*の相同体は、*キイロショウジョウバエ*の RNAi により欠乏しました。筆者らは、RNA シークエンシングのデータを用いて *Pasilla* 遺伝子によって調節されるエキソンを同定しようとしました。
 
-Total RNA was isolated and used for preparing either single-end or paired-end RNA-seq libraries for treated (PS depleted) samples and untreated samples. These libraries were sequenced to obtain a collection of RNA sequencing reads for each sample. The effects of *Pasilla* gene depletion on splicing events can then be analyzed by comparison of RNA sequencing data of the treated (PS depleted) and the untreated samples.
+全 RNA を単離し処理した（PS を欠乏させた）サンプルと未処理のサンプルについてシングルエンドとペアエンドの RNA-seq ライブラリーのいずれかを調整するために使用しました。これらのライブラリーをシークエンシングして各サンプルの RNA シークエンシングリードのコレクションを取得しました。そしてスプライシング現象による *Pasilla* 遺伝子の欠乏の影響を、処理した（PS を欠乏させた）サンプルと未処理のサンプルの RNA シークエンシングデータを比較することで解析することができます。
 
-The genome of *Drosophila melanogaster* is known and assembled. It can be used as reference genome to ease this analysis.  In a reference based RNA-seq data analysis, the reads are aligned (or mapped) against a reference genome, *Drosophila melanogaster* here, to significantly improve the ability to reconstruct transcripts and then identify differences of expression between several conditions.
+*キイロショウジョウバエ*のゲノムは既知でありアセンブリされています。この解析を容易にするためにリファレンスゲノムとして利用することができます。リファレンスベースの RNA-seq データ解析では、転写産物を再編成する能力を大幅に改善しそしていくつかの条件の間で発現の差異を同定するために、リードを*キイロショウジョウバエ*のリファレンスゲノムに対してアラインメント（またはマッピング）する。
 
 > ### Agenda
 >
-> In this tutorial, we will deal with:
+> このチュートリアルでは、以下のことを行います:
 >
 > 1. TOC
 > {:toc}
 >
 {: .agenda}
 
-# Pretreatments
+# 前処理
 
-## Data upload
+## データのアップロード
 
-The original data is available at NCBI Gene Expression Omnibus (GEO) under accession number [GSE18508](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508).
+オリジナルのデータは NCBI の Gene Expression Omnibus (GEO) から受託番号 [GSE18508](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508) で入手することができます。 
 
-We will look at the 7 first samples:
+最初の7つのサンプルを見てみましょう:
 
-- 3 treated samples with *Pasilla* (PS) gene depletion: [GSM461179](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461179), [GSM461180](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461180), [GSM461181](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461181)
-- 4 untreated samples: [GSM461176](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461176), [GSM461177](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461177), [GSM461178](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461178), [GSM461182](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461182)
+- *Pasilla* (PS) 遺伝子が欠乏した3つの処理サンプル: [GSM461179](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461179), [GSM461180](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461180), [GSM461181](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461181)
+- 4つの未処理サンプル: [GSM461176](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461176), [GSM461177](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461177), [GSM461178](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461178), [GSM461182](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM461182)
 
-Each sample constitutes a separate biological replicate of the corresponding condition (treated or untreated). Moreover, two of the treated and two of the untreated samples are from a paired-end sequencing assay, while the remaining samples are from a single-end sequencing experiment.
+各サンプルは対応する条件（処理か未処理か）に分けて生物学的複製物を構成しています。さらに、処理された2つのサンプルと2つの未処理のサンプルはペアエンドシークエンシング法由来で、残りのサンプルはシングルエンドシークエンシング法由来です。
 
-We have extracted sequences from the Sequence Read Archive (SRA) files to build FASTQ files.
+Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイルを構築しました。
 
-> ### {% icon hands_on %} Hands-on: Data upload
+> ### {% icon hands_on %} Hands-on: データのアップロード
 >
-> 1. Create a new history for this RNA-seq exercise
-> 2. Import the FASTQ file pairs for
->       - `GSM461177` (untreated): `GSM461177_1` and `GSM461177_2`
->       - `GSM461180` (treated): `GSM461180_1` and `GSM461180_2`
+> 1. この RNA-seq チュートリアル用に新しいヒストリーを作成する
+> 2. FASTQファイルのペアをインポートする (*例*  `GSM461177_untreat_paired_chr4_R1.fastq` と `GSM461177_untreat_paired_chr4_R2.fastq`)
+>     * オプション 1: 利用可能な場合は（インストラクターにお尋ねください）共有データライブラリから
+>     * オプション 2: [Zenodo](https://dx.doi.org/10.5281/zenodo.290221) から
 >
->       To import the files, there are two options:
->       - Option 1: From a shared data library if available (ask your instructor)
->       - Option 2: From [Zenodo](https://doi.org/10.5281/zenodo.1185122)
->
->           > ### {% icon tip %} Tip: Importing data via links
+>           > ### {% icon tip %} Tip: リンクからデータをインポートする
 >           >
->           > * Copy the link location
->           > * Open the Galaxy Upload Manager
->           > * Select **Paste/Fetch Data**
->           > * Paste the link into the text field
->           > * Press **Start**    
+>           > * リンクの場所をコピーする
+>           > * Galaxy Upload Manager を開く
+>           > * **Paste/Fetch Data** を選択する
+>           > * リンクをテキストフィールドにペーストする
+>           > * **Start** を押す   
 >           {: .tip}
 >           
 >           You can directly paste:
