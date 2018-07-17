@@ -27,118 +27,118 @@ tutorial_name: database-handling
 *   データベースへの web リンクを直接使用する。
 *   データライブラリからデータベースをアップロードする。
 
-In this tutorial, we will explore **Protein Database Downloader** {% icon tool %} for generating a protein search database. For this we will download the proteome of an organism of interest. In this tutorial, we will use a database of the human proteome.
+このチュートリアルでは、タンパク質検索データベースを生成するための **Protein Database Downloader** {% icon tool %} について説明します。このために必要な生物のプロテオームをダウンロードします。このチュートリアルでは、ヒトのプロテオームのデータベースを使用します。
 
-> ### {% icon hands_on %} Hands-on: Uploading a protein search database
+> ### {% icon hands_on %} ハンズオン: タンパク質検索データベースをアップロードする 
 >
-> 1. Create a new history for this Database Handling exercise.
-> 2. Open **Protein Database Downloader** {% icon tool %}
-> 3. Select in the drop-down menues `Taxonomy`: "Homo sapiens (Human)" and `reviewed`: "UniprotKB/Swiss-Prot (reviewed only)".
-> 4. Click on `Execute`. There will be a new dataset named `Protein database` in your history, now.
-> 5. Rename the `Protein database` to `Main database`.
+> 1. このデータベース操作チュートリアル用の新しいヒストリーを作成する。
+> 2. **Protein Database Downloader** {% icon tool %} を開く
+> 3. ドロップダウンメニューから `Taxonomy`: "Homo sapiens (Human)" と `reviewed`: "UniprotKB/Swiss-Prot (reviewed only)" を選択する。
+> 4. `Execute` をクリックする。これで、あなたのヒストリーに `Protein database` という名前の新しいデータセットがあるはずです。
+> 5. `Protein database` を `Main database` に名前を変更する。
 >
->  > ### {% icon tip %} Tip: Types of uniprot databases
->  > Uniprot offers several types of databases. You may choose to download only reviewed (UniProtKB/Swissprot) databases, only unreviewed (UniProtKB/TREMBL) or both (UniProtKB). In model organisms which are well-researched, e.g. _Homo sapiens_ or _D. melanogaster_, reviewed (Swissprot) databases contain curated proteins and may lead to smaller databases and cleaner search results. However, if the researcher is interested in identifying proteins that are unreviewed, it might be wiser to include the TrEMBL database.
+>  > ### {% icon tip %} Tip: uniprot データベースの種類
+>  > Uniprot にはいくつかの種類のデータベースがあります。レビューされた (UniProtKB/Swissprot) データベースのみをダウンロードするか、レビューされていない (UniProtKB/TREMBL) データベースのみ、または両方  (UniProtKB) のデータベースをダウンロードするかを選択することができます。よく研究されているモデル生物、例えばヒトやショウジョウバエといった生物のレビューされた (Swissprot) データベースには精選されたタンパク質が含まれていてより小さなデータベースでよりクリーンな検索結果を得られるかもしれません。しかし、レビューされていないタンパク質に興味がある場合は、TrEMBL データベースを含めるのが賢明かもしれません。
 >  >
->  > You may also include protein isoforms by setting the tick box `Include isoform data` to `Yes`.
+>  > またチェックボックス `Include isoform data` を `Yes` に設定することでタンパク質アイソフォームを含めることができます。
 >  {: .tip}
 >
 >  > ### {% icon question %} Question
->  > What is the difference between a "reference proteome set" and a "complete proteome set"?
+>  > "reference proteome set" と "complete proteome set" の違いはなんですか?
 >  >
 >  > > ### {% icon solution %} Solution
->  > > 1.  A UniProt complete proteome consists of the set of proteins thought to be expressed by an organism whose genome has been completely sequenced. A reference proteome is the complete proteome of a representative, well-studied model organism or an organism of interest for biomedical and biotechnological research. Reference proteomes constitute a representative cross-section of the taxonomic diversity to be found within UniProtKB. Species of particular importance may be represented by numerous reference proteomes for specific ecotypes or strains of interest. [Link to source](http://www.uniprot.org/help/reference_proteome)
+>  > > 1.  UniProt の complete proteome はゲノムが完全にシークエンスされた生物で発現されると考えられるタンパク質のセットからなります。Reference proteome は代表的な、よく研究されたモデル生物または生物医学や生物工学の研究の対象となる生物の完全なプロテオームです。Reference proteomes は UniProtKB 内で見られる分類学的な多様性の代表的な cross-section を構成します。特定の重要な種は特定の生態系または関心のある種族の多数のリファレンスプロテオームによって表現できる可能性があります。[Link to source](http://www.uniprot.org/help/reference_proteome)
 >  > {: .solution }
 >  {: .question}
 {: .hands_on}
 
 
-# Contaminant databases
+# コンタミネーションデータベース
 
-In proteomic samples, some protein contaminants are commonly present. These protein contamianants are introduced into sample during sample preparation. The source of these contamiants could be an experimenter or contaminated cell culture. In order to avoid misidentification of spectra derived from contaminants, protein sequences of common laboratory contaminants are added to the database. This has two benefits:
-1. Contamination can be observed, heavily contaminated samples can be excluded from analysis.
-2. Contaminant peptides cannot be misassigned to similar peptides in the database reducing the risk of identifying false positives.
+プロテオームのサンプルでは、いくつかのタンパク質混入物が一般的に存在します。これらのタンパク質混入物はサンプル調製中にサンプル中にコンタミします。これらのコンタミネーションの原因は研究者またはコンタミした細胞培地によるものであると考えられます。混入物由来のスペクトルを誤って特定することを避けるために、一般的な研究室でコンタミするタンパク質配列をデータベースに追加します。これには2つの利点があります:
+1. コンタミネーションを観測することができ、重度にコンタミしたサンプルは解析から除外することができます。
+2. 混入物のペプチドをデータベース中の類似のペプチドに誤って割り当てることがなくなり誤った陽性結果を特定するリスクを減少します。
 
-A widely used database for common contaminants is the **c**ommon **R**epository of **A**dventitious **P**roteins (cRAP). When using samples generated in cell cultures, it is furthermore recommended to include _Mycoplasma_ proteomes in the search database. _Mycoplasma_ infections are very common in cell culture and often go unnoticed ([Drexler and Uphoff, Cytotechnology, 2002](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3463982/)).
+コンタミネーション用に一般的に使用されるデータベースは **c**ommon **R**epository of **A**dventitious **P**roteins (cRAP) です。細胞培養で生成されたサンプルを使用する場合は、_Mycoplasma_ のプロテオームを検索データベースに含めることを強く推奨します。_Mycoplasma_ 感染は細胞培養において非常に一般的なものでありしばしば見落とします ([Drexler and Uphoff, Cytotechnology, 2002](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3463982/))。
 
-> ### {% icon hands_on %} Hands-on: Contaminant databases
-> 1. Open **Protein Database Downloader** {% icon tool %}.
-> 2. Select `Download from`: "cRAP (contaminants)" and execute.
-> 3. Rename the new database to "crap database".
+> ### {% icon hands_on %} ハンズオン: コンタミネーションデータベース
+> 1. **Protein Database Downloader** {% icon tool %} を開く。
+> 2. `Download from`: "cRAP (contaminants)" を選択し実行する。
+> 3. 新しいデータベースを "crap database" という名前に変更する。
 >
-> To be able to distinguish contaminants from proteins of interest, you should add a tag to each contaminant protein.
+> 目的のタンパク質から混入物を区別するには、それぞれのコンタミネーションタンパク質にタグを追加する必要があります。 
 >
 > 1. Run **FASTA-to-Tabular** {% icon tool %} on your crap database.
-> 2. Run **Add column** {% icon tool %} on the new output. In the field `Add this value` enter "CONTAMINANT" and execute.
-> 3. Run **Tabular-to-FASTA** {% icon tool %}. Use column 1 and column 3 as Title columns and column 2 as sequence column.
-> 4. Rename the **Tabular-to-FASTA** {% icon tool %} output to "Tagged cRAP database".
+> 2. 新たなアウトプットで **Add column** {% icon tool %} を実行する。`Add this value` の欄に "CONTAMINANT" を入力して実行する。
+> 3. **Tabular-to-FASTA** {% icon tool %} を実行する。1列目と3列目をタイトル列として、2列目を配列の列として使用する。
+> 4. **Tabular-to-FASTA** {% icon tool %} のアウトプットを "Tagged cRAP database" に名前を変更する。
 >
 >
 >  > ### {% icon question %} Question
->  > 1. The cRAP database contains some human proteins. What does it mean if you identify those typical contaminants in a human sample?
->  > 2. What does it mean in a non-human sample?
+>  > 1. cRAP データベースにはいくつかのヒトタンパク質が含まれています。ヒトサンプル中の典型的な混入物を特定する場合それはどういう意味でしょうか？
+>  > 2. 非ヒトサンプルではどういう意味でしょうか？
 >  >
 >  > > ### {% icon solution %} Solution
->  > > 1. In samples stemming from a human source, identified human contaminants do not necessarily mean a contaminated sample. The proteins may as well originate from the research study sample. Users are advised to use discretion when interpreting the data.
->  > > 2. In samples from non-human sources, identified human contaminants do mean contamination by the experimenter.
+>  > > 1. ヒト由来のサンプルでは、特定されたヒト由来の混入物は必ずしも混入サンプルを意味するものではありません。このタンパク質は研究調査サンプルに由来するもののように扱ってもよいです。使用者はデータを解釈する際によく考えて判断することをお勧めします。
+>  > > 2. 非ヒトサンプルでは、同定されたヒトの混入物は実験者によるコンタミネーションを意味しています。 
 >  > {: .solution }
 >  {: .question}
 {: .hands_on}
 
 
-> ### {% icon hands_on %} Optional Hands-On: _Mycoplasma_ databases
-> 90 - 95 % of mycoplasma infection in cell culture originates from the following species: _M. orale, M. hyorhinis, M. arginini, M. fermentans, M. hominis_ and _A. laidlawii_ ([Drexler and Uphoff, Cytotechnology, 2002](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3463982/)).
+> ### {% icon hands_on %} 任意のハンズオン: _Mycoplasma_ データベース
+> 細胞培養におけるマイコプラズマ感染の 90 - 95 % は以下の種に由来します: _M. orale, M. hyorhinis, M. arginini, M. fermentans, M. hominis_ そして _A. laidlawii_ ([Drexler and Uphoff, Cytotechnology, 2002](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3463982/))。
 >
-> 1. Use **Protein Database Downloader** {% icon tool %} to download the six mycoplasma databases. We will merge them to the main database in the next part of the tutorial.
-> 2. Run **FASTA Merge Files and Filter Unique Sequences** {% icon tool %} to combine all mycoplasma databases into a single one.
+> 1. **Protein Database Downloader** {% icon tool %} を使用して6種のマイコプラズマのデータベースをダウンロードする。これらはこのチュートリアルの次のパートでメインのデータベースにマージします。
+> 2. **FASTA Merge Files and Filter Unique Sequences** {% icon tool %} を実行してすべてのマイコプラズマデータベースを1つに連結します。
 > 3. Tag each entry in the combined database with the string "MYCOPLASMA_CONTAMINANT" by using **FASTA-to-Tabular** {% icon tool %}, **Add column** :wrench: and **Tabular-to-FASTA** :wrench:, as explained [above](#contaminant-databases).
-> 4. Rename the **Tabular-to-FASTA** {% icon tool %} output to "Tagged Mycoplasma database".
+> 4. **Tabular-to-FASTA** {% icon tool %} アウトプットを "Tagged Mycoplasma database" という名前に変更する。
 >
 >  > ### {% icon comment %} Comment
->  > The reviewed mycoplasma databases do not contain all known proteins. It is better to also include the TREMBL database. _Mycoplasma_ proteomes are relatively small, so even downloading TrEMBL sequences will not incraese the size of your main database by much.
+>  > レビューされたマイコプラズマデータベースにはすべての既知のタンパク質が含まれているわけではありません。TREMBL データベースも含めた方が良いです。_Mycoplasma_ プロテオームは比較的小さいので、TrEMBL 配列をダウンロードするだけではメインのデータベースのサイズはそれほど大きくならないでしょう。
 >  {: .comment}
 {: .hands_on}
 
 
-# Merging databases
+# データベースをマージする 
 
-Depending on the search algorithm in use,  you might need to merge all FASTA entries (i.e. proteins of interest and contaminants) in a single database. Make sure to merge the tagged versions of your contaminant databases.
+使用する検索アルゴリズムによって、FASTA のすべてのエントリー（関心のあるタンパク質と混入物）を1つのデータベースにマージする必要があります。コンタミのデータベースはタグ付きのバージョンをマージしてください。
 
-> ### {% icon hands_on %} Hands-on: Merging databases
+> ### {% icon hands_on %} ハンズオン: データベースをマージする
 >
-> 1. Run **FASTA Merge Files and Filter Unique Sequences** {% icon tool %} on the main database and the tagged cRAP database.
+> 1. メインのデータベースとタグ付けした cRAP データベースで **FASTA Merge Files and Filter Unique Sequences** {% icon tool %} を実行する。
 >
-> 2. **Optional**: Merging mycoplasma databases
+> 2. **任意**: マイコプラズマデータベースをマージする
 >
->    At this step you may also merge the mycoplasma protein databases that you downloaded earlier on. Simply enter them as additional inputs in **FASTA Merge Files and Filter Unique Sequences** {% icon tool %}. You can enter any number of protein databases when you click on `Insert Input FASTA file(s)`.
+>    このステップでは上でダウンロードしたマイコプラズマタンパク質データベースをマージすることもできます。**FASTA Merge Files and Filter Unique Sequences** {% icon tool %} にインプットを追加するだけです。`Insert Input FASTA file(s)` をクリックすると任意の数のタンパク質でデータベースを追加することができます。
 {: .hands_on}
 
 
-# Creating a Decoy Database
+# デコイデータベースを作成する
 
-The most common method of peptide and protein False Discovery Rate (FDR) calculation is by adding protein sequences that are not expected to be present in the sample. These are also called decoy protein sequences. This can be done by generating reverse sequences of the target protein entries and appending these protein entries to the protein database. Some search algoritmms use premade target-decoy protein sequences while others can generate a target-decoy protein sequence database from a target protein sequence database before using them for peptide spectral matching.
+ペプチドおよびタンパク質の False Discovery Rate（FDR）計算の最も一般的な方法はサンプル中に存在しないことが予想されるタンパク質配列を加えることです。これらは、デコイタンパク質配列とも呼ばれています。これは、標的タンパク質エントリーの逆配列を生成し、これらのタンパク質エントリーをタンパク質データベースに付加することによって行うことができます。Some search algoritmms use premade target-decoy protein sequences while others can generate a target-decoy protein sequence database from a target protein sequence database before using them for peptide spectral matching.
 
-> ### {% icon hands_on %} Hands-on: Creating a Decoy Database
-> 1. Run **DecoyDatabase**  {% icon tool %} on the merged database.
-> 2. Set the flag (-append) to `Yes` and execute.
+> ### {% icon hands_on %} ハンズオン: デコイデータベースを作成する
+> 1. マージしたデータベースで **DecoyDatabase**  {% icon tool %} を実行する。
+> 2. flag (-append) を `Yes` に設定して実行する。
 >
 >  > ### {% icon tip %} Tip: Decoy tags
->  > The string you enter as a decoy tag will be added as a prefix or suffix (your choice) to the description of each decoy protein entry. Thus you can see from which entry in the target database the decoy was computed.
+>  > デコイのタグとして入力した文字列は各デコイタンパク質のエントリーの説明に接頭辞または接尾辞（選択できます）として追加されます。こうしてデコイが計算された標的データベース内のエントリーを確認することができます。
 >  {: .tip}
 >
 >  > ### {% icon comment %} Comment
->  > **DecoyDatabase**  {% icon tool %} may also take several databases as input which are then automatically merged into one database.
+>  > **DecoyDatabase**  {% icon tool %} はいくつかのデータベースをインプットとして自動的に1つのデータベースにマージします。
 >  {: .comment}
 {: .hands_on}
 
 
-# Concluding remarks
+# 結論
 {:.no_toc}
 
-In order to keep your proteins databases up-to-date, it is recommended to create a workflow out of the hands-on sections (to learn about workflows see [this tutorial]({{site.baseurl}}/topics/introduction/tutorials/galaxy-intro-101/tutorial.html)). You might also want to combine the mycoplasma databases to a single file, which you then easily can add to each of your main databases.
+タンパク質データベースを最新の状態に保つには、ハンズオンセクションからワークフローを作成することをお勧めします（ワークフローについては[このチュートリアル]({{site.baseurl}}/topics/introduction/tutorials/galaxy-intro-101/tutorial.html)を参照してください）。またマイコプラズマデータベースを1つのファイルに結合して、それぞれのメインデータベースに簡単に加えることができます。
 
-Often you may not want to use the most recent database for reasons of reproducibility. If so, you can transfer the final database of this tutorial into other histories to work with it.
+再現性の理由から最新のデータベースを使いたくないことがよくあります。そうであれば、このチュートリアルの巻末のデータベースを他のヒストリーに転送して操作してください。
 
-Further reading about construction of the optimal database: ([Kumar et al., Methods in molecular biology, 2017](https://www.ncbi.nlm.nih.gov/pubmed/27975281)).
+最適なデータベースの構築についてさらに読むなら: ([Kumar et al., Methods in molecular biology, 2017](https://www.ncbi.nlm.nih.gov/pubmed/27975281))
 
-This tutorial is based upon parts of the GalaxyP-101 tutorial (https://usegalaxyp.readthedocs.io/en/latest/sections/galaxyp_101.html).
+このチュートリアルは GalaxyP-101 tutorial (https://usegalaxyp.readthedocs.io/en/latest/sections/galaxyp_101.html) の一部に基づいて作成されています。
