@@ -26,7 +26,7 @@ tutorial_name: ref-based
 
 ## データのアップロード
 
-オリジナルのデータは NCBI の Gene Expression Omnibus (GEO) から受託番号 [GSE18508](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508) で入手することができます。 
+オリジナルのデータは NCBI の Gene Expression Omnibus (GEO) から受託番号 [GSE18508](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE18508) で入手することができます。
 
 最初の7つのサンプルを見てみましょう:
 
@@ -37,7 +37,7 @@ tutorial_name: ref-based
 
 Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイルを構築しました。
 
-> ### {% icon hands_on %} Hands-on: データのアップロード
+> ### {% icon hands_on %} ハンズオン: データのアップロード
 >
 > 1. この RNA-seq チュートリアル用に新しいヒストリーを作成する
 > 2. FASTQファイルのペアをインポートする (*例*  `GSM461177_untreat_paired_chr4_R1.fastq` と `GSM461177_untreat_paired_chr4_R2.fastq`)
@@ -74,7 +74,7 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 >    {: .tip}
 >
 > 5. 各データベースにサンプル名に対応するタグを追加する (`#GSM461177` または `#GSM461180`)
-> 
+>
 >    > ### {% icon tip %} Tip: タグを追加する
 >    > * データセットをクリックする
 >    > * <i class="fa fa-tags"></i> **Edit dataset tags** をクリックする
@@ -83,7 +83,7 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 >    >     `#` で始まるタグはこのデータセットを使うことでツールのアウトプットに自動的に伝播されます。
 >    >  
 >    > * タグがデータセット名の下に表示されていることを確認してください
->    > 
+>    >
 >    {: .tip}
 {: .hands_on}
 
@@ -93,7 +93,7 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 
 クオリティコントロールに関しては、[NGS-QC tutorial]({{site.baseurl}}/topics/sequence-analysis) に記載されている同様のツールを使用します: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) と [Trim Galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) 。
 
-> ### {% icon hands_on %} Hands-on: クオリティコントロール
+> ### {% icon hands_on %} ハンズオン: クオリティコントロール
 >
 > 1. **FastQC** {% icon tool %}: FASTQ ファイルで FastQC を実行してリードのクオリティをコントロールする
 >       - "Short read data from your current history"
@@ -119,7 +119,7 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 >    >
 >    {: .question}
 >
-> 3. **MultiQC** {% icon tool %}: で次の設定で FastQC のレポートを集計する 
+> 3. **MultiQC** {% icon tool %}: で次の設定で FastQC のレポートを集計する
 >      - "Which tool was used generate logs?" → `FastQC`
 >      - "Type of FastQC output?" → `Raw data`
 >      - "FastQC output" には生成された `Raw data` ファイル (multiple datasets) を選択する
@@ -170,8 +170,8 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 
 真核生物の転写産物の場合、ほとんどのリードはイントロンのないプロセシングされた mRNAs に由来しているため、通常は DNA データのように単純にゲノムをマッピングすることはできません。代わりにリードを2つのカテゴリーに分ける必要があります:
 
-- エキソン内で完全にマッピングされるリード 
-- 2つ以上のエキソンにまたがるためエキソン内の全長にわたってマッピングすることができないリード 
+- エキソン内で完全にマッピングされるリード
+- 2つ以上のエキソンにまたがるためエキソン内の全長にわたってマッピングすることができないリード
 
 ![Five types of RNA-seq reads](../../images/five_type_rna_seq_reads.png "The five types of RNA-seq reads (Figure 1a from Kim et al, Nat Methods, 2015)")
 
@@ -180,13 +180,13 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 ![Splice-aware alignment](../../images/splice_aware_alignment.png "Principle of spliced mappers: (1) identification of the reads spanning a single exon, (2) identification of the splicing junctions on the unmapped reads")
 
 > ### {% icon details %} スプライスマッパーのそれぞれの違いについての詳細
-> 
+>
 > RNA-seq のデータが爆発的に増加する中で数年にわたっていくつかのスプライスマッパーが開発されました。
-> 
-> [TopHat](https://ccb.jhu.edu/software/tophat/index.shtml) ([Trapnell et al, Bioinformatics, 2009](https://academic.oup.com/bioinformatics/article/25/9/1105/203994)) はこの問題を処理するために特化して設計された最初のツールの1つです。TopHat のリードはゲノムに対してマッピングされ、次の2つのカテゴリに分けられます: (1) マッピングされるもの (2) 最初にマッピングされなかったもの (IUM)。潜在的にエキソン部分となるリードの "Piles" は潜在的に供与体または受容体となるスプライス部位を探索することで拡張され潜在的なスプライス結合部が再構築されます。IUM はこれらの接合部にマッピングされる。 
-> 
+>
+> [TopHat](https://ccb.jhu.edu/software/tophat/index.shtml) ([Trapnell et al, Bioinformatics, 2009](https://academic.oup.com/bioinformatics/article/25/9/1105/203994)) はこの問題を処理するために特化して設計された最初のツールの1つです。TopHat のリードはゲノムに対してマッピングされ、次の2つのカテゴリに分けられます: (1) マッピングされるもの (2) 最初にマッピングされなかったもの (IUM)。潜在的にエキソン部分となるリードの "Piles" は潜在的に供与体または受容体となるスプライス部位を探索することで拡張され潜在的なスプライス結合部が再構築されます。IUM はこれらの接合部にマッピングされる。
+>
 >    ![TopHat](../../images/tophat.png "TopHat (Trapnell et al, Bioinformatics, 2009)")
-> 
+>
 > TopHat は後に TopHat2 を開発し改良されました ([Kim et al, Genome Biology, 2013](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2013-14-4-r36)):
 >
 >    ![TopHat2](../../images/13059_2012_Article_3053_Fig6_HTML.jpg "TopHat2 (Kim et al, Genome Biology, 2013)")
@@ -194,161 +194,161 @@ Sequence Read Archive (SRA) ファイルから配列を抽出し FASTQ ファイ
 > スプライスされたリードのアラインメントをさらに最適化して高速化するために Kim ら ([Nat Methods, 2015](https://www.nature.com/articles/nmeth.3317)) は [HISAT](https://ccb.jhu.edu/software/hisat2/index.shtml) を開発しました。それは1つのグローバルゲノムワイドインデックスと ~48,000 個のローカルオーバーラッピング 42 kb インデックス（HISAT2 では ~55,000 個の 56 kb インデックス）のコレクションからなる [FM-indices](https://en.wikipedia.org/wiki/FM-index) のセットを使用しています。これによりグローバルインデックスを用いてゲノム内の潜在的なリードのアラインメントの初期シード位置を見つけてローカルインデックスを用いてこれらのアラインメントを迅速に精製することができます:
 >
 >    ![Hierarchical Graph FM index in HISAT/HISAT2](../../images/hisat.png "Hierarchical Graph FM index in HiSat/HiSat2 (Kim et al, Nat Methods, 2015)")
-> 
-> A part of the read (blue arrow) is first mapped to the genome using the global FM index. The HISAT then tries to extend the alignment directly utilizing the genome sequence (violet arrow). In (**a**) it succeeds and this read aligned as it completely resides within an exon. In (**b**) the extension hits a mismatch. Now HISAT takes advantage of the local FM index overlapping this location to find the appropriate mapping for the remainder of this read (green arrow). The (**c**) shows a combination these two strategies: the beginning of the read is mapped using global FM index (blue arrow), extended until it reaches the end of the exon (violet arrow), mapped using local FM index (green arrow) and extended again (violet arrow).
-> 
-> [STAR aligner](https://github.com/alexdobin/STAR) is a fast alternative for mapping RNAseq reads against genome utilizing uncompressed [suffix array](https://en.wikipedia.org/wiki/Suffix_array). It operates in two stages [Dobin et al, Bioinformatics, 2013](https://academic.oup.com/bioinformatics/article/29/1/15/272537). In the first stage it performs seed search:
-> 
+>
+> 一部のリード（青色の矢印）はまずグローバル FM インデックスを使用してゲノムにマッピングされます。次に HISAT はゲノム配列（紫色の矢印）を直接利用してアラインメントを延ばそうとします。図 (**a**) ではそれが成功していて、リードは完全にエキソン内にあるようにアラインメントされています。図 (**b**) では Extension に不一致があります。ここで HISAT はこの位置と重なるローカル FM インデックスを利用して、このリードの余りの部分（緑色の矢印）に一致するマッピングを探します。図 (**c**) では2つの方法の組み合わせを示しています: リードの開始はグローバル FM インデックス（青色の矢印）を使用してマッピングされ、エキソンの末端（紫色の矢印）に達するまで延長されて、ローカル FM インデックス（緑色の矢印）を使用してマッピングされてそして再び延長されます（紫色の矢印）。
+>
+> [STAR aligner](https://github.com/alexdobin/STAR) は非圧縮の [suffix array](https://en.wikipedia.org/wiki/Suffix_array) を使用してゲノムに対して RNAseq のリードをマッピングするために高速で置き換えるツールです。それは2つの段階によって行われます [Dobin et al, Bioinformatics, 2013](https://academic.oup.com/bioinformatics/article/29/1/15/272537)。第一段階ではシード検索を実行します:
+>
 >    ![STAR's seed search](../../images/star.png "STAR's seed search (Dobin et al, Bioinformatics, 2013)")
 >
-> Here a read is split between two consecutive exons. STAR starts to look for a maximum mappable prefix (MMP) from the beginning of the read until it can no longer match continuously. After this point it start to MMP for the unmatched portion of the read (**a**). In the case of mismatches (**b**) and unalignable regions (**c**) MMPs serve as anchors from which to extend alignments</p>
+> ここでは2つの連続したエキソン間でリードを分割しています。STAR ではリードの開始位置からそれがもはや連続して一致しなくなるまで maximum mappable prefix（MMP）を探します。その後 After this point it start to MMP for the unmatched portion of the read (**a**). In the case of mismatches (**b**) and unalignable regions (**c**) MMPs serve as anchors from which to extend alignments </p>
 >
-> At the second stage STAR stitches MMPs to generate read-level alignments that (contrary to MMPs) can contain mismatches and indels. A scoring scheme is used to evaluate and prioritize stitching combinations and to evaluate reads that map to multiple locations. STAR is extremely fast but requires a substantial amount of RAM to run efficiently.
-> 
+> 第二段階では STAR は MMP とstitchesして（MMP とは反対に）ミスマッチや挿入欠失を含むことができるリードレベルのアラインメントを生成します。スコアリングスキームはstitchingの組み合わせを評価して優先順位付けをしたり複数の位置にマッピングするリードを評価するために使用されます。STAR は非常に高速ですが効率的に実行するには相当量の RAM が必要です。
+>
 {: .details}
 
-## Mapping
+## マッピング
 
-We will map our RNA reads to the *Drosophila melanogaster* genome using STAR.
+STAR を使用して RNA のリードを *キイロショウジョウバエ* のゲノムにマッピングします。
 
-> ### {% icon hands_on %} Hands-on: Spliced mapping
+> ### {% icon hands_on %} ハンズオン: スプライスマッピング
 >
-> 1. Import the Ensembl gene annotation for *Drosophila melanogaster* (`Drosophila_melanogaster.BDGP6.87.gtf`) from the shared data library or from [Zenodo](https://doi.org/10.5281/zenodo.1185122) into your current Galaxy history
->    - Rename the dataset if necessary
->    - Verify that the datatype is `gtf` and not `gff`
+> 1. *キイロショウジョウバエ* の Ensembl 遺伝子のアノテーション (`Drosophila_melanogaster.BDGP6.87.gtf`) を共有データライブラリまたは [Zenodo](https://doi.org/10.5281/zenodo.1185122) から現在のGalaxyのヒストリーへインポートする。
+>    - 必要であればデータセットの名前を変更する
+>    - データタイプが `gff` ではなく `gtf` であることを確認する
 >
-> 2. **RNA STAR** {% icon tool %}: Map your reads on the reference genome with
->    - "Single-end or paired-end reads" to `Paired-end (as individual datasets)`
->    - "RNA-Seq FASTQ/FASTA file, forward reads" to the generated `trimmed reads pair 1` files (multiple datasets)
->    - "RNA-Seq FASTQ/FASTA file, reverse reads" to the generated `trimmed reads pair 2` files (multiple datasets)
->    - "Custom or built-in reference genome" to `Use a built-in index`
->    - "Reference genome with or without an annotation" to `use genome reference without builtin gene-model`
->    - "Select reference genome" to `Drosophila Melanogaster (dm6)`
->    - "Gene model (gff3,gtf) file for splice junctions" to the imported `Drosophila_melanogaster.BDGP6.87.gtf`
->    - "Length of the genomic sequence around annotated junctions" to `36`
+> 2. **RNA STAR** {% icon tool %}: リファレンスゲノムにリードをマッピングする
+>    - "Single-end or paired-end reads" → `Paired-end (as individual datasets)`
+>    - "RNA-Seq FASTQ/FASTA file, forward reads" には生成された `trimmed reads pair 1` ファイルを選択する (multiple datasets)
+>    - "RNA-Seq FASTQ/FASTA file, reverse reads" には生成された `trimmed reads pair 2` ファイルを選択する (multiple datasets)
+>    - "Custom or built-in reference genome" → `Use a built-in index`
+>    - "Reference genome with or without an annotation" → `use genome reference without builtin gene-model`
+>    - "Select reference genome" → `Drosophila Melanogaster (dm6)`
+>    - "Gene model (gff3,gtf) file for splice junctions" にはインポートした `Drosophila_melanogaster.BDGP6.87.gtf` を選択する
+>    - "Length of the genomic sequence around annotated junctions" → `36`
 >
 >        This parameter should be length of reads - 1
 >
-> 3. **MultiQC** {% icon tool %}: Aggregate the STAR logs with
->      - "Which tool was used generate logs?" to `STAR`
->      - "Type of FastQC output?" to `Log`
->      - "STAR log output" to the generated `log` files (multiple datasets)
+> 3. **MultiQC** {% icon tool %}: STAR のログを集計する
+>      - "Which tool was used generate logs?" → `STAR`
+>      - "Type of FastQC output?" → `Log`
+>      - "STAR log output" には生成された `log` ファイルを選択する (multiple datasets)
 >
 >    > ### {% icon question %} Question
 >    >
->    > Which percentage of reads were mapped exactly once for both samples?
+>    > 両方のサンプルにおいて正確に1回マッピングされたリードの割合はどれですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > More than 83% for GSM461177 and more than 78% for GSM461180
+>    >    > GSM461177 では83％以上、GSM461180 では78％以上です
 >    >    >
 >    >    {: .solution}
 >    >
 >    {: .question}
 {: .hands_on}
 
-**STAR** generates a BAM file with the mapped reads.
+**STAR** はマッピングされたリードを含む BAM ファイルを生成します。
 
 > ### {% icon question %} Question
 >
-> 1. What is a BAM file?
-> 2. What does such a file contain?
+> 1. BAM ファイルとはなんですか？
+> 2. そのようなファイルには何が含まれていますか？
 >
 >    > ### {% icon solution %} Solution
 >    >
->    > 1. a BAM file is the binary version of a SAM file
->    > 2. It contains information about the mapping: for each mapped read, the position on the reference genome, the mapping quality, ...
+>    > 1. BAM ファイルは SAM ファイルのバイナリーバージョンです
+>    > 2. このファイルにはマッピングに関する情報を含んでいます: それぞれのマッピングされたリードに関する情報や、リファレンスゲノムの位置についてや、マッピングのクオリティ、などなど
 >    >
 >    {: .solution}
 {: .question}
 
-## Inspection of the mapping results
+## マッピングの結果を検査する
 
-The BAM file contains information about where the reads are mapped on the reference genome. But it is a binary file and with the information for more than 3 million reads encoded in it, it is difficult to inspect and explore the file.
+BAM ファイルにはリファレンスゲノム上でマッピングされたリードの位置に関する情報が含まれています。しかしそれはバイナリーファイルでその中に3百万以上のリードの情報がエンコードされているため、ファイルを検査して調べることは困難です。
 
-A powerful tool to visualize the content of BAM files is the Integrative Genomics Viewer IGV.
+Integrative Genomics Viewer IGV は BAM ファイルの内容を視覚化するための強力なツールです。
 
-> ### {% icon hands_on %} Hands-on: Inspection of mapping results
+> ### {% icon hands_on %} ハンズオン: マッピングの結果を検査する
 >
-> 1. **IGV** {% icon tool %}: Visualize the aligned reads for `GSM461177`
->     - Click on the STAR BAM output in your history to expand it.
->     - Towards the bottom of the history item, find the line starting with `Display with IGV`
+> 1. **IGV** {% icon tool %}: `GSM461177` に割り当てられたリードを視覚化する
+>     - ヒストリーにある STAR の BAM アウトプットをクリックして展開する
+>     - ヒストリー項目の下部に向かって、`Display with IGV` で始まる行を探す
 >        
->        This is followed by 2 links:
->        - option 1: `local`. Select this option if you already have IGV installed on your machine
->        - option 2: `D. melanogaster (dm3)`. This will download and launch IGV on your local machine
+>        これには2つのリンクがあります:
+>        - option 1: `local`. あなたのマシンにすでに IGV がインストールされている場合は、このオプションを選択してください
+>        - option 2: `D. melanogaster (dm3)`. これはローカルマシン上で IGV をダウンロードして起動します
 >
 >    > ### {% icon comment %} Comments
 >    >
->    > In order for this step to work, you will need to have either IGV or [Java web start](https://www.java.com/en/download/faq/java_webstart.xml)
->    > installed on your machine. However, the questions in this section can also be answered by inspecting the IGV screenshots below.
+>    > このステップを実行するには、マシンに IGV または [Java web start](https://www.java.com/en/download/faq/java_webstart.xml) がインストールされている必要があります。
+>    > しかしながら、このセクションの質問は下記の IGV のスクリーンショットを調べることでも答えることができます。
 >    >
->    > Check the [IGV documentation](https://software.broadinstitute.org/software/igv/AlignmentData) for more information.
+>    > 詳細については [IGV documentation](https://software.broadinstitute.org/software/igv/AlignmentData) を参照してください。
 >    >
 >    {: .comment}
 >
-> 2. **IGV** {% icon tool %}: Zoom to `chr4:540,000-560,000` (Chromosome 4 between 540 kb to 560 kb)
+> 2. **IGV** {% icon tool %}: `chr4:540,000-560,000`（４番染色体の540 kb から560 kb 間）にズームする
 >
 >    > ### {% icon question %} Question
 >    >
 >    > ![Screenshot of the IGV view on Chromosome 4](../../images/junction_igv_screenshot.png "Screenshot of IGV on Chromosome 4")
 >    >
->    > 1. Which information does appear on the top in grey?
->    > 2. What do the connecting lines between some of the aligned reads indicate?
+>    > 1. トップの灰色の部分はどんな情報を表示しているのですか？
+>    > 2. 整列されたいくつかのリードの間にある接続線は何を示しているのですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 1. The coverage plot: the sum of mapped reads at each position
->    >    > 2. They indicate junction events (or splice sites), *i.e.*, reads that are mapped across an intron
+>    >    > 1. カバレッジプロット: 各位置でのマッピングされたリードの合計
+>    >    > 2. それらは junction events （またはスプライス部位）、*即ち*、イントロンを介してマッピングされるリードを示しています
 >    >    >
 >    >    {: .solution}
 >    {: .question}
 >
-> 3. **IGV** {% icon tool %}: Inspect the splice junctions using a **Sashimi plot**
+> 3. **IGV** {% icon tool %}: **Sashimi plot** を使用してスプライス接合部を検査する
 >
->    > ### {% icon tip %} Tip: Creation of a Sashimi plot
+>    > ### {% icon tip %} Tip: Sashimi plot を作成する
 >    >
->    > * Right click on the BAM file
->    > * Select **Sashimi Plot** from the context menu
+>    > * BAM ファイルを右クリックする
+>    > * コンテキストメニューから **Sashimi Plot** を選択する
 >    {: .tip}    
 >
 >    > ### {% icon question %} Question
 >    >
 >    > ![Screenshot of a Sashimi plot of Chromosome 4](../../images/star_igv_sashimi.png "Screenshot of a Sashimi plot of Chromosome 4")
 >    >
->    > 1. What does the vertical bar graph represent? And the numbered arcs?
->    > 2. What do the numbers on the arcs mean?
->    > 3. Why do we observe different stacked groups of blue linked boxes at the bottom?
+>    > 1. 縦棒グラフは何を表していますか？また数字が振られている円弧は何を表していますか？
+>    > 2. 円弧の数字はどういう意味ですか？
+>    > 3. なぜ下部にある青色のリンクボックスの異なるスタックグループを観察するのですか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 1. The coverage for each alignment track is plotted as a bar graph. Arcs represent observed splice junctions, *i.e.*, reads spanning introns
->    >    > 2. The numbers refer to the number of these observed junction reads. 
->    >    > 3. The groups of linked boxes on the bottom represent different transcripts from a single gene differing in the involved exon.
+>    >    > 1. 各アラインメントトラックのカバレッジは棒グラフとしてプロットされます。円弧は観察されたスプライス部位、*即ち*、reads spanning introns を表しています
+>    >    > 2. この数字はこれらの観察されたジャンクションリードの数を示しています。
+>    >    > 3. 下のリンクボックスのグループは関与するエキソンが異なる単一遺伝子からの異なる転写産物を表しています。
 >    >    >
 >    >    {: .solution}
 >    {: .question}
 >
 >    > ### {% icon comment %} Comment
 >    >
->    > Check the [IGV documentation on Sashimi plots](https://software.broadinstitute.org/software/igv/Sashimi) to find some clues
+>    > [IGV documentation on Sashimi plots](https://software.broadinstitute.org/software/igv/Sashimi) をチェックしていくつかの手がかりを見つけてください
 >    {: .comment}
 >
 {: .hands_on}
 
-After the mapping, we have the information on where the reads are located on the reference genome. We also know how well they were mapped.
+マッピングの後は、私たちはリファレンスゲノム上のどこにリードがあるかに関する情報を持っています。 また、どのようにマッピングされているかもわかります。
 
-The next step in the RNA-Seq data analysis is quantification of expression level of the genomic features (gene, transcript, exons, ...) to be able then to compare several samples for the different expression analysis. The quantification consist into taking each known genomic feature (*e.g.* gene) of the reference genome and then counting how many reads are mapped on this genomic feature. So, in this step, we start with an information per mapped reads to end with an information per genomic feature.
+RNA-Seq データ解析の次のステップは異なる発現解析のためにいくつかのサンプルを比較できるようにゲノムの特徴（遺伝子、転写産物、エキソン、など）の発現レベルを定量化することです。定量化はリファレンスゲノムの既知の各ゲノム特徴（*例えば* 遺伝子）を取得してそしてこのゲノムの特徴にマッピングされたリードの数を数えることで行います。したがって、このステップでは、 we start with an information per mapped reads to end with an information per genomic feature.
 
 > ### {% icon comment %} Comment
 >
-> The quantification depends on the definition of the genomic features of the reference genome, and then on the annotations. We strongly recommend you to use an annotation corresponding to the same version of the reference genome you used for the mapping.
+> 定量化は、リファレンスゲノムのゲノム特徴の定義に依存していて、次にアノテーションに依存しています。マッピングに使用したリファレンスゲノムと同じバージョンのアノテーションを使用することを強くお勧めします。
 {: .comment}
 
-To identify exons that are regulated by the *Pasilla* gene, we need to identify genes and exons which are differentially expressed between samples with PS gene depletion and control samples.
-In this tutorial, we will then analyze the differential gene expression, but also the differential exon usage.
+*Pasilla* 遺伝子によって制御されるエキソンを同定するためには、PS 遺伝子が欠乏したサンプルとコントロールのサンプルとの間で差次的に発現される遺伝子やエキソンを同定する必要があります。
+このチュートリアルでは、差次的な遺伝子発現の解析だけでなく、異なるエキソンの使用法についても分析します。
 
-Did mapping exercise work for you? Great! :tada:
+マッピングのエキササイズはあなたにとって役に立ちましたか？よかったです！ :tada:
 
 # Analysis of the differential gene expression
 
@@ -356,7 +356,7 @@ We will first investigate the differential gene expression to identify which gen
 
 ## Count the number of reads per annotated gene
 
-To compare the expression of single genes between different conditions (*e.g.* with or without PS depletion), an essential first step is to quantify the number of reads per gene. 
+To compare the expression of single genes between different conditions (*e.g.* with or without PS depletion), an essential first step is to quantify the number of reads per gene.
 
 ![Counting the number of reads per annotated gene](../../images/gene_counting.png "Counting the number of reads per annotated gene")
 
@@ -389,7 +389,7 @@ This information should usually come with your FASTQ files, ask your sequencing 
 
 Another option is to estimate these parameters with a tool called **Infer Experiment**. This tool takes the output of your mappings (BAM files), takes a subsample of your reads and compares their genome coordinates and strands with those of the reference gene model (from an annotation file). Based on the strand of the genes, it can gauge whether sequencing is strand-specific, and if so, how reads are stranded.
 
-> ### {% icon hands_on %} Hands-on: Determining the library strandness
+> ### {% icon hands_on %} ハンズオン: Determining the library strandness
 >
 > 1. **Infer Experiment** {% icon tool %}: Determine the library strandness with:
 >    - "Input .bam file" to the STAR-generated `BAM` files (multiple datasets)
@@ -406,7 +406,7 @@ The tool generates one file with:
         - Fraction of reads explained by "+-,-+" (**SR** in previous figure)
     - For paired-end
         - Fraction of reads explained by "1++,1--,2+-,2-+" (**SF** in previous figure)
-        - Fraction of reads explained by "1+-,1-+,2++,2--" (**SR** in previous figure) 
+        - Fraction of reads explained by "1+-,1-+,2++,2--" (**SR** in previous figure)
 
 If the fractions in the two last lines are too close to each other, we conclude that this is the library is not specific to a strand specific dataset (**U** in previous figure).
 
@@ -416,7 +416,7 @@ If the fractions in the two last lines are too close to each other, we conclude 
 > 2. Which library type do you choose for both samples?
 >
 >    > ### {% icon solution %} Solution
->    > 
+>    >
 >    > 1. Fraction of reads explained by "1++,1--,2+-,2-+": 0.4648 - Fraction of reads explained by "1+-,1-+,2++,2--": 0.4388
 >    > 2. The library seems to be of the type unstranded for both samples.
 >    {: .solution}
@@ -439,7 +439,7 @@ If the fractions in the two last lines are too close to each other, we conclude 
 
 We now run **featureCounts** to count the number of reads per annotated gene.
 
-> ### {% icon hands_on %} Hands-on: Counting the number of reads per annotated gene
+> ### {% icon hands_on %} ハンズオン: Counting the number of reads per annotated gene
 >
 > 1. **featureCounts** {% icon tool %}: Count the number of reads per genes using **featureCounts** with
 >    - "Alignment file" to the STAR-generated `BAM` files (multiple datasets)
@@ -472,7 +472,7 @@ We now run **featureCounts** to count the number of reads per annotated gene.
 >
 {: .hands_on}
 
-The main output of **featureCounts** is a big table. 
+The main output of **featureCounts** is a big table.
 
 > ### {% icon question %} Question
 >
@@ -491,7 +491,7 @@ The main output of **featureCounts** is a big table.
 
 In the previous section, we counted reads that mapped to genes for two sample. To be able to identify differential gene expression induced by PS depletion, all datasets (3 treated and 4 untreated) must be analyzed following the same procedure and for the whole genome.
 
-> ### {% icon hands_on %} (Optional) Hands-on: Re-run on the other datasets
+> ### {% icon hands_on %} (Optional) ハンズオン: Re-run on the other datasets
 >
 > You can do the same process on the other sequence files available on [Zenodo](https://doi.org/10.5281/zenodo.1185122)
 >
@@ -542,7 +542,7 @@ Here treatment is the primary factor which we are interested in. The sequencing 
 > We recommend you to add as many factors as you think may affect gene expression in your experiment. It can be the sequencing type like here, but it can also be the manipulation (if different persons are involved in the library preparation), ...
 {: .comment}
 
-> ### {% icon hands_on %} Hands-on: Determines differentially expressed features
+> ### {% icon hands_on %} ハンズオン: Determines differentially expressed features
 >
 > 1. Create a new history
 > 2. Import the seven count files from [Zenodo](https://doi.org/10.5281/zenodo.1185122) or the data library
@@ -607,7 +607,7 @@ Here treatment is the primary factor which we are interested in. The sequencing 
         >
         >    > ### {% icon solution %} Solution   
         >    > They are first grouped depending on the treatment (the first factor) and after on the library type (the second factor), as defined when DESeq2 was launched
-        >    > 
+        >    >
         >    {: .solution}
         {: .question}
 
@@ -642,7 +642,7 @@ We would proceed in several steps
 - Extract the normalized counts of these genes for each sample using the normalized count file generated by DESeq2
 - Plot the heatmap of the normalized counts of these genes for each sample
 
-> ### {% icon hands_on %} Hands-on: Extract the most differentially expressed genes
+> ### {% icon hands_on %} ハンズオン: Extract the most differentially expressed genes
 >
 > 1. **Filter** {% icon tool %}: Extract genes with a significant change in gene expression (adjusted *p*-value below 0.05) between treated and untreated samples
 >    - "Filter" to the DESeq2 summary file
@@ -676,7 +676,7 @@ We would proceed in several steps
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 11.92% (130) of the differentially expressed genes 
+>    >    > 11.92% (130) of the differentially expressed genes
 >    >    >
 >    >    {: .solution}
 >    {: .question}
@@ -693,7 +693,7 @@ We would proceed in several steps
 >    - "File to select" to the sorted DE genes with abs(FC) > 2
 >    - "Operation" to `Keep first lines`
 >    - "Number of lines" to `10`
-> 
+>
 > 4. **Select last lines** {% icon tool %}: Extract the 10 most down-regulated genes
 >    - "Text file" to the sorted DE genes with abs(FC) > 2
 >    - "Operation" to `Keep first lines`
@@ -710,7 +710,7 @@ We could plot the log<sub>2</sub>FC for the different genes, but here we would l
 
 We will join the normalized count table generated by DESeq with the table we just generated to conserved in the normalized count table only the lines corresponding to the most differentially expressed genes
 
-> ### {% icon hands_on %} Hands-on: Extract the normalized counts of most differentially expressed genes in the different samples
+> ### {% icon hands_on %} ハンズオン: Extract the normalized counts of most differentially expressed genes in the different samples
 >
 > 1. **Join two Datasets** {% icon tool %}: Join the two files
 >    - "Join" to the normalized count table generated by DESeq2
@@ -731,9 +731,9 @@ We will join the normalized count table generated by DESeq with the table we jus
 
 We have now a table with 20 lines (the most differentially expressed genes) and the normalized counts for these genes in the 7 samples.
 
-> ### {% icon hands_on %} Hands-on: Plot the heatmap of the normalized counts of these genes for each sample
+> ### {% icon hands_on %} ハンズオン: Plot the heatmap of the normalized counts of these genes for each sample
 >
-> 1. **heatmap2** {% icon tool %}: Plot the heatmap with 
+> 1. **heatmap2** {% icon tool %}: Plot the heatmap with
 >    - "Input should have column headers" to the generated table
 >    - "Advanced - log transformation" to `Log2(value) transform my data`
 >    - "Enable data clustering" to `Yes`
@@ -752,7 +752,7 @@ You should obtain something similar to:
 > 3. Can you generate an heatmap the normalized counts for the up-regulated genes with FC > 2?
 >
 >   > ### {% icon solution %} Solution
->   > 
+>   >
 >   > 1. The samples are clustering by treatment. The genes are also clustering based on the counts. 2 genes (FBgn0026562, FBgn00003360)
 >   > 2. The scale is changing and the differences between the genes are not visible anymore
 >   > 3. Extract the genes with logFC > 2 (filter for genes with c3>1 on the summary of the differentially expressed genes) and run heatmap2 on the generated table
@@ -773,9 +773,9 @@ goseq needs 2 files as inputs:
     - True (differentially expressed) or False (not differentially expressed)
 - A file with information about the length of a gene to correct for potential length bias in differentially expressed genes
 
-> ### {% icon hands_on %} Hands-on: Prepare the datasets for GOSeq
+> ### {% icon hands_on %} ハンズオン: Prepare the datasets for GOSeq
 >
-> 1. **Compute** {% icon tool %} with 
+> 1. **Compute** {% icon tool %} with
 >    - "Add expression" to `bool(c7<0.05)`
 >    - "as a new column to" to DESeq summary file
 >
@@ -796,7 +796,7 @@ goseq needs 2 files as inputs:
 >    - "Select a built-in GTF file or one from your history" to `Use a GTF from history`
 >    - "Select a GTF file" to `Drosophila_melanogaster.BDGP6.87.gtf`
 >    - "Select a built-in FASTA or one from your history" to `Use a built-in FASTA`
->    - "Select a FASTA file" to `Fly (Drosophila melanogaster): dm6 Full`
+>    - "Select a FASTA file" to `Fly (キイロショウジョウバエ): dm6 Full`
 >    - "Output length file?" to `Yes`
 >    - "Output GC content file?" to `No`
 >
@@ -809,9 +809,9 @@ goseq needs 2 files as inputs:
 
 We have now the two required files for goseq.
 
-> ### {% icon hands_on %} Hands-on: Perform GO analysis
+> ### {% icon hands_on %} ハンズオン: Perform GO analysis
 >
-> 1. **goseq** {% icon tool %} with 
+> 1. **goseq** {% icon tool %} with
 >    - "Differentially expressed genes file" to first file generated on previous step
 >    - "Gene lengths file" to second file generated on previous step
 >    - "Gene categories" to `Get categories`
@@ -825,8 +825,8 @@ goseq generates a big table with the following columns for each GO term:
 1. `category`: GO category
 2. `over_rep_pval`: *p*-value for over representation of the term in the differentially expressed genes
 3. `under_rep_pval`: *p*-value for under representation of the term in the differentially expressed genes
-4. `numDEInCat`: number of differentially expressed genes in this category 
-5. `numInCat`: number of genes in this category 
+4. `numDEInCat`: number of differentially expressed genes in this category
+5. `numInCat`: number of genes in this category
 6. `term`: detail of the term
 7. `ontology`: MF (Molecular Function - molecular activities of gene products), CC (Cellular Component - where gene products are active), BP (Biological Process - pathways and larger processes made up of the activities of multiple gene products)
 8. `p.adjust.over_represented`: *p*-value for over representation of the term in the differentially expressed genes, adjusted for multiple testing with the Benjamini-Hochberg procedure
@@ -857,7 +857,7 @@ We will use [DEXSeq](https://www.bioconductor.org/packages/release/bioc/html/DEX
 
 This step is similar to the step of [counting the number of reads per annotated gene](#count-the-number-of-reads-per-annotated-gene) except that, instead of HTSeq-count, we are using DEXSeq-Count.
 
-> ### {% icon hands_on %} Hands-on: Counting the number of reads per exon
+> ### {% icon hands_on %} ハンズオン: Counting the number of reads per exon
 >
 > 1. **DEXSeq-Count** {% icon tool %}: Use the **DEXSeq-Count** to prepare the *Drosophila* annotations to extract only exons with corresponding gene ids
 >     - "Mode of operation" to `Prepare annotation`
@@ -884,9 +884,9 @@ DEXSeq generates a file similar to the one generated by featureCounts, but with 
 > 3. Is there a connection to the previous result obtained with HTSeq-count?
 >
 >    > ### {% icon solution %} Solution
->    > 
+>    >
 >    > FBgn0000556:005 is the exon with the most reads mapped to it for both samples. It is part of FBgn0000556, the feature with the most reads mapped on it (from featureCounts).
->    > 
+>    >
 >    {: .solution}
 >
 {: .question}
@@ -900,7 +900,7 @@ As for DESeq2, in the previous step, we counted only reads that mapped to exons 
 - The results of running DEXSeq-count in 'Prepare annotation' mode
 - Seven count files generated in 'Count reads' mode
 
-> ### {% icon hands_on %} Hands-on:
+> ### {% icon hands_on %} ハンズオン:
 >
 > 1. Create a new history
 > 2. Import the seven exon count files and the annotation GTF file from [Zenodo](https://doi.org/10.5281/zenodo.1185122) or the data library
@@ -948,7 +948,7 @@ Similarly to DESeq2, DEXSeq generates a table with:
 7.  *p*-value for the statistical significance of this change
 8.  *p*-value adjusted for multiple testing with the Benjamini-Hochberg procedure which controls false discovery rate ([FDR](https://en.wikipedia.org/wiki/False_discovery_rate))
 
-> ### {% icon hands_on %} Hands-on:
+> ### {% icon hands_on %} ハンズオン:
 >
 > 1. **Filter** {% icon tool %}: Run **Filter** to extract exons with a significant differential usage (adjusted *p*-value equal or below 0.05) between treated and untreated samples
 >
@@ -968,7 +968,7 @@ Similarly to DESeq2, DEXSeq generates a table with:
 
 Unfortunately, in the process of counting, we loose all the information of the gene except its identifiant. In order to get the information back to our final counting tables, we can use a tool to make the correspondance between identifiant and annotation.
 
-> ### {% icon hands_on %} Hands-on:
+> ### {% icon hands_on %} ハンズオン:
 >
 > 1. **Annotate DE(X)Seq result** {% icon tool %}: Run **Annotate DE(X)Seq result** on a counting table (from DESeq or DEXSeq) using the `Drosophila_melanogaster.BDGP5.78.gtf` as annotation file
 {: .hands_on}
