@@ -350,27 +350,27 @@ RNA-Seq データ解析の次のステップは異なる発現解析のために
 
 マッピングのエキササイズはあなたにとって役に立ちましたか？よかったです！ :tada:
 
-# Analysis of the differential gene expression
+# 差次的な遺伝子発現の解析 
 
-We will first investigate the differential gene expression to identify which genes are impacted by the *Pasilla* gene depletion
+私たちははじめに差次的な遺伝子発現を調べて *Pasilla* 遺伝子の欠乏によってどの遺伝子が影響を受けるかを同定します 
 
-## Count the number of reads per annotated gene
+## アノテーションされた遺伝子あたりのリード数を数える 
 
-To compare the expression of single genes between different conditions (*e.g.* with or without PS depletion), an essential first step is to quantify the number of reads per gene.
+異なる条件（*例えば* PS の欠乏の有無）の間での単一遺伝子の発現を比較するために、本質的な第一のステップでは遺伝子あたりのリード数を定量化します。
 
 ![Counting the number of reads per annotated gene](../../images/gene_counting.png "Counting the number of reads per annotated gene")
 
-Two main tools could be used for that: [HTSeq-count](http://htseq.readthedocs.io/en/release_0.9.1/count.html) ([Anders et al, Bioinformatics, 2015](https://academic.oup.com/bioinformatics/article/31/2/166/2366196)) or featureCounts ([Liao et al, Bioinformatics, 2014](https://academic.oup.com/bioinformatics/article/31/2/166/2366196)). The second one is considerably faster and requires far less computational resources. We will use it.
+そのために2つの主要なツールを使うことができます: [HTSeq-count](http://htseq.readthedocs.io/en/release_0.9.1/count.html) ([Anders et al, Bioinformatics, 2015](https://academic.oup.com/bioinformatics/article/31/2/166/2366196)) または featureCounts ([Liao et al, Bioinformatics, 2014](https://academic.oup.com/bioinformatics/article/31/2/166/2366196)) の2つです。2つ目のツールはかなり高速であり、計算のリソースがはるかに少ないです。私たちはこの2つ目のツールを使用します。
 
-In principle, the counting of reads overlapping with genomic features is a fairly simple task. But there are some details that need to be given to featureCounts: for example the strandness...
+原理としては、ゲノム特徴と重複するリードを数えることはかなり単純な作業です。しかし featureCounts を行うためにいくつかの細かい情報が必要になります: 例えばストランド性など
 
-### Estimation of the strandness
+### ストランド性の推定 
 
-RNAs that are typically targeted in RNAseq experiments are single stranded (*e.g.*, mRNAs) and thus have polarity (5' and 3' ends that are functionally distinct):
+RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例えば* mRNA）であり、そして極性（機能的に異なる5'および3'末端）を持っています:
 
 ![Relationship between DNA and RNA orientation](../../images/dna_rna.png "Relationship between DNA and RNA orientation")
 
-During a typical RNAseq experiment the information about strandedness is lost after both strands of cDNA are synthesized, size selected, and converted into sequencing library. However, this information can be quite useful for the read counting.
+典型的な RNAseq の実験の間、cDNA の両方のストランドが合成され、サイズが選択され、シークエンスのライブラリーに変換された後に、ストランド性に関する情報は失われてしまいます。しかしながら、この情報はリードを数える際に非常に役に立ちます。 
 
 Some library preparation protocols create so called *stranded* RNAseq libraries that preserve the strand information (an excellent overview in [Levin et al, Nat Meth, 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3005310/)). The implication of stranded RNAseq is that you can distinguish whether the reads are derived from forward- or reverse-encoded transcripts:
 
