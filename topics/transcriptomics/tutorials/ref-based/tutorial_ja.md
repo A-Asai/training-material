@@ -213,7 +213,7 @@ STAR を使用して RNA のリードを *キイロショウジョウバエ* の
 
 > ### {% icon hands_on %} ハンズオン: スプライスマッピング
 >
-> 1. *キイロショウジョウバエ* の Ensembl 遺伝子のアノテーション (`Drosophila_melanogaster.BDGP6.87.gtf`) を共有データライブラリまたは [Zenodo](https://doi.org/10.5281/zenodo.1185122) から現在のGalaxyのヒストリーへインポートする。
+> 1. *キイロショウジョウバエ* の Ensembl 遺伝子のアノテーション (`Drosophila_melanogaster.BDGP6.87.gtf`) を共有データライブラリまたは [Zenodo](https://doi.org/10.5281/zenodo.1185122) から現在の Galaxy のヒストリーへインポートする。
 >    - 必要であればデータセットの名前を変更する
 >    - データタイプが `gff` ではなく `gtf` であることを確認する
 >
@@ -372,29 +372,29 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 
 典型的な RNAseq の実験の間、cDNA の両方のストランドが合成され、サイズが選択され、シークエンスのライブラリーに変換された後に、ストランド性に関する情報は失われてしまいます。しかしながら、この情報はリードを数える際に非常に役に立ちます。 
 
-Some library preparation protocols create so called *stranded* RNAseq libraries that preserve the strand information (an excellent overview in [Levin et al, Nat Meth, 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3005310/)). The implication of stranded RNAseq is that you can distinguish whether the reads are derived from forward- or reverse-encoded transcripts:
+いくつかのライブラリー調製プロトコルではストランドの情報を保存する *stranded* RNAseq ライブラリーと呼ばれるものを作成する (an excellent overview in [Levin et al, Nat Meth, 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3005310/))。Stranded RNAseq の意味はリードがフォワードまたはリバースのどちらからコードされた転写産物によるものなのかを区別できるということです:
 
 ![Stranded RNAseq data look like this](../../images/stranded_result.png "How do stranded RNAseq data look like (image from GATC Biotech)")
 
-Depending on the approach and whether one performs single- or paired-end sequencing there are multiple possibilities on how to interpret the results of mapping of these reads onto the genome:
+アプローチによって、そしてシングルエンドかペアエンドのシークエンスのどちらを実行するかによって、これらのリードをゲノムにマッピングした結果をどのように解釈するかについては複数の可能性があります:
 
 ![Effects of RNAseq library types](../../images/rnaseq_library_type.png "Effects of RNAseq library types (adapted from Sailfish documentation)")
 
-In practice, with Illumina paired-end RNAseq protocols, you are unlikely to uncover many of these possibilities. You will either deal with:
+実際には、Illumina paired-end RNAseq プロトコルでは、これらの可能性の多くを明らかにすることはまずありません。あなたは次のどちらかを扱います:
 
-- Unstranded RNAseq data
-- Stranded RNAseq data produced with Illumina TrueSeq RNAseq kits and [dUTP tagging](https://nar.oxfordjournals.org/content/37/18/e123) (**ISR**)
+- Unstranded RNAseq データ
+- Illumina TrueSeq RNAseq キットと [dUTP tagging](https://nar.oxfordjournals.org/content/37/18/e123) (**ISR**) で生成された Stranded RNAseq データ
 
-This information should usually come with your FASTQ files, ask your sequencing facility! If not, try to find them on the site where you downloaded the data or in the corresponding publication.
+この情報には通常 FASTQ ファイルが伴っているはずなので、簡単にあなたのシークエンスを確かめてください！そうでない場合は、データをダウンロードしたサイトまたは対応するパブリケーションを調べてみてください。 
 
-Another option is to estimate these parameters with a tool called **Infer Experiment**. This tool takes the output of your mappings (BAM files), takes a subsample of your reads and compares their genome coordinates and strands with those of the reference gene model (from an annotation file). Based on the strand of the genes, it can gauge whether sequencing is strand-specific, and if so, how reads are stranded.
+もう1つの選択肢としては **Infer Experiment** と呼ばれるツールを使用してこれらのパラメーターを推定することです。このツールはマッピングのアウトプット（BAM ファイル）を取り込んで、リードのサブサンプルを取り、ゲノム座標と（アノテーションファイルからの）リファレンス遺伝子モデルのストランドを比較します。遺伝子のストランドに基づいて、シークエンスがストランドに特異的であるかどうかを測定することができ、これより、リードがどのように stranded であるかを測定することができる。
 
-> ### {% icon hands_on %} ハンズオン: Determining the library strandness
+> ### {% icon hands_on %} ハンズオン: ライブラリーのストランドを決定する 
 >
-> 1. **Infer Experiment** {% icon tool %}: Determine the library strandness with:
->    - "Input .bam file" to the STAR-generated `BAM` files (multiple datasets)
->    - "Reference gene model" to `Drosophila_melanogaster.BDGP6.87.gtf`
->    - "Number of reads sampled from SAM/BAM file (default = 200000)" to `200000`
+> 1. **Infer Experiment** {% icon tool %}: ライブラリーのストランドを決定する:
+>    - "Input .bam file" には STAR で生成された `BAM` ファイルを選択する (multiple datasets)
+>    - "Reference gene model" → `Drosophila_melanogaster.BDGP6.87.gtf`
+>    - "Number of reads sampled from SAM/BAM file (default = 200000)" → `200000`
 {: .hands_on}
 
 The tool generates one file with:
