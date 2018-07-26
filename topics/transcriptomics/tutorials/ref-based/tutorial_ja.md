@@ -350,11 +350,11 @@ RNA-Seq データ解析の次のステップは異なる発現解析のために
 
 マッピングのエキササイズはあなたにとって役に立ちましたか？よかったです！ :tada:
 
-# 差次的な遺伝子発現の解析 
+# 差次的な遺伝子発現の解析
 
-私たちははじめに差次的な遺伝子発現を調べて *Pasilla* 遺伝子の欠乏によってどの遺伝子が影響を受けるかを同定します 
+私たちははじめに差次的な遺伝子発現を調べて *Pasilla* 遺伝子の欠乏によってどの遺伝子が影響を受けるかを同定します
 
-## アノテーションされた遺伝子あたりのリード数を数える 
+## アノテーションされた遺伝子あたりのリード数を数える
 
 異なる条件（*例えば* PS の欠乏の有無）の間での単一遺伝子の発現を比較するために、本質的な第一のステップでは遺伝子あたりのリード数を定量化します。
 
@@ -364,13 +364,13 @@ RNA-Seq データ解析の次のステップは異なる発現解析のために
 
 原理としては、ゲノム特徴と重複するリードを数えることはかなり単純な作業です。しかし featureCounts を行うためにいくつかの細かい情報が必要になります: 例えばストランド性など
 
-### ストランド性の推定 
+### ストランド性の推定
 
 RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例えば* mRNA）であり、そして極性（機能的に異なる5'および3'末端）を持っています:
 
 ![Relationship between DNA and RNA orientation](../../images/dna_rna.png "Relationship between DNA and RNA orientation")
 
-典型的な RNAseq の実験の間、cDNA の両方のストランドが合成され、サイズが選択され、シークエンスのライブラリーに変換された後に、ストランド性に関する情報は失われてしまいます。しかしながら、この情報はリードを数える際に非常に役に立ちます。 
+典型的な RNAseq の実験の間、cDNA の両方のストランドが合成され、サイズが選択され、シークエンスのライブラリーに変換された後に、ストランド性に関する情報は失われてしまいます。しかしながら、この情報はリードを数える際に非常に役に立ちます。
 
 いくつかのライブラリー調製プロトコルではストランドの情報を保存する *stranded* RNAseq ライブラリーと呼ばれるものを作成する (an excellent overview in [Levin et al, Nat Meth, 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3005310/))。Stranded RNAseq の意味はリードがフォワードまたはリバースのどちらからコードされた転写産物によるものなのかを区別できるということです:
 
@@ -385,11 +385,11 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 - Unstranded RNAseq データ
 - Illumina TrueSeq RNAseq キットと [dUTP tagging](https://nar.oxfordjournals.org/content/37/18/e123) (**ISR**) で生成された Stranded RNAseq データ
 
-この情報には通常 FASTQ ファイルが伴っているはずなので、簡単にあなたのシークエンスを確かめてください！そうでない場合は、データをダウンロードしたサイトまたは対応するパブリケーションを調べてみてください。 
+この情報には通常 FASTQ ファイルが伴っているはずなので、簡単にあなたのシークエンスを確かめてください！そうでない場合は、データをダウンロードしたサイトまたは対応するパブリケーションを調べてみてください。
 
 もう1つの選択肢としては **Infer Experiment** と呼ばれるツールを使用してこれらのパラメーターを推定することです。このツールはマッピングのアウトプット（BAM ファイル）を取り込んで、リードのサブサンプルを取り、ゲノム座標と（アノテーションファイルからの）リファレンス遺伝子モデルのストランドを比較します。遺伝子のストランドに基づいて、シークエンスがストランドに特異的であるかどうかを測定することができ、これより、リードがどのように stranded であるかを測定することができる。
 
-> ### {% icon hands_on %} ハンズオン: ライブラリーのストランドを決定する 
+> ### {% icon hands_on %} ハンズオン: ライブラリーのストランドを決定する
 >
 > 1. **Infer Experiment** {% icon tool %}: ライブラリーのストランドを決定する:
 >    - "Input .bam file" には STAR で生成された `BAM` ファイルを選択する (multiple datasets)
@@ -397,23 +397,23 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >    - "Number of reads sampled from SAM/BAM file (default = 200000)" → `200000`
 {: .hands_on}
 
-The tool generates one file with:
-- Paired-end or singled-end library
-- Fraction of reads failed to determine
+このツールでは以下の1つのファイルを生成します:
+- ペアエンドまたはシングルエンドのライブラリー
+- 決定できなかったリードの割合
 - 2 lines
-    - For single-end
-        - Fraction of reads explained by "++,--" (**SF** in previous figure)
-        - Fraction of reads explained by "+-,-+" (**SR** in previous figure)
-    - For paired-end
-        - Fraction of reads explained by "1++,1--,2+-,2-+" (**SF** in previous figure)
-        - Fraction of reads explained by "1+-,1-+,2++,2--" (**SR** in previous figure)
+    - シングルエンドでは
+        - "++,--" (前の図での **SF**)で説明されるリードの割合
+        - "+-,-+" (前の図での **SR**)で説明されるリードの割合
+    - ペアエンドでは
+        - "1++,1--,2+-,2-+" (前の図での **SF**)で説明されるリードの割合
+        - "1+-,1-+,2++,2--" (前の図での **SR**)で説明されるリードの割合
 
-If the fractions in the two last lines are too close to each other, we conclude that this is the library is not specific to a strand specific dataset (**U** in previous figure).
+最後の2行の割合がお互いに近すぎる場合、これはライブラリーがストランド特異的なデータセットではないと結論付けます（前の図の **U**）。
 
 > ### {% icon question %} Question
 >
-> 1. Which fraction of the reads in the BAM file can be explained assuming which library type for `GSM461177`?
-> 2. Which library type do you choose for both samples?
+> 1. `GSM461177` はどのライブラリータイプを想定してどのBAMファイルのリードの割合を説明できるのでしょうか？
+> 2. 両方のサンプルにはどのライブラリータイプを選択しますか？
 >
 >    > ### {% icon solution %} Solution
 >    >
@@ -423,13 +423,13 @@ If the fractions in the two last lines are too close to each other, we conclude 
 {: .question}
 
 > ### {% icon comment %} Comment
-> As it is sometimes quite difficult to find out which settings correspond to those of other programs, the following table might be helpful to identify the library type:
+> どの設定がほかのプログラムに対応しているのかを知るのは非常に難しい場合があるので、次の表がライブラリータイプを識別するのに役立ちます:
 >
-> Library type | **Infer Experiment** | **TopHat** | **HISAT2** | **htseq-count** | **featureCounts**
+> ライブラリータイプ | **Infer Experiment** | **TopHat** | **HISAT2** | **htseq-count** | **featureCounts**
 > --- | --- | --- | --- | --- | ---
-> Paired-End (PE) - SF | 1++,1--,2+-,2-+ | FR Second Strand | Second Strand F/FR | yes | Forward (1)
+> ペアエンド (PE) - SF | 1++,1--,2+-,2-+ | FR Second Strand | Second Strand F/FR | yes | Forward (1)
 > PE - SR | 1+-,1-+,2++,2-- | FR First Strand | First Strand R/RF | reverse | Reverse (2)
-> Single-End (SE) - SF | ++,-- | FR Second Strand | Second Strand F/FR | yes | Forward (1)
+> シングルエンド (SE) - SF | ++,-- | FR Second Strand | Second Strand F/FR | yes | Forward (1)
 > SE - SR | +-,-+ | FR First Strand | First Strand R/RF | reverse | Reverse (2)
 > PE, SE - U | undecided | FR Unstranded | default | no | Unstranded (0)
 >
@@ -437,73 +437,73 @@ If the fractions in the two last lines are too close to each other, we conclude 
 
 ### Counting
 
-We now run **featureCounts** to count the number of reads per annotated gene.
+**featureCounts** を実行してアノテーション遺伝子あたりのリード数を数えます。
 
-> ### {% icon hands_on %} ハンズオン: Counting the number of reads per annotated gene
+> ### {% icon hands_on %} ハンズオン: アノテーション遺伝子あたりのリード数を数える
 >
-> 1. **featureCounts** {% icon tool %}: Count the number of reads per genes using **featureCounts** with
->    - "Alignment file" to the STAR-generated `BAM` files (multiple datasets)
->    - "Gene annotation file" to `GTF file`
->    - "Gene annotation file" to `in your history`
->    - "Gene annotation file" to `Drosophila_melanogaster.BDGP6.87.gtf`
->    - "Output format" to `Gene-ID "\t" read-count (DESeq2 IUC wrapper compatible)`
->    - Click on "Advanced options"
->    - "GFF feature type filter" to `exon`
->    - "GFF gene identifier" to `gene_id`
->    - "Allow read to contribute to multiple features" to `No`
->    - "Strand specificity of the protocol" to `Unstranded`
->    - "Count multi-mapping reads/fragments" to `Disabled; multi-mapping reads are excluded (default)`
->    - "Minimum mapping quality per read" to `10`
+> 1. **featureCounts** {% icon tool %}: **featureCounts** 使用して遺伝子あたりのリード数を数える
+>    - "Alignment file" には STAR で生成された `BAM` ファイルを選択する (multiple datasets)
+>    - "Gene annotation file" → `GTF file`
+>    - "Gene annotation file" → `in your history`
+>    - "Gene annotation file" → `Drosophila_melanogaster.BDGP6.87.gtf`
+>    - "Output format" → `Gene-ID "\t" read-count (DESeq2 IUC wrapper compatible)`
+>    - "Advanced options" をクリックする
+>    - "GFF feature type filter" → `exon`
+>    - "GFF gene identifier" → `gene_id`
+>    - "Allow read to contribute to multiple features" → `No`
+>    - "Strand specificity of the protocol" → `Unstranded`
+>    - "Count multi-mapping reads/fragments" → `Disabled; multi-mapping reads are excluded (default)`
+>    - "Minimum mapping quality per read" → `10`
 >
 > 2. **MultiQC** {% icon tool %}: Aggregate the FastQC report with
->      - "Which tool was used generate logs?" to `featureCounts`
->      - "Output of FeatureCounts" to the generated `summary` files (multiple datasets)
+>      - "Which tool was used generate logs?" → `featureCounts`
+>      - "Output of FeatureCounts" には生成された `summary` ファイルを選択する (multiple datasets)
 >
 >    > ### {% icon question %} Question
 >    >
->    > How many reads have been assigned to a gene?
+>    > 遺伝子にはいくつのリードが割り当てられていますか？
 >    >
 >    >    >### {% icon solution %} Solution
 >    >    >
->    >    > Around 70% of the reads have been assigned to genes: this quantity is correct enough. If it is going below 50%, you should investigate where are mapping your reads (with IGV) and check that the annotation corresponds to the reference genome (version).
+>    >    > リードの約70%が遺伝子に割り当てられています: これは十分な量です。もし50%を下回っている場合は、どこにリードがマッピングされているのかを（IGV を使用して）調べてアノテーションがリファレンスゲノム（version）に対応しているかを確認する必要があります。
 >    >    >
 >    >    {: .solution}
 >    {: .question}
 >
 {: .hands_on}
 
-The main output of **featureCounts** is a big table.
+**featureCounts** の主なアウトプットは大きな表です。
 
 > ### {% icon question %} Question
 >
-> 1. Which information does the generated table files contain?
+> 1. 生成されたテーブルファイルにはどのような情報が含まれていますか？
 > 2. Which feature has the most reads mapped on it for both samples?
 >
 >    > ### {% icon solution %} Solution
 >    >
->    > 1. The useful result file is a tabular file with two columns: the gene id and the number of reads mapped on the corresponding gene
->    > 2. To display the most abundantly detected feature, we need to sort the files with the features and the number of reads mapped to them. This can be done using the Sort tool on the second column and in descending order, which reveals that FBgn0000556 is the feature with the most reads (around 258,000 in GSM461177 and 253,000 in GSM461180) mapped on it.
+>    > 1. 有用な結果のファイルは2つのカラムを持つ表形式のファイルです: 遺伝子 ID と対応する遺伝子にマッピングされたリードの数
+>    > 2. 最も豊富に検出されたfeatureを表示するには、featureとそれにマッピングされたリードの数でファイルをソートする必要があります。これは２列目を降順でソートするツールを使用することで行うことができ、 which reveals that FBgn0000556 is the feature with the most reads (around 258,000 in GSM461177 and 253,000 in GSM461180) mapped on it.
 >    >
 >    {: .solution}
 {: .question}
 
-## Identification of the differentially expressed features
+## 差次的に発現された特徴の同定
 
-In the previous section, we counted reads that mapped to genes for two sample. To be able to identify differential gene expression induced by PS depletion, all datasets (3 treated and 4 untreated) must be analyzed following the same procedure and for the whole genome.
+前のセクションでは、２つのサンプルの遺伝子にマッピングされたリードを数えました。PS の欠乏によって誘導された差次的に発現された遺伝子を同定することができるためには、すべてのデータセット（3つの処理と4つの未処理）で同じ手順および全ゲノムで解析を行わなければなりません。
 
-> ### {% icon hands_on %} (Optional) ハンズオン: Re-run on the other datasets
+> ### {% icon hands_on %} (Optional) ハンズオン: 他のデータセットで再実行する
 >
-> You can do the same process on the other sequence files available on [Zenodo](https://doi.org/10.5281/zenodo.1185122)
+> [Zenodo](https://doi.org/10.5281/zenodo.1185122) で利用できる他の配列ファイルに対しても同じ手順を行うことができます
 >
-> - Paired-end data
->     - `GSM461178_1` and `GSM461178_2`
->     - `GSM461181_1` and `GSM461181_2`
-> - Single-end data
+> - ペアエンドのデータ
+>     - `GSM461178_1` と `GSM461178_2`
+>     - `GSM461181_1` と `GSM461181_2`
+> - シングルエンドのデータ
 >     - `GSM461176`
 >     - `GSM461179`
 >     - `GSM461182`
 >
-> This is really interesting to redo on the other datasets, specially to check how the parameters are inferred given the different type of data.
+> 他のデータセットで再実行することは本当に興味深く、特に異なるタイプのデータが与えられた場合どのようにパラメーターが推測されているか確認することが重要です。 
 {: .hands_on}
 
 To save time, we have run the necessary steps for you and obtained 7 count files, available on [Zenodo](https://doi.org/10.5281/zenodo.1185122).
