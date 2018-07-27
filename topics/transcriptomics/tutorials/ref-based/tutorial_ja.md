@@ -506,19 +506,19 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 > 他のデータセットで再実行することは本当に興味深く、特に異なるタイプのデータが与えられた場合どのようにパラメーターが推測されているか確認することが重要です。 
 {: .hands_on}
 
-To save time, we have run the necessary steps for you and obtained 7 count files, available on [Zenodo](https://doi.org/10.5281/zenodo.1185122).
+時間を節約するために、必要なステップを実行した7つのカウントファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) で入手できるようにしました。
 
-These files contain for each gene of *Drosophila* the number of reads mapped to it. We could compare the files directly and calculate the extent of differential gene expression, but the number of sequenced reads mapped to a gene depends on:
+これらのファイルには*ショウジョウバエ*の遺伝子ごとにマッピングされたリードの数が含まれています。ファイルを直接比較して差次的に発現する遺伝子の程度を計算することができますが、しかし遺伝子にマッピングされたシークエンスしたリードの数は以下に依存しています: 
 
-- Its own expression level
-- Its length
-- The sequencing depth of the sample
-- The expression of all other genes within the sample
+- それら自身の発現レベル 
+- それらの長さ 
+- サンプルのシークエンス深度 
+- サンプル内の他のすべての遺伝子の発現 
 
-Either for within- or for between-sample comparison, the gene counts need to be normalized. We can then use the Differential Gene Expression (DGE) analysis, whose two basic tasks are:
+サンプル間またはサンプル内の比較のために、遺伝子数を正規化する必要がある。そこで差次的な遺伝子発現（DGE）を使用することができ、それらは以下の基本的な2つのタスクからなります:
 
-- Estimate the biological variance using the replicates for each condition
-- Estimate the significance of expression differences between any two conditions
+- 各条件の反復を使用して生物学的な分散を推定する 
+- 任意の2つの条件の間での発現差の有意性を推定する 
 
 This expression analysis is estimated from read counts and attempts are made to correct for variability in measurements using replicates that are absolutely essential for accurate results. For your own analysis, we advice you to use at least 3, but preferably 5 biological replicates per condition. You can have different number of replicates per condition.
 
