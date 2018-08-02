@@ -503,30 +503,30 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >     - `GSM461179`
 >     - `GSM461182`
 >
-> 他のデータセットで再実行することは本当に興味深く、特に異なるタイプのデータが与えられた場合どのようにパラメーターが推測されているか確認することが重要です。 
+> 他のデータセットで再実行することは本当に興味深く、特に異なるタイプのデータが与えられた場合どのようにパラメーターが推測されているか確認することが重要です。
 {: .hands_on}
 
 時間を節約するために、必要なステップを実行した7つのカウントファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) で入手できるようにしました。
 
-これらのファイルには*ショウジョウバエ*の遺伝子ごとにマッピングされたリードの数が含まれています。ファイルを直接比較して差次的に発現する遺伝子の程度を計算することができますが、しかし遺伝子にマッピングされたシークエンスしたリードの数は以下に依存しています: 
+これらのファイルには*ショウジョウバエ*の遺伝子ごとにマッピングされたリードの数が含まれています。ファイルを直接比較して差次的に発現する遺伝子の程度を計算することができますが、しかし遺伝子にマッピングされたシークエンスしたリードの数は以下に依存しています:
 
-- それら自身の発現レベル 
-- それらの長さ 
-- サンプルのシークエンス深度 
-- サンプル内の他のすべての遺伝子の発現 
+- それら自身の発現レベル
+- それらの長さ
+- サンプルのシークエンス深度
+- サンプル内の他のすべての遺伝子の発現
 
 サンプル間またはサンプル内の比較のために、遺伝子数を正規化する必要がある。そこで差次的な遺伝子発現（DGE）を使用することができ、それらは以下の基本的な2つのタスクからなります:
 
-- 各条件の反復を使用して生物学的な分散を推定する 
-- 任意の2つの条件の間での発現差の有意性を推定する 
+- 各条件の反復を使用して生物学的な分散を推定する
+- 任意の2つの条件の間での発現差の有意性を推定する
 
 この発現解析はリードカウントから推定され、正確な結果には絶対不可欠な複製を使用して測定値のばらつきを補正するように試みます。あなた自身の解析のために、条件ごとに少なくとも3回、できるなら5回は生物学的な反復を使用することをアドバイスします。条件ごとに異なる数の複製を作成できます。
 
 [**DESeq2**](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) は DGE 解析のための素晴らしいツールです。これは以前に生成されたリードカウントを取ってきて、それらを大きな表（行に遺伝子を含み列にサンプルを含む）に結合してサイズファクターを正規化して適用します:
 
-- 全サンプルにわたるリードカウントでの各遺伝子の幾何平均の計算 
-- 幾何平均による各遺伝子数の除算 
-- 正規化のためのサンプルのサイズファクターとしてこれらの比の中央値を使用する 
+- 全サンプルにわたるリードカウントでの各遺伝子の幾何平均の計算
+- 幾何平均による各遺伝子数の除算
+- 正規化のためのサンプルのサイズファクターとしてこれらの比の中央値を使用する
 
 いくつかのレベルでの複数のファクターを解析に組み込むことができます。正規化の後、統計的に信頼できる方法で、異なるレベルのファクターの存在に対する任意の遺伝子の発現の応答を比較することができます。
 
@@ -535,17 +535,17 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 - 処理 (処理か未処理のどちらか)
 - シークエンスのタイプ (ペアエンドまたはシングルエンド)
 
-ここでは処理の有無が興味を持っていることに対する主なファクターとなります。シークエンスのタイプは解析に影響を与える可能性のあるデータについて私たちが知っているさらに詳しい情報になります。この特定のマルチファクター解析により、シークエンスのタイプを考慮に入れながら、処理の効果を評価することができます。 
+ここでは処理の有無が興味を持っていることに対する主なファクターとなります。シークエンスのタイプは解析に影響を与える可能性のあるデータについて私たちが知っているさらに詳しい情報になります。この特定のマルチファクター解析により、シークエンスのタイプを考慮に入れながら、処理の効果を評価することができます。
 
 > ### {% icon comment %} Comment
 >
-> あなたが実験する際は遺伝子発現に影響を及ぼすと考えているいくつかのファクターを追加することをお勧めします。ここで説明したようなシークエンスのタイプも、複雑な操作（他の人がライブラリーの準備に関わっている場合など、、、）でも入れることができます。 
+> あなたが実験する際は遺伝子発現に影響を及ぼすと考えているいくつかのファクターを追加することをお勧めします。ここで説明したようなシークエンスのタイプも、複雑な操作（他の人がライブラリーの準備に関わっている場合など、、、）でも入れることができます。
 {: .comment}
 
-> ### {% icon hands_on %} ハンズオン: 差次的に発現した特徴を決定する 
+> ### {% icon hands_on %} ハンズオン: 差次的に発現した特徴を決定する
 >
-> 1. 新しいヒストリーを作成する 
-> 2. 7つのカウントファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) またはデータライブラリーからインポートする 
+> 1. 新しいヒストリーを作成する
+> 2. 7つのカウントファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) またはデータライブラリーからインポートする
 >    - `GSM461176_untreat_single.counts`
 >    - `GSM461177_untreat_paired.counts`
 >    - `GSM461178_untreat_paired.counts`
@@ -556,35 +556,35 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >
 > 3. **DESeq2** {% icon tool %}: **DESeq2** を次のように実行する:
 >    - For "1: Factor"
->       - "Specify a factor name" to `Treatment`
+>       - "Specify a factor name" → `Treatment`
 >       - "1: Factor level"
->           - "Specify a factor level" to `treated`
->           - "Counts file(s)" to the 3 gene count files (multiple datasets) with `treated` in name
+>           - "Specify a factor level" → `treated`
+>           - "Counts file(s)" には名前に `treated` が入っている3つの遺伝子のカウントファイル (multiple datasets) を選択する
 >       - "2: Factor level"
->           - "Specify a factor level" to `untreated`
->           - "Counts file(s)" to the 4 gene count files (multiple datasets) with `untreated` in name
->    - Click on "Insert Factor" (not on "Insert Factor level")
+>           - "Specify a factor level" → `untreated`
+>           - "Counts file(s)" には名前に `untreated` が入っている4つの遺伝子のカウントファイル (multiple datasets) を選択する
+>    - "Insert Factor" ("Insert Factor level" ではありません) をクリックする
 >    - For "2: Factor"
->       - "Specify a factor name" to `Sequencing`
+>       - "Specify a factor name" → `Sequencing`
 >       - "1: Factor level"
->           - "Specify a factor level" to `PE`
->           - "Counts file(s)" to the generated count files (multiple datasets) with `paired` in name
+>           - "Specify a factor level" → `PE`
+>           - "Counts file(s)" には名前に `paired` が入っている生成したカウントファイル (multiple datasets) を選択する
 >       - "2: Factor level"
->           - "Specify a factor level" to `SE`
->           - "Counts file(s)" to the generated count files (multiple datasets) with `single` in name   
->    - "Output normalized counts table" to `Yes`
+>           - "Specify a factor level" → `SE`
+>           - "Counts file(s)" には名前に `single` が入っている生成したカウントファイル (multiple datasets) を選択する
+>    - "Output normalized counts table" → `Yes`
 {: .hands_on}
 
-**DESeq2** generated 3 outputs
+**DESeq2** では3つのアウトプットを生成します
 
-- A table with the normalized counts for each genes (rows) and each samples (columns)
-- A graphical summary of the results, useful to evaluate the quality of the experiment:
+- 各遺伝子（行）と各サンプル（列）の正規化カウントの表
+- 実験のクオリティを評価するのに役に立つ、結果の図式的な要約:
 
-    1. Histogram of *p*-values for all tests
+    1. すべてのテストにおける *p* 値のヒストグラム
     2. [MA plot](https://en.wikipedia.org/wiki/MA_plot): global view of the relationship between the expression change of conditions (log ratios, M), the average expression strength of the genes (average mean, A), and the ability of the algorithm to detect differential gene expression. The genes that passed the significance threshold (adjusted p-value < 0.1) are colored in red.
     3. Principal Component Analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) and the first two axes
 
-        Each replicate is plotted as an individual data point. This type of plot is useful for visualizing the overall effect of experimental covariates and batch effects.
+        各複製は個々のデータポイントとしてプロットされます。このタイプのプロットは実験的共変量とバッチ効果の全体的な効果を視覚化するのに役立ちます。
 
         > ### {% icon question %} Questions
         >
@@ -599,7 +599,7 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
         {: .question}
 
 
-    4. Heatmap of sample-to-sample distance matrix: overview over similarities and dissimilarities between samples
+    4. サンプル間の距離行列のヒートマップ: サンプル間の類似度と非類似度の概要
 
         > ### {% icon question %} Questions
         >
@@ -611,14 +611,14 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
         >    {: .solution}
         {: .question}
 
-    5. Dispersion estimates: gene-wise estimates (black), the fitted values (red), and the final maximum a posteriori estimates used in testing (blue)
+    5. 分散の推定: 遺伝子に基づく推定値（黒色）、適合値（赤色）、そしてテストで使用された最終最大事後推定値（青色）
 
-        This dispersion plot is typical, with the final estimates shrunk from the gene-wise estimates towards the fitted estimates. Some gene-wise estimates are flagged as outliers and not shrunk towards the fitted value. The amount of shrinkage can be more or less than seen here, depending on the sample size, the number of coefficients, the row mean and the variability of the gene-wise estimates.
+        この分散プロットは典型的なものであり、最終推定値は This dispersion plot is typical, with the final estimates shrunk from the gene-wise estimates towards the fitted estimates. Some gene-wise estimates are flagged as outliers and not shrunk towards the fitted value. The amount of shrinkage can be more or less than seen here, depending on the sample size, the number of coefficients, the row mean and the variability of the gene-wise estimates.
 
-- A summary file with the following values for each gene
+- Summary ファイルは各遺伝子について次の値を有しています
 
-    1.  Gene identifiers
-    2.  Mean normalized counts, averaged over all samples from both conditions
+    1.  遺伝子のID
+    2.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント
     3.  Logarithm (to basis 2) of the fold change
 
         The log2 fold changes are based on primary factor level 1 vs. factor level 2, hence the order of factor levels is important. For example, for the factor 'Treatment', DESeq2 computes fold changes of 'treated' samples against 'untreated', *i.e.* the values correspond to up- or downregulation of genes in treated samples.
@@ -633,20 +633,20 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 > For more information about **DESeq2** and its outputs, you can have a look at [**DESeq2** documentation](https://www.bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf).
 {: .comment}
 
-## Visualization of the differentially expressed genes
+## 差次的に発現する遺伝子の可視化
 
-We would like now to draw an heatmap of the normalized counts for each sample for the most differentially expressed genes.
+今から、最も差次的に発現された遺伝子のための各サンプルの正規化されたカウントのヒートマップを描きたいと思います。
 
-We would proceed in several steps
-- Extract the most differentially expressed genes using the DESeq2 summary file
-- Extract the normalized counts of these genes for each sample using the normalized count file generated by DESeq2
-- Plot the heatmap of the normalized counts of these genes for each sample
+私たちは次のいくつかのステップを進めます
+- DESeq2 の summary ファイルを使用して最も差次的に発現した遺伝子を抽出する
+- DESeq2 によって生成された正規化のカウントファイルを使用して各サンプルについてこれらの遺伝子の正規化カウントを抽出する
+- 各サンプルについてこれらの遺伝子の正規化のカウントのヒートマップをプロットする
 
-> ### {% icon hands_on %} ハンズオン: Extract the most differentially expressed genes
+> ### {% icon hands_on %} ハンズオン: 最も差次的に発現した遺伝子を抽出する
 >
 > 1. **Filter** {% icon tool %}: Extract genes with a significant change in gene expression (adjusted *p*-value below 0.05) between treated and untreated samples
->    - "Filter" to the DESeq2 summary file
->    - "With following condition" to `c7<0.05`
+>    - "Filter" には DESeq2 の summary ファイルを選択する
+>    - "With following condition" → `c7<0.05`
 >
 >    > ### {% icon question %} Question
 >    >
