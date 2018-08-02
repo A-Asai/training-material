@@ -520,32 +520,32 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 - 各条件の反復を使用して生物学的な分散を推定する 
 - 任意の2つの条件の間での発現差の有意性を推定する 
 
-This expression analysis is estimated from read counts and attempts are made to correct for variability in measurements using replicates that are absolutely essential for accurate results. For your own analysis, we advice you to use at least 3, but preferably 5 biological replicates per condition. You can have different number of replicates per condition.
+この発現解析はリードカウントから推定され、正確な結果には絶対不可欠な複製を使用して測定値のばらつきを補正するように試みます。あなた自身の解析のために、条件ごとに少なくとも3回、できるなら5回は生物学的な反復を使用することをアドバイスします。条件ごとに異なる数の複製を作成できます。
 
-[**DESeq2**](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) is a great tool for DGE analysis. It takes read counts produced previously, combines them into a big table (with genes in the rows and samples in the columns) and applies size factor normalization:
+[**DESeq2**](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) は DGE 解析のための素晴らしいツールです。これは以前に生成されたリードカウントを取ってきて、それらを大きな表（行に遺伝子を含み列にサンプルを含む）に結合してサイズファクターを正規化して適用します:
 
-- Computation for each gene of the geometric mean of read counts across all samples
-- Division of every gene count by the geometric mean
-- Use of the median of these ratios as a sample's size factor for normalization
+- 全サンプルにわたるリードカウントでの各遺伝子の幾何平均の計算 
+- 幾何平均による各遺伝子数の除算 
+- 正規化のためのサンプルのサイズファクターとしてこれらの比の中央値を使用する 
 
-Multiple factors with several levels can then be incorporated in the analysis. After normalization we can compare, in a statistically reliable way, the response of the expression of any gene to the presence of different levels of a factor.
+いくつかのレベルでの複数のファクターを解析に組み込むことができます。正規化の後、統計的に信頼できる方法で、異なるレベルのファクターの存在に対する任意の遺伝子の発現の応答を比較することができます。
 
-In our example, we have samples with two varying factors that can explain differences in gene expression:
+今回の例では、遺伝子発現の違いを説明できる2つの異なるファクターを有するサンプルがあります:
 
-- Treatment (either treated or untreated)
-- Sequencing type (paired-end or single-end)
+- 処理 (処理か未処理のどちらか)
+- シークエンスのタイプ (ペアエンドまたはシングルエンド)
 
-Here treatment is the primary factor which we are interested in. The sequencing type is some further information that we know about the data that might affect the analysis. This particular multi-factor analysis allows us to assess the effect of the treatment, while taking the sequencing type into account, too.
+ここでは処理の有無が興味を持っていることに対する主なファクターとなります。シークエンスのタイプは解析に影響を与える可能性のあるデータについて私たちが知っているさらに詳しい情報になります。この特定のマルチファクター解析により、シークエンスのタイプを考慮に入れながら、処理の効果を評価することができます。 
 
 > ### {% icon comment %} Comment
 >
-> We recommend you to add as many factors as you think may affect gene expression in your experiment. It can be the sequencing type like here, but it can also be the manipulation (if different persons are involved in the library preparation), ...
+> あなたが実験する際は遺伝子発現に影響を及ぼすと考えているいくつかのファクターを追加することをお勧めします。ここで説明したようなシークエンスのタイプも、複雑な操作（他の人がライブラリーの準備に関わっている場合など、、、）でも入れることができます。 
 {: .comment}
 
-> ### {% icon hands_on %} ハンズオン: Determines differentially expressed features
+> ### {% icon hands_on %} ハンズオン: 差次的に発現した特徴を決定する 
 >
-> 1. Create a new history
-> 2. Import the seven count files from [Zenodo](https://doi.org/10.5281/zenodo.1185122) or the data library
+> 1. 新しいヒストリーを作成する 
+> 2. 7つのカウントファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) またはデータライブラリーからインポートする 
 >    - `GSM461176_untreat_single.counts`
 >    - `GSM461177_untreat_paired.counts`
 >    - `GSM461178_untreat_paired.counts`
@@ -554,7 +554,7 @@ Here treatment is the primary factor which we are interested in. The sequencing 
 >    - `GSM461181_treat_paired.counts`
 >    - `GSM461182_untreat_single.counts`
 >
-> 3. **DESeq2** {% icon tool %}: Run **DESeq2** with:
+> 3. **DESeq2** {% icon tool %}: **DESeq2** を次のように実行する:
 >    - For "1: Factor"
 >       - "Specify a factor name" to `Treatment`
 >       - "1: Factor level"
