@@ -644,17 +644,17 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 
 > ### {% icon hands_on %} ハンズオン: 最も差次的に発現した遺伝子を抽出する
 >
-> 1. **Filter** {% icon tool %}: Extract genes with a significant change in gene expression (adjusted *p*-value below 0.05) between treated and untreated samples
+> 1. **Filter** {% icon tool %}:処理したサンプルと未処理のサンプルとの間で遺伝子発現に有意な差（調整した P 値が0.05未満）がある遺伝子を抽出する 
 >    - "Filter" には DESeq2 の summary ファイルを選択する
 >    - "With following condition" → `c7<0.05`
 >
 >    > ### {% icon question %} Question
 >    >
->    > How many genes have a significant change in gene expression between these conditions?
+>    > これらの条件間で遺伝子発現に有意差がある遺伝子はいくつありましたか？ 
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > We get 1,091 genes (6.21%) with a significant change in gene expression between treated and untreated samples.
+>    >    > 処理されたサンプルと未処理のサンプルとの間で遺伝子発現の有意差がある遺伝子は 1,091 (6.21%)ありました。 
 >    >    >
 >    >    {: .solution}
 >    {: .question}
@@ -664,7 +664,7 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >    > The file with the independent filtered results can be used for further downstream analysis as it excludes genes with only few read counts as these genes will not be considered as significantly differentially expressed.
 >    {: .comment}
 >
->    The generated file contains to many genes to get a meaningful heatmap. So we will take only the genes with an absoluted fold change > 2
+>    生成されたファイルには意味のあるヒートマップを得るための多くの遺伝子が含まれています。So we will take only the genes with an absoluted fold change > 2
 >
 > 2. **Filter** {% icon tool %}: Extract genes with an abs(log<sub>2</sub>FC) > 1 (FC stands for "fold change")
 >    - "Filter" to the differentially expressed genes
@@ -672,16 +672,16 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >
 >    > ### {% icon question %} Question
 >    >
->    > How many genes have been conserved?
+>    > いくつの遺伝子が保存されていますか？ 
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 11.92% (130) of the differentially expressed genes
+>    >    > 11.92% (130)の差次的に発現する遺伝子が保存されています 
 >    >    >
 >    >    {: .solution}
 >    {: .question}
 >
->    The number of genes is still too high there. So we will take only the 10 most up-regulated and 10 most down-regulated genes
+>    まだ遺伝子の数はそれでは多すぎます。したがって私たちは最もアップレギュレートされた10個の遺伝子と最もダウンレギュレートされた10個の遺伝子のみを取り出したいと思います。
 >
 > 3. **Sort** {% icon tool %}: Sort the genes by log<sub>2</sub>FC
 >    - "Sort Dataset" to the differentially expressed genes with abs(FC) > 2
@@ -689,22 +689,22 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >    - "with flavor" to `Numerical sort`
 >    - "everything in" to `Descending order`
 >
-> 4. **Select first lines** {% icon tool %}: Extract the 10 most up-regulated genes
+> 4. **Select first lines** {% icon tool %}: 最もアップレギュレートされた10個の遺伝子を抽出する 
 >    - "File to select" to the sorted DE genes with abs(FC) > 2
 >    - "Operation" to `Keep first lines`
 >    - "Number of lines" to `10`
 >
-> 4. **Select last lines** {% icon tool %}: Extract the 10 most down-regulated genes
+> 4. **Select last lines** {% icon tool %}: 最もダウンレギュレートされた10個の遺伝子を抽出する
 >    - "Text file" to the sorted DE genes with abs(FC) > 2
 >    - "Operation" to `Keep first lines`
 >    - "Number of lines" to `10`
 >
-> 5. **Concatenate datasets** {% icon tool %}: Concatenated the 10 most up-regulated genes with the 10 most down-regulated genes
+> 5. **Concatenate datasets** {% icon tool %}: 最もアップレギュレートされた10個の遺伝子と最もダウンレギュレートされた10個の遺伝子を連結する
 >    - "Datasets to concatenate" to the 10 most up-regulated genes and to the 10 most down-regulated genes
 >
 {: .hands_on}
 
-We now have a table with 20 lines corresponding to the most differentially expressed genes. And for each of the gene, we have its id, its mean normalized counts (averaged over all samples from both conditions), its log<sub>2</sub>FC and other information.
+私たちは今最も差次的に発現する20行の表を持っています。そして各遺伝子について、そのID、その平均正規化カウント（両条件の全てのサンプルで平均しました）、log<sub>2</sub>FC や他の情報を持っています。
 
 We could plot the log<sub>2</sub>FC for the different genes, but here we would like to look at the heatmap with the read counts for these genes in the different samples. So we need to extract the read counts for these genes.
 
