@@ -761,11 +761,11 @@ DESeq によって生成された正規化されたカウントテーブルを�
 
 ## 差次的に発現する遺伝子間での機能的豊富さの解析 
 
-私たちは未処理のサンプルと比較して処理された（PS 遺伝子を欠乏させた）サンプルで差次的に発現する遺伝子を抽出しました。ここからは差次的に発現する遺伝子間での機能的な豊富さについてしりたいです。 
+私たちは未処理のサンプルと比較して処理された（PS 遺伝子を欠乏させた）サンプルで差次的に発現する遺伝子を抽出しました。ここからは差次的に発現する遺伝子間での機能的な豊富さについて知りたいです。 
 
-[Gene Ontology (GO)](http://www.geneontology.org/) 解析はanalysis is widely used to reduce complexity and highlight biological processes in genome-wide expression studies, but standard methods give biased results on RNA-seq data due to over-detection of differential expression for long and highly expressed transcripts.
+[Gene Ontology (GO)](http://www.geneontology.org/) 解析はゲノム分野の発現研究における複雑さを低減し生物学的プロセスを強調するために広く使用されていますが、標準的な手法は長く高度に発現された転写物の差次的な発現を過剰に発現するために RNA-seq データに偏った結果を与えます。 
 
-[goseq tool](https://bioconductor.org/packages/release/bioc/vignettes/goseq/inst/doc/goseq.pdf) provides methods for performing GO analysis of RNA-seq data, taking length bias into account. The methods and software used by goseq are equally applicable to other category based tests of RNA-seq data, such as KEGG pathway analysis.
+[goseq tool](https://bioconductor.org/packages/release/bioc/vignettes/goseq/inst/doc/goseq.pdf) は長さのバイアスを考慮して、RNA-seq データの GO 解析を実行する方法を提供します。goseq によって使用される方法やソフトウェアは RNA-seq データの他のカテゴリーに基づくテスト、例えば KEGG 経路解析のようなものにも、等しく適用できます。
 
 goseq needs 2 files as inputs:
 - A tabular file with the differentially expressed genes from all genes assayed in the RNA-seq experiment with 2 columns:
@@ -773,7 +773,7 @@ goseq needs 2 files as inputs:
     - True (differentially expressed) or False (not differentially expressed)
 - A file with information about the length of a gene to correct for potential length bias in differentially expressed genes
 
-> ### {% icon hands_on %} ハンズオン: Prepare the datasets for GOSeq
+> ### {% icon hands_on %} ハンズオン: GOSeq 用のデータセットを準備する
 >
 > 1. **Compute** {% icon tool %} with
 >    - "Add expression" to `bool(c7<0.05)`
@@ -790,7 +790,7 @@ goseq needs 2 files as inputs:
 >    - "Delimited by" to `Tab`
 >    - "To" to `Upper case`
 >
->    We just generated the first input for goseq
+>    goseq の最初のインプットを生成しました。
 >
 > 4. **Gene length and GC content** with
 >    - "Select a built-in GTF file or one from your history" to `Use a GTF from history`
@@ -807,9 +807,9 @@ goseq needs 2 files as inputs:
 >    - "To" to `Upper case`
 {: .hands_on}
 
-We have now the two required files for goseq.
+今 goseq に必須な2つのファイルを持っています。 
 
-> ### {% icon hands_on %} ハンズオン: Perform GO analysis
+> ### {% icon hands_on %} ハンズオン: GO 解析を実行する
 >
 > 1. **goseq** {% icon tool %} with
 >    - "Differentially expressed genes file" to first file generated on previous step
@@ -821,22 +821,22 @@ We have now the two required files for goseq.
 >
 {: .hands_on}
 
-goseq generates a big table with the following columns for each GO term:
-1. `category`: GO category
-2. `over_rep_pval`: *p*-value for over representation of the term in the differentially expressed genes
-3. `under_rep_pval`: *p*-value for under representation of the term in the differentially expressed genes
-4. `numDEInCat`: number of differentially expressed genes in this category
-5. `numInCat`: number of genes in this category
-6. `term`: detail of the term
-7. `ontology`: MF (Molecular Function - molecular activities of gene products), CC (Cellular Component - where gene products are active), BP (Biological Process - pathways and larger processes made up of the activities of multiple gene products)
-8. `p.adjust.over_represented`: *p*-value for over representation of the term in the differentially expressed genes, adjusted for multiple testing with the Benjamini-Hochberg procedure
-9. `p.adjust.under_represented`: *p*-value for over representation of the term in the differentially expressed genes, adjusted for multiple testing with the Benjamini-Hochberg procedure
+goseq は GO term ごとに以下の列をからなる大きな表を生成します:
+1. `category`: GO のカテゴリー
+2. `over_rep_pval`: 差次的に発現される遺伝子における term の過剰発現の P 値
+3. `under_rep_pval`: 差次的に発現される遺伝子における term の過小発現の P 値 
+4. `numDEInCat`: このカテゴリーの差次的に発現される遺伝子の数 
+5. `numInCat`: このカテゴリーにある遺伝子の数 
+6. `term`: term の詳細
+7. `ontology`: MF（分子機能 − 遺伝子産物の分子活性）、CC（細胞成分 − 遺伝子産物が活性化している部分です）、BP（生物学的なプロセス − 複数の遺伝子産物の活性からなる経路やより大きなプロセス） 
+8. `p.adjust.over_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、差次的に発現された遺伝子における term の過剰発現の P 値 
+9. `p.adjust.under_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、差次的に発現された遺伝子における term の過小発現の P 値 
 
 To identify categories significantly enriched/unenriched below some p-value cutoff, it is necessary to use the adjusted *p*-value.
 
 > ### {% icon question %} Questions
 >
-> 1. How many GO terms are over represented? Under represented?
+> 1. いくつの GO term が過剰発現されていますか？過小発現されていますか？ 
 > 2. How are the over represented GO terms divided between MF, CC and BP? And for under represented GO terms?
 >
 >   > ### {% icon solution %} Solution
@@ -847,25 +847,25 @@ To identify categories significantly enriched/unenriched below some p-value cuto
 >   {: .solution}
 {: .question}
 
-# Inference of the differential exon usage
+# 差次的なエキソンの使用法を推論する 
 
-Next, we would like to know the differential exon usage between treated (PS depleted) and untreated samples using RNA-seq exon counts. We will rework on the mapping results we generated previously.
+次に、RNA-seq でのエキソンのカウントを用いて処理（PS の欠乏）サンプルと未処理サンプルとの間での差次的なエキソンの使用法を探ります。これまでに生成したマッピングの結果を再解析します。
 
-We will use [DEXSeq](https://www.bioconductor.org/packages/release/bioc/html/DEXSeq.html). DEXSeq detects high sensitivity genes, and in many cases exons, that are subject to differential exon usage. But first, as for the differential gene expression, we need to count the number of reads mapping to the exons.
+[DEXSeq](https://www.bioconductor.org/packages/release/bioc/html/DEXSeq.html) を使用します。DEXSeq は遺伝子や、多くの場合エキソンを高感度で検出し、それは差次的なエキソンの使用法について対象となります。しかしまずは、差次的な遺伝子発現について、エキソンにマッピングされたリードの数を数える必要があります。 
 
-## Count the number of reads per exon
+## エキソンあたりのリード数を数える 
 
-This step is similar to the step of [counting the number of reads per annotated gene](#count-the-number-of-reads-per-annotated-gene) except that, instead of HTSeq-count, we are using DEXSeq-Count.
+このステップは、HTSeq-count の代わりに DEXSeq-Count を使用していることを除いて、[counting the number of reads per annotated gene](#count-the-number-of-reads-per-annotated-gene) のステップに似ています。 
 
-> ### {% icon hands_on %} ハンズオン: Counting the number of reads per exon
+> ### {% icon hands_on %} ハンズオン: エキソンあたりのリード数を数える 
 >
-> 1. **DEXSeq-Count** {% icon tool %}: Use the **DEXSeq-Count** to prepare the *Drosophila* annotations to extract only exons with corresponding gene ids
+> 1. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用して*ショウジョウバエ*のアノテーションを用意し対応する遺伝子 ID を持つエキソンのみを抽出する 
 >     - "Mode of operation" to `Prepare annotation`
 >     - "GTF file" to `Drosophila_melanogaster.BDGP6.87.gtf`
 >
->    The output is again a GTF file that is ready to be used for counting
+>    このアウトプットは再びカウントするために使用することができる GTF ファイルです 
 >
-> 2. **DEXSeq-Count** {% icon tool %}: Count reads using **DEXSeq-Count** with
+> 2. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用してリード数を数える 
 >     - "Mode of operation" to `Count reads`
 >     - "Input bam file" to the STAR-generated `BAM` files (multiple datasets)
 >     - "DEXSeq compatible GTF file" to the previously generated GTF file
