@@ -338,7 +338,7 @@ Integrative Genomics Viewer IGV は BAM ファイルの内容を視覚化する�
 
 マッピングの後は、私たちはリファレンスゲノム上のどこにリードがあるかに関する情報を持っています。 また、どのようにマッピングされているかもわかります。
 
-RNA-Seq データ解析の次のステップは異なる発現解析のためにいくつかのサンプルを比較できるようにゲノムの特徴（遺伝子、転写産物、エキソン、など）の発現レベルを定量化することです。定量化はリファレンスゲノムの既知の各ゲノム特徴（*例えば* 遺伝子）を取得してそしてこのゲノムの特徴にマッピングされたリードの数を数えることで行います。したがって、このステップでは、マッピングされたリードごとの情報から始めてゲノム特徴ごとの情報までやります。 
+RNA-Seq データ解析の次のステップは異なる発現解析のためにいくつかのサンプルを比較できるようにゲノムの特徴（遺伝子、転写産物、エキソン、など）の発現レベルを定量化することです。定量化はリファレンスゲノムの既知の各ゲノム特徴（*例えば* 遺伝子）を取得してそしてこのゲノムの特徴にマッピングされたリードの数を数えることで行います。したがって、このステップでは、マッピングされたリードごとの情報から始めてゲノム特徴ごとの情報までやります。
 
 > ### {% icon comment %} Comment
 >
@@ -581,20 +581,20 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 - 実験のクオリティを評価するのに役に立つ、結果の図式的な要約:
 
     1. すべてのテストにおける *p* 値のヒストグラム
-    2. [MA plot](https://en.wikipedia.org/wiki/MA_plot): global view of the relationship between the expression change of conditions (log ratios, M), the average expression strength of the genes (average mean, A), and the ability of the algorithm to detect differential gene expression. The genes that passed the significance threshold (adjusted p-value < 0.1) are colored in red.
-    3. Principal Component Analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) and the first two axes
+    2. [MA plot](https://en.wikipedia.org/wiki/MA_plot): 条件による発現の変化（対数比, M）、遺伝子の平均発現強度（average mean, A）、そして遺伝子発現の差異を検出するアルゴリズムの能力、の間の関係の全体図です。有意な閾値（調整されたP値 < 0.1）を通過した遺伝子は赤色で表されています。
+    3. 主成分分析 ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) と最初の2つの軸 
 
         各複製は個々のデータポイントとしてプロットされます。このタイプのプロットは実験的共変量とバッチ効果の全体的な効果を視覚化するのに役立ちます。
 
         > ### {% icon question %} Questions
         >
-        > 1. What is the first axis separating?
-        > 2. And the second axis?    
+        > 1. 分離されている1つ目の軸とは何ですか？
+        > 2. 2つ目の軸とは何ですか？   
         >
         >    > ### {% icon solution %} Solution
         >    >
-        >    > 1. The first axis is seperating the treated samples from the untreated samples, as defined when DESeq2 was launched
-        >    > 2. The second axis is separating the single-end datasets from the paired-end datasets
+        >    > 1. 1つ目の軸とは、DESeq2 を実行した時に定義したように、未処理サンプルから処理サンプルを分離することです。
+        >    > 2. 2つ目の軸とは、ペアエンドデータセットからシングルエンドデータセットを分離することです。
         >    {: .solution}
         {: .question}
 
@@ -603,34 +603,34 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 
         > ### {% icon question %} Questions
         >
-        > How are the samples grouped?
+        > サンプルはどのようにグループ分けされていますか？
         >
         >    > ### {% icon solution %} Solution   
-        >    > They are first grouped depending on the treatment (the first factor) and after on the library type (the second factor), as defined when DESeq2 was launched
+        >    > DESeq2 を実行した時に定義したように、まず処理の有無（1つ目のファクター）によって分類しその後ライブラリーのタイプ（2つ目のファクター）によってグループ分けされています。 
         >    >
         >    {: .solution}
         {: .question}
 
-    5. 分散の推定: 遺伝子に基づく推定値（黒色）、適合値（赤色）、そしてテストで使用された最終最大事後推定値（青色）
+    5. 分散の推定: 遺伝子ごとの推定値（黒色）、理論値（赤色）、そしてテストで使用された最終最大事後推定値（青色）
 
-        この分散プロットは典型的なものであり、最終推定値は This dispersion plot is typical, with the final estimates shrunk from the gene-wise estimates towards the fitted estimates. Some gene-wise estimates are flagged as outliers and not shrunk towards the fitted value. The amount of shrinkage can be more or less than seen here, depending on the sample size, the number of coefficients, the row mean and the variability of the gene-wise estimates.
+        この分散プロットは典型的なものであり、最終推定値は遺伝子ごとの推定値から理論的な推定値に向かって収束されます。いくつかの遺伝子に基づく推定値は異常値としてフラグ付けされて理論値に向かって収束しません。収束量は、サンプルサイズや、係数の数、行の平均や遺伝子ごとの推定値の変動によって、ここで見られたものよりも多くても少なくても構いません。 
 
 - Summary ファイルは各遺伝子について次の値を有しています
 
     1.  遺伝子のID
     2.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント
-    3.  Logarithm (to basis 2) of the fold change
+    3.  fold change の対数（底は2）
 
-        The log2 fold changes are based on primary factor level 1 vs. factor level 2, hence the order of factor levels is important. For example, for the factor 'Treatment', DESeq2 computes fold changes of 'treated' samples against 'untreated', *i.e.* the values correspond to up- or downregulation of genes in treated samples.
+        The log2 の fold changes は1つ目のファクターレベル対2つ目のファクターレベルに基づいているので、ファクターレベルの順番は重要です。例えば、ファクター 'Treatment' では、DESeq2 は 'treated' サンプルに対して 'untreated' サンプルの fold changes を計算しているので、*すなわち* 値は処理されたサンプルにおける遺伝子のアップまたはダウンレギュレーションに対応しています。
 
-    4.  Standard error estimate for the log2 fold change estimate
-    5.  [Wald](https://en.wikipedia.org/wiki/Wald_test) statistic
-    6.  *p*-value for the statistical significance of this change
-    7.  *p*-value adjusted for multiple testing with the Benjamini-Hochberg procedure which controls false discovery rate ([FDR](https://en.wikipedia.org/wiki/False_discovery_rate))
+    4.  log2 の fold change の推定値に対する標準誤差推定値
+    5.  [Wald](https://en.wikipedia.org/wiki/Wald_test) 統計
+    6.  この変化の統計的有意性を表すP値
+    7.  誤発見率 ([FDR](https://en.wikipedia.org/wiki/False_discovery_rate)) を制御する Benjamini-Hochberg 手順による複数のテストで調整されたP値
 
 > ### {% icon comment %} Comment
 >
-> For more information about **DESeq2** and its outputs, you can have a look at [**DESeq2** documentation](https://www.bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf).
+> **DESeq2** とそのアウトプットについての詳細については、[**DESeq2** documentation](https://www.bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf) を参照してください。
 {: .comment}
 
 ## 遺伝子発現の差異の可視化
@@ -644,17 +644,17 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 
 > ### {% icon hands_on %} ハンズオン: 最も差次的に発現した遺伝子を抽出する
 >
-> 1. **Filter** {% icon tool %}:処理したサンプルと未処理のサンプルとの間で遺伝子発現に有意な差（調整した P 値が0.05未満）がある遺伝子を抽出する 
+> 1. **Filter** {% icon tool %}:処理したサンプルと未処理のサンプルとの間で遺伝子発現に有意な差（調整した P 値が0.05未満）がある遺伝子を抽出する
 >    - "Filter" には DESeq2 の summary ファイルを選択する
 >    - "With following condition" → `c7<0.05`
 >
 >    > ### {% icon question %} Question
 >    >
->    > これらの条件間で遺伝子発現に有意差がある遺伝子はいくつありましたか？ 
+>    > これらの条件間で遺伝子発現に有意差がある遺伝子はいくつありましたか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 処理されたサンプルと未処理のサンプルとの間で遺伝子発現の有意差がある遺伝子は 1,091 (6.21%)ありました。 
+>    >    > 処理されたサンプルと未処理のサンプルとの間で遺伝子発現の有意差がある遺伝子は 1,091 (6.21%)ありました。
 >    >    >
 >    >    {: .solution}
 >    {: .question}
@@ -672,11 +672,11 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >
 >    > ### {% icon question %} Question
 >    >
->    > いくつの遺伝子が保存されていますか？ 
+>    > いくつの遺伝子が保存されていますか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 11.92% (130)の差次的に発現する遺伝子が保存されています 
+>    >    > 11.92% (130)の差次的に発現する遺伝子が保存されています
 >    >    >
 >    >    {: .solution}
 >    {: .question}
@@ -689,7 +689,7 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 >    - "with flavor" to `Numerical sort`
 >    - "everything in" to `Descending order`
 >
-> 4. **Select first lines** {% icon tool %}: 最もアップレギュレートされた10個の遺伝子を抽出する 
+> 4. **Select first lines** {% icon tool %}: 最もアップレギュレートされた10個の遺伝子を抽出する
 >    - "File to select" to the sorted DE genes with abs(FC) > 2
 >    - "Operation" to `Keep first lines`
 >    - "Number of lines" to `10`
@@ -706,7 +706,7 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
 
 私たちは今最も差次的に発現する20行の表を持っています。そして各遺伝子について、そのID、その平均正規化カウント（両条件の全てのサンプルで平均しました）、log<sub>2</sub>FC や他の情報を持っています。
 
-私たちは異なる遺伝子について log<sub>2</sub>FC をプロットすることができましたが、ここでは異なるサンプル内のこれらの遺伝子の配列数をヒートマップで見たいと思います。なのでこれらの遺伝子の配列数を抽出する必要があります。 
+私たちは異なる遺伝子について log<sub>2</sub>FC をプロットすることができましたが、ここでは異なるサンプル内のこれらの遺伝子の配列数をヒートマップで見たいと思います。なのでこれらの遺伝子の配列数を抽出する必要があります。
 
 DESeq によって生成された正規化されたカウントテーブルを生成されたばかりの表と結合して正規化されたカウントテーブルにおいて最も差次的に発現する遺伝子に対応する行のみを保存します。
 
@@ -720,7 +720,7 @@ DESeq によって生成された正規化されたカウントテーブルを�
 >    - "Keep lines of first input that do not join with second input" to `No`
 >    - "Keep the header lines" to `Yes`
 >
->    生成されるファイルは列が多すぎます: 平均正規化カウント、log<sub>2</sub>FC や他の情報です。私たちはそれらを削除する必要があります。 
+>    生成されるファイルは列が多すぎます: 平均正規化カウント、log<sub>2</sub>FC や他の情報です。私たちはそれらを削除する必要があります。
 >
 > 2. **Cut** {% icon tool %}: 正規化されたカウントの列を保存する
 >    - "Cut columns" to `c1,c2,c3,c4,c5,c6,c7,c8`
@@ -729,11 +729,11 @@ DESeq によって生成された正規化されたカウントテーブルを�
 >
 {: .hands_on}
 
-今7つのサンプルでの20行（最も差次的に発現した遺伝子）でこれらの遺伝子の正規化されたカウントからなる表があります。 
+今7つのサンプルでの20行（最も差次的に発現した遺伝子）でこれらの遺伝子の正規化されたカウントからなる表があります。
 
-> ### {% icon hands_on %} ハンズオン: 各サンプルについてこれらの遺伝子の正規化されたカウントのヒートマップをプロットする 
+> ### {% icon hands_on %} ハンズオン: 各サンプルについてこれらの遺伝子の正規化されたカウントのヒートマップをプロットする
 >
-> 1. **heatmap2** {% icon tool %}: 以下の設定でヒートマップをプロットする 
+> 1. **heatmap2** {% icon tool %}: 以下の設定でヒートマップをプロットする
 >    - "Input should have column headers" to the generated table
 >    - "Advanced - log transformation" to `Log2(value) transform my data`
 >    - "Enable data clustering" to `Yes`
@@ -747,7 +747,7 @@ DESeq によって生成された正規化されたカウントテーブルを�
 
 > ### {% icon question %} Questions
 >
-> 1. あなたはデータの傾向を観察していますか？ 
+> 1. あなたはデータの傾向を観察していますか？
 > 2. What is changing if we select `Plot the data as it is` in "Advanced - log transformation"?
 > 3. Can you generate an heatmap the normalized counts for the up-regulated genes with FC > 2?
 >
@@ -759,11 +759,11 @@ DESeq によって生成された正規化されたカウントテーブルを�
 >   {: .solution}
 {: .question}
 
-## 遺伝子発現の差異間での機能的豊富さの解析 
+## 遺伝子発現の差異間での機能的豊富さの解析
 
-私たちは未処理のサンプルと比較して処理された（PS 遺伝子を欠乏させた）サンプルで遺伝子発現の差異を抽出しました。ここからは遺伝子発現の差異間での機能的な豊富さについて知りたいです。 
+私たちは未処理のサンプルと比較して処理された（PS 遺伝子を欠乏させた）サンプルで遺伝子発現の差異を抽出しました。ここからは遺伝子発現の差異間での機能的な豊富さについて知りたいです。
 
-[Gene Ontology (GO)](http://www.geneontology.org/) 解析はゲノム分野の発現研究における複雑さを低減し生物学的プロセスを強調するために広く使用されていますが、標準的な手法は長く高度に発現された転写物の差次的な発現を過剰に発現するために RNA-seq データに偏った結果を与えます。 
+[Gene Ontology (GO)](http://www.geneontology.org/) 解析はゲノム分野の発現研究における複雑さを低減し生物学的プロセスを強調するために広く使用されていますが、標準的な手法は長く高度に発現された転写物の差次的な発現を過剰に発現するために RNA-seq データに偏った結果を与えます。
 
 [goseq tool](https://bioconductor.org/packages/release/bioc/vignettes/goseq/inst/doc/goseq.pdf) は長さのバイアスを考慮して、RNA-seq データの GO 解析を実行する方法を提供します。goseq によって使用される方法やソフトウェアは RNA-seq データの他のカテゴリーに基づくテスト、例えば KEGG 経路解析のようなものにも、等しく適用できます。
 
@@ -807,7 +807,7 @@ goseq needs 2 files as inputs:
 >    - "To" to `Upper case`
 {: .hands_on}
 
-今 goseq に必須な2つのファイルを持っています。 
+今 goseq に必須な2つのファイルを持っています。
 
 > ### {% icon hands_on %} ハンズオン: GO 解析を実行する
 >
@@ -824,19 +824,19 @@ goseq needs 2 files as inputs:
 goseq は GO term ごとに以下の列をからなる大きな表を生成します:
 1. `category`: GO のカテゴリー
 2. `over_rep_pval`: 遺伝子発現の差異における term の過剰発現の P 値
-3. `under_rep_pval`: 遺伝子発現の差異における term の過小発現の P 値 
-4. `numDEInCat`: このカテゴリーの遺伝子発現の差異の数 
-5. `numInCat`: このカテゴリーにある遺伝子の数 
+3. `under_rep_pval`: 遺伝子発現の差異における term の過小発現の P 値
+4. `numDEInCat`: このカテゴリーの遺伝子発現の差異の数
+5. `numInCat`: このカテゴリーにある遺伝子の数
 6. `term`: term の詳細
-7. `ontology`: MF（分子機能 − 遺伝子産物の分子活性）、CC（細胞成分 − 遺伝子産物が活性化している部分です）、BP（生物学的なプロセス − 複数の遺伝子産物の活性からなる経路やより大きなプロセス） 
-8. `p.adjust.over_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、遺伝子発現の差異における term の過剰発現の P 値 
-9. `p.adjust.under_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、遺伝子発現の差異における term の過小発現の P 値 
+7. `ontology`: MF（分子機能 − 遺伝子産物の分子活性）、CC（細胞成分 − 遺伝子産物が活性化している部分です）、BP（生物学的なプロセス − 複数の遺伝子産物の活性からなる経路やより大きなプロセス）
+8. `p.adjust.over_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、遺伝子発現の差異における term の過剰発現の P 値
+9. `p.adjust.under_represented`: Benjamini-Hochberg の手順による複数のテストのために調整された、遺伝子発現の差異における term の過小発現の P 値
 
 To identify categories significantly enriched/unenriched below some p-value cutoff, it is necessary to use the adjusted *p*-value.
 
 > ### {% icon question %} Questions
 >
-> 1. いくつの GO term が過剰発現されていますか？過小発現されていますか？ 
+> 1. いくつの GO term が過剰発現されていますか？過小発現されていますか？
 > 2. How are the over represented GO terms divided between MF, CC and BP? And for under represented GO terms?
 >
 >   > ### {% icon solution %} Solution
@@ -847,25 +847,25 @@ To identify categories significantly enriched/unenriched below some p-value cuto
 >   {: .solution}
 {: .question}
 
-# 差次的なエキソンの使用法を推論する 
+# 差次的なエキソンの使用法を推論する
 
 次に、RNA-seq でのエキソンのカウントを用いて処理（PS の欠乏）サンプルと未処理サンプルとの間での差次的なエキソンの使用法を探ります。これまでに生成したマッピングの結果を再解析します。
 
-[DEXSeq](https://www.bioconductor.org/packages/release/bioc/html/DEXSeq.html) を使用します。DEXSeq は遺伝子や、多くの場合エキソンを高感度で検出し、それは差次的なエキソンの使用法について対象となります。しかしまずは、遺伝子発現の差異について、エキソンにマッピングされたリードの数を数える必要があります。 
+[DEXSeq](https://www.bioconductor.org/packages/release/bioc/html/DEXSeq.html) を使用します。DEXSeq は遺伝子や、多くの場合エキソンを高感度で検出し、それは差次的なエキソンの使用法について対象となります。しかしまずは、遺伝子発現の差異について、エキソンにマッピングされたリードの数を数える必要があります。
 
-## エキソンあたりのリード数を数える 
+## エキソンあたりのリード数を数える
 
-このステップは、HTSeq-count の代わりに DEXSeq-Count を使用していることを除いて、[counting the number of reads per annotated gene](#count-the-number-of-reads-per-annotated-gene) のステップに似ています。 
+このステップは、HTSeq-count の代わりに DEXSeq-Count を使用していることを除いて、[counting the number of reads per annotated gene](#count-the-number-of-reads-per-annotated-gene) のステップに似ています。
 
-> ### {% icon hands_on %} ハンズオン: エキソンあたりのリード数を数える 
+> ### {% icon hands_on %} ハンズオン: エキソンあたりのリード数を数える
 >
-> 1. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用して*ショウジョウバエ*のアノテーションを用意し対応する遺伝子 ID を持つエキソンのみを抽出する 
+> 1. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用して*ショウジョウバエ*のアノテーションを用意し対応する遺伝子 ID を持つエキソンのみを抽出する
 >     - "Mode of operation" to `Prepare annotation`
 >     - "GTF file" to `Drosophila_melanogaster.BDGP6.87.gtf`
 >
->    このアウトプットは再びカウントするために使用することができる GTF ファイルです 
+>    このアウトプットは再びカウントするために使用することができる GTF ファイルです
 >
-> 2. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用してリード数を数える 
+> 2. **DEXSeq-Count** {% icon tool %}: **DEXSeq-Count** を使用してリード数を数える
 >     - "Mode of operation" to `Count reads`
 >     - "Input bam file" to the STAR-generated `BAM` files (multiple datasets)
 >     - "DEXSeq compatible GTF file" to the previously generated GTF file
@@ -875,12 +875,12 @@ To identify categories significantly enriched/unenriched below some p-value cuto
 >
 {: .hands_on}
 
-DEXSeqは featureCounts によって生成されたものに似たファイルを生成しますが、エキソンの数もカウントされます。 
+DEXSeqは featureCounts によって生成されたものに似たファイルを生成しますが、エキソンの数もカウントされます。
 
 > ### {% icon question %} Question
 >
-> 1. 両方のサンプルについてどのエキソンに最も多くのリードがマッピングされていますか？ 
-> 2. これらのエキソンはどの遺伝子から抽出されていますか？ 
+> 1. 両方のサンプルについてどのエキソンに最も多くのリードがマッピングされていますか？
+> 2. これらのエキソンはどの遺伝子から抽出されていますか？
 > 3. Is there a connection to the previous result obtained with HTSeq-count?
 >
 >    > ### {% icon solution %} Solution
@@ -893,7 +893,7 @@ DEXSeqは featureCounts によって生成されたものに似たファイル�
 
 ## Differential exon usage
 
-DEXSeq の手法は DESeq2 と似ています。それは差次的に使用されるエキソンを見つけるために似た統計を用います。 
+DEXSeq の手法は DESeq2 と似ています。それは差次的に使用されるエキソンを見つけるために似た統計を用います。
 
 DESeq2 に関しては、前段階で、私たちは1つのサンプルのみで4番染色体のエキソンにマッピングされたリードのみをカウントしました。PS 欠乏によって誘発された差次的なエキソンの使用法を同定することができるためには、同じ手順に従ってすべてのデータセット（3つの処理と4つの未処理）を解析しなければなりません。時間を節約するために、それを行っておきました。結果は [Zenodo](https://doi.org/10.5281/zenodo.1185122) で入手することができます:
 
@@ -903,7 +903,7 @@ DESeq2 に関しては、前段階で、私たちは1つのサンプルのみで
 > ### {% icon hands_on %} ハンズオン:
 >
 > 1. 新しいヒストリーを作成する
-> 2. 7つのエキソンのカウントファイルとアノテーション GTF ファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) またはデータライブラリからインポートする 
+> 2. 7つのエキソンのカウントファイルとアノテーション GTF ファイルを [Zenodo](https://doi.org/10.5281/zenodo.1185122) またはデータライブラリからインポートする
 >    - `Drosophila_melanogaster.BDGP6.87.dexseq.gtf`
 >    - `GSM461176_untreat_single.exon.counts`
 >    - `GSM461177_untreat_paired.exon.counts`
@@ -936,10 +936,10 @@ DESeq2 に関しては、前段階で、私たちは1つのサンプルのみで
 
 DESeq2 と同様に、DEXSeq は次の表を生成します:
 
-1.  エキソン ID 
-2.  遺伝子 ID 
-3.  遺伝子中のエキソンの ID 
-4.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント 
+1.  エキソン ID
+2.  遺伝子 ID
+3.  遺伝子中のエキソンの ID
+4.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント
 5.  Logarithm (to basis 2) of the fold change
 
     The log2 fold changes are based on primary factor level 1 vs. factor level 2. The order of factor levels is then important. For example, for the factor 'Condition', DESeq2 computes fold changes of 'treated' samples against 'untreated', *i.e.* the values correspond to up- or downregulations of genes in treated samples.
@@ -954,11 +954,11 @@ DESeq2 と同様に、DEXSeq は次の表を生成します:
 >
 >    > ### {% icon question %} Question
 >    >
->    > いくつのエキソンがこれらの条件間で使用法に有意な変化を示していますか？ 
+>    > いくつのエキソンがこれらの条件間で使用法に有意な変化を示していますか？
 >    >
 >    >    > ### {% icon solution %} Solution
 >    >    >
->    >    > 処理サンプルと未処理サンプルの間で38のエキソン (12.38%) が有意な使用法の変化を示しました 
+>    >    > 処理サンプルと未処理サンプルの間で38のエキソン (12.38%) が有意な使用法の変化を示しました
 >    >    >
 >    >    {: .solution}
 >    {: .question}
@@ -966,7 +966,7 @@ DESeq2 と同様に、DEXSeq は次の表を生成します:
 
 # Annotation of the result tables with gene information
 
-残念なことに、カウントの過程で、同定したもの以外の遺伝子のすべての情報を失ってしまいます。情報を最終的なカウントテーブルに戻すために、同定したものとアノテーションを対応させるツールを使用することができます。 
+残念なことに、カウントの過程で、同定したもの以外の遺伝子のすべての情報を失ってしまいます。情報を最終的なカウントテーブルに戻すために、同定したものとアノテーションを対応させるツールを使用することができます。
 
 > ### {% icon hands_on %} ハンズオン:
 >
