@@ -621,7 +621,7 @@ RNAseq 実験において典型的に標的とされる RNA は一本鎖（*例�
     2.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント
     3.  fold change の対数（底は2）
 
-        The log2 の fold changes は1つ目のファクターレベル対2つ目のファクターレベルに基づいているので、ファクターレベルの順番は重要です。例えば、ファクター 'Treatment' では、DESeq2 は 'treated' サンプルに対して 'untreated' サンプルの fold changes を計算しているので、*すなわち* 値は処理されたサンプルにおける遺伝子のアップまたはダウンレギュレーションに対応しています。
+        log2 の fold changes は1つ目のファクターレベル対2つ目のファクターレベルに基づいているので、ファクターレベルの順番は重要です。例えば、ファクター 'Treatment' では、DESeq2 は 'treated' サンプルに対して 'untreated' サンプルの fold changes を計算しているので、*すなわち* 値は処理されたサンプルにおける遺伝子のアップまたはダウンレギュレーションに対応しています。
 
     4.  log2 の fold change の推定値に対する標準誤差推定値
     5.  [Wald](https://en.wikipedia.org/wiki/Wald_test) 統計
@@ -940,13 +940,13 @@ DESeq2 と同様に、DEXSeq は次の表を生成します:
 2.  遺伝子 ID
 3.  遺伝子中のエキソンの ID
 4.  両方の条件からすべてのサンプルにわたって平均した、平均正規化カウント
-5.  Logarithm (to basis 2) of the fold change
+5.  fold change の対数（底は2）
 
-    The log2 fold changes are based on primary factor level 1 vs. factor level 2. The order of factor levels is then important. For example, for the factor 'Condition', DESeq2 computes fold changes of 'treated' samples against 'untreated', *i.e.* the values correspond to up- or downregulations of genes in treated samples.
+    log2 の fold changes は1つ目のファクターレベル対2つ目のファクターレベルに基づいています。なのでファクターレベルの順番は重要です。例えば、ファクター 'Condition' において、DEXSeq は 'treated' サンプルに対して 'untreated' サンプルの fold changes を計算しているので、*すなわち* 値は処理されたサンプルにおける遺伝子のアップまたはダウンレギュレーションに対応しています。
 
-6.  Standard error estimate for the log2 fold change estimate
-7.  *p*-value for the statistical significance of this change
-8.  *p*-value adjusted for multiple testing with the Benjamini-Hochberg procedure which controls false discovery rate ([FDR](https://en.wikipedia.org/wiki/False_discovery_rate))
+6.  log2 の fold change の推定値に対する標準誤差推定値
+7.  この変化の統計的有意性を表すP値
+8.  誤発見率 ([FDR](https://en.wikipedia.org/wiki/False_discovery_rate)) を制御する Benjamini-Hochberg 手順による複数のテストで調整されたP値
 
 > ### {% icon hands_on %} ハンズオン:
 >
