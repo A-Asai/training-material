@@ -4,88 +4,88 @@ topic_name: sequence-analysis
 tutorial_name: quality-control
 ---
 
-# Introduction
+# イントロダクション
 {:.no_toc}
 
-During sequencing, errors might be introduced, such as the incorporation of ambiguous nucleotides. These are due to the technical limitations of each sequencing platform. Sequencing errors might bias the analysis, ultimately leading to a misinterpretation of the data.
+シークエンシング中に、曖昧なヌクレオチドの取り込みのような、エラーが導入される可能性があります。これは各シークエンシングプラットフォームの技術的な限界に起因しています。シークエンシングエラーは解析にバイアスをもたらし、最終的にはデータの誤解を招く可能性があります。 
 
-Sequence quality control is therefore an essential step to take right after receiving the raw sequencing data. This ensures proper, analysis regardless the sequencing platform used to obtain the data.
+したがってシークエンシングのクオリティチェックは生のシークエンスデータを受信した直後に行う不可欠なステップです。これはデータを取得するために使用されるシークエンシングプラットフォームに関係なく、適切な分析が確実に行われます。 
 
 > ### Agenda
 >
-> In this tutorial, we will deal with:
+> このチュートリアルでは、以下のことを扱います:
 >
 > 1. TOC
 > {:toc}
 >
 {: .agenda}
 
-# Importing sequences
+# シークエンスデータをインポートする 
 
-> ### {% icon hands_on %} Hands-on: Data upload
+> ### {% icon hands_on %} ハンズオン: データのアップロード 
 >
-> 1. Create a new history
-> 2. Import the FASTQ file: [`GSM461178_untreat_paired_subset_1`](https://zenodo.org/record/61771/files/GSM461178_untreat_paired_subset_1.fastq)
+> 1. ヒストリーを新規作成する 
+> 2. 次の FASTQ ファイルをインポートする: [`GSM461178_untreat_paired_subset_1`](https://zenodo.org/record/61771/files/GSM461178_untreat_paired_subset_1.fastq)
 >
->    > ### {% icon tip %} Tip: Importing data via links
+>    > ### {% icon tip %} Tip: リンクからデータをインポートする 
 >    >
->    > * Copy the link location
->    > * Open the Galaxy Upload Manager
->    > * Select **Paste/Fetch Data**
->    > * Paste the link into the text field
->    > * Press **Start**    
+>    > * リンクをコピーする 
+>    > * Galaxy Upload Manager を開く
+>    > * **Paste/Fetch Data** を選択する
+>    > * テキストボックスにリンクをペーストする 
+>    > * **Start** を押す    
 >    {: .tip}
 >
->    > ### {% icon tip %} Tip: Change the file type `fastq` to `fastqsanger` once the data file is in your history
+>    > ### {% icon tip %} Tip: データファイルがヒストリーにインポートされたらファイルタイプを `fastq` から `fastqsanger` に変更する 
 >    >
->    > * Click on the pencil button displayed in your data file in the history
->    > * Choose **Datatype** on the top
->    > * Select `fastqsanger`
->    > * Press **save**
+>    > * ヒストリーのデータファイルに表示されている鉛筆ボタンをクリックする 
+>    > * トップにある **Datatype** を選択する 
+>    > * `fastqsanger` を選択する
+>    > * **save** を押す
 >    {: .tip}
 >
 >    > ### {% icon comment %} Comments
 >    >
->    > Rename the dataset to "First dataset"
+>    > データセットの名前を "First dataset" に変えましょう
 >    {: .comment}
-> By default, when data is imported via its link, Galaxy names it with its URL.
+> デフォルトでは、リンクからデータをインポートすると、Galaxy での名前はその URL になります。
 {: .hands_on}
 
-# Quality check
+# クオリティチェック 
 
-To estimate sequence quality and how to further filter raw data, different indicators can be checked:
+配列のクオリティや生データをさらにフィルタリングする方法を推定するために、異なるインジケータをチェックすることができます:
 
-- Quality score of the sequences with
-    - Per-base sequence quality
-    - Per-sequence quality scores
-    - Per-tile sequence quality
-- Sequence content with
-    - Per-base sequence content
-    - Per-sequence GC content
-    - Per-base N content
-- Sequence length with the sequence length distribution
-- Duplicated sequences
-- Tag sequences with
-    - Adapter contamination
-    - K-mer content
+- 配列のクオリティスコアについて
+    - 塩基ごとの配列のクオリティ 
+    - 配列ごとのクオリティスコア 
+    - タイルごとの配列のクオリティ 
+- 配列の含有量について 
+    - 塩基ごとの配列の含有量 
+    - 配列ごとの GC 含有量
+    - 塩基ごとの N 含有量 
+- 配列長の分布での配列長 
+- 重複配列 
+- タグ配列について 
+    - アダプターのコンタミネーション 
+    - K-mer の含有量 
 
-[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) is an open-source tool that provides a simple way to quality-control raw sequence data coming from high throughput sequencing pipelines. It gets rid of low quality score reads, and generates graphics and estimates providing a quick overview about which data might be the source of bias in the analysis.
+[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) はハイスループットシークエンシングパイプラインからの生配列データをクオリティコントロールする簡単な方法を提供するオープンソースのツールです。それは低いクオリティスコアのリードを取り除き、どのデータが解析のバイアスの原因となるかについての簡単な概要を提供するグラフィックスおよび推定を生成する。 
 
-> ### {% icon hands_on %} Hands-on: Quality check
+> ### {% icon hands_on %} ハンズオン: クオリティチェック 
 >
-> 1. **FastQC** {% icon tool %}: Run **FastQC Read Quality reports** on the imported FastQ file with default parameters
-> 2. Inspect the FastQC report on its webpage output
+> 1. **FastQC** {% icon tool %}: インポートした FastQ ファイルで、デフォルトの設定で **FastQC Read Quality reports** を実行する 
+> 2. webpage のアウトプットで FastQC report を検査する 
 >
->    > ### {% icon tip %} Tip: Inspecting the content of a file in Galaxy
+>    > ### {% icon tip %} Tip: Galaxy でファイルの内容を検査する 
 >    >
->    > * Click on the eye ("View data") on the right of the file name in the history
->    > * Inspect the content of the file on the middle
+>    > * ヒストリーのファイル名の右にある目 ("データを表示する") をクリックする 
+>    > * 中央でファイルの内容を検査する 
 >    {: .tip}
 >
 >    > ### {% icon question %} Questions
 >    >
->    > 1. How good are the quality scores?
->    > 2. Why is there a warning for the per-base sequence content and the per-sequence GC content graphs?
+>    > 1. クオリティスコアはどれくらいが良いですか？ 
+>    > 2. なぜWhy is there a warning for the per-base sequence content and the per-sequence GC content graphs?
 >    > 3. What needs to be done to improve the sequences?
 >    >
 >    >    <details>
