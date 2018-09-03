@@ -85,13 +85,13 @@ tutorial_name: quality-control
 >    > ### {% icon question %} Questions
 >    >
 >    > 1. クオリティスコアはどれくらいが良いですか？ 
->    > 2. なぜWhy is there a warning for the per-base sequence content and the per-sequence GC content graphs?
->    > 3. What needs to be done to improve the sequences?
+>    > 2. なぜ塩基ごとの配列の含有量と配列ごとの GC 含有量のグラフが警告されているのですか？ 
+>    > 3. シークエンスを改善するためには何が必要ですか？ 
 >    >
 >    >    <details>
->    >    <summary>Click to view the answers</summary>
+>    >    <summary>クリックして回答を表示</summary>
 >    >    <ol type="1">
->    >    <li>The sequence scores are quite good: no warnings from FastQC, even if we can see a slight decrease of the quality at the end of the reads</li>
+>    >    <li>シークエンスのスコアは非常に良いです: たとえリードの末端でクオリティがわずかにていかno warnings from FastQC, even if we can see a slight decrease of the quality at the end of the reads</li>
 >    >    <li>In the beginning of sequences, the sequence content per base is not really good and the percentages are not equal. For the GC content, the distribution is slightly shifted on the left, and too high</li>
 >    >    <li>We can trim the end of the sequences a little, but not too much as the sequences are already small</li>
 >    >    </ol>
