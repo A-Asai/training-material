@@ -91,47 +91,47 @@ tutorial_name: quality-control
 >    >    <details>
 >    >    <summary>クリックして回答を表示</summary>
 >    >    <ol type="1">
->    >    <li>シークエンスのスコアは非常に良いです: たとえリードの末端でクオリティがわずかにていかno warnings from FastQC, even if we can see a slight decrease of the quality at the end of the reads</li>
->    >    <li>In the beginning of sequences, the sequence content per base is not really good and the percentages are not equal. For the GC content, the distribution is slightly shifted on the left, and too high</li>
->    >    <li>We can trim the end of the sequences a little, but not too much as the sequences are already small</li>
+>    >    <li>シークエンスのスコアは非常に良いです: たとえリードの末端でクオリティがわずかに低下しても、FastQC は警告しません</li>
+>    >    <li>シークエンスの始めは、塩基ごとの配列の含有量は実際には良くなくパーセンテージは等しくありません。GC 含有量については、分布は左にわずかにシフトし、高すぎます。</li>
+>    >    <li>配列の末端を少しだけトリミングすることができますが、配列がすでに小さいのであまり大きくはトリミングできません。</li>
 >    >    </ol>
 >    >    </details>
 >    {: .question}
 {: .hands_on}
 
-# Improvement of sequence quality
+# 配列のクオリティを改善する 
 
-Based on the informations provided by the quality graphs, the sequences must to be treated to avoid bias in downstream analyis.
+クオリティのグラフによって提供される情報に基づいて、下流の解析におけるバイアスを避けるために配列を処理しなければなりません。 
 
-In general, quality treatments are:
+一般的に、クオリティの処理を行う場合は次の通りです:
 
-- Filtering of sequences
-    - with small mean quality score
-    - too small
-    - with too many N bases
-    - based on their GC content
+- 配列のフィルタリングする 
+    - 平均してクオリティスコアが低い 
+    - 小さすぎる 
+    - N 塩基が多すぎる
+    - GC 含有量に基づいて 
     - ...
-- Cutting/Trimming sequences
-    - from low quality score parts
-    - tails
+- 配列をカット/トリミングする
+    - クオリティスコアが低い部分 
+    - 末端 
     - ...
 
-To improve the overall sequence quality, we use the [Trim Galore!](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) tool. This tool enhances sequence quality by automating adapter trimming as well as quality control.
+配列全体のクオリティを向上させるために、[Trim Galore!](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) ツールを使用します。このツールはアダプターのトリミングとクオリティコントロールを自動化することにより配列のクオリティを向上させます。 
 
-> ### {% icon hands_on %} Hands-on: Improvement of sequence quality
+> ### {% icon hands_on %} ハンズオン: 配列のクオリティを改善する 
 >
-> 1. **Trim Galore!** {% icon tool %}: Run **Trim Galore! Quality and adapter trimmer of reads** on the imported FastQ file
+> 1. **Trim Galore!** {% icon tool %}: インポートした FastQ ファイルに対して **Trim Galore! Quality and adapter trimmer of reads** を実行する
 >
 >    > ### {% icon question %} Questions
 >    >
 >    > Which parameters must be applied to follow the previous recommendations?
 >    >
 >    > <details>
->    > <summary>Click to view the answers</summary>
->    > We use the default ones:
+>    > <summary>クリックして回答を表示</summary>
+>    > デフォルトのまま使用します:
 >    > <ul>
 >    > <li>​
-If you know which adapter sequence was used during library preparation, provide its sequence. Otherwise use the option for automatic detection and trimming of adapter sequences</li>
+ライブラリー作成中に使用されたアダプター配列が分かっている場合は、その配列を記入してください。それ以外の場合はアダプター配列の自動検出とトリミングのオプションを使用しましょう。</li>
 >    > <li>Trimming low-quality ends (below 20) from reads in addition to adapter removal</li>
 >    > <li>Option for required overlap (in bp) with adapter sequence can be tweaked. The default value "1" is too stringent, and on average 25% of reads will be trimmed. Please set it to 5 bases to loose the required overlap</li>
 >    > <li>Removing reads shorter than 20 bp</li>
