@@ -132,81 +132,81 @@ tutorial_name: quality-control
 >    > <ul>
 >    > <li>​
 ライブラリー作成中に使用されたアダプター配列が分かっている場合は、その配列を記入してください。それ以外の場合はアダプター配列の自動検出とトリミングのオプションを使用しましょう。</li>
->    > <li>Trimming low-quality ends (below 20) from reads in addition to adapter removal</li>
->    > <li>Option for required overlap (in bp) with adapter sequence can be tweaked. The default value "1" is too stringent, and on average 25% of reads will be trimmed. Please set it to 5 bases to loose the required overlap</li>
->    > <li>Removing reads shorter than 20 bp</li>
+>    > <li>アダプター配列の除去に加えてクオリティの低い末端（20未満）もトリミングしましょう</li>
+>    > <li>アダプター配列との必要なオーバーラップ（bp）のオプションを微調整することができます。デフォルト値の "1" はかなり厳しく、平均して25%のリードがトリミングされます。必要なオーバーラップを緩めるためにも5塩基に設定してください</li>
+>    > <li>20 bp より短いリードを除去しましょう</li>
 >    > </ul>
 >    > </details>
 >    {: .question}
 >
-> 2. **FastQC** {% icon tool %}: Re-run **FastQC Read Quality reports** on the quality controlled data, and inspect the new FastQC report
+> 2. **FastQC** {% icon tool %}: クオリティコントロールを経たデータに対して **FastQC Read Quality reports** を再実行し、新しい FastQC レポートを検査する 
 >
 >    > ### {% icon question %} Questions
 >    >
->    > 1. How many sequences have been removed?
->    > 2. Has sequence quality been improved?
->    > 3. Can you explain why the per-base sequence content is not good now?
+>    > 1. いくつの配列が除去されましたか？ 
+>    > 2. 配列のクオリティは改善されましたか？ 
+>    > 3. なぜ塩基ごとの配列の含有量が良くないのか説明できますか？ 
 >    >
 >    >    <details>
->    >    <summary>Click to view the answers</summary>
+>    >    <summary>クリックして回答を表示</summary>
 >    >    <ol type="1">
->    >    <li>Before Trim Galore, the dataset comprised 100,000 sequences. After Trim Galore, there are 99,653 sequences</li>
->    >    <li>The per-base quality score looks better, but other indicators show bad values now. The sequence length distribution is not clear anymore because sequences have different size after the trimming operation</li>
->    >    <li>The per-base sequence content has turned red. Again, the cause is the trimming of the end of some sequences</li>
+>    >    <li>Trim Galore の前は、データセットは100,000配列で構成されていました。Trim Galore 後は99,653配列になりました</li>
+>    >    <li>塩基ごとのクオリティスコアは良く見えますが、他のインジケーターは悪いスコアを示しています。トリミング操作後の配列のサイズが異なるために配列長の分布はもはや明確ではないのです</li>
+>    >    <li>塩基ごとの配列の含有量は赤色に変わっています。やはり、原因はいくつかの配列の末端のトリミングによるものです。</li>
 >    >    </ol>
 >    >    </details>
 >    {: .question}
 {: .hands_on}
 
-The quality of the previous dataset was pretty good from beginning. The sequence quality treatment improved the quality score at the cost of other parameters.
+以前のデータセットのクオリティは最初からかなり良好でした。配列のクオリティ処理は他のパラメーターを犠牲にしてクオリティスコアを改善したのです。 
 
-# Impact of quality control
+# クオリティコントロールの影響について 
 
-Now, we take a look at the impact of quality control and treatment on a bad dataset.
+それでは、悪いデータセットでクオリティコントロールと処理の影響を見てみましょう。 
 
-> ### {% icon hands_on %} Hands-on: Impact of quality control
+> ### {% icon hands_on %} ハンズオン: クオリティコントロールの影響 
 >
-> 1. Create a new history
-> 2. Import the FASTQ file: [`GSM461182_untreat_single_subset`](https://zenodo.org/record/61771/files/GSM461182_untreat_single_subset.fastq)
-> 3. **FastQC** {% icon tool %}: Run **FastQC Read Quality reports** on the newly imported dataset
+> 1. ヒストリーを新規作成する 
+> 2. 次の FASTQ ファイルをインポートする: [`GSM461182_untreat_single_subset`](https://zenodo.org/record/61771/files/GSM461182_untreat_single_subset.fastq)
+> 3. **FastQC** {% icon tool %}: 新しくインポートされたデータセットで **FastQC Read Quality reports** を実行する
 >
 >    > ### {% icon question %} Questions
 >    >
->    > 1. How good is this dataset?
->    > 2. What needs to be done to improve the sequences?
+>    > 1. このデータセットはどれくらい良いですか？ 
+>    > 2. 配列を改善するためには何が必要ですか？ 
 >    >
 >    >    <details>
->    >    <summary>Click to view the answers</summary>
+>    >    <summary>クリックして回答を表示</summary>
 >    >    <ol type="1">
->    >    <li>There is a red warning on the per-base sequence quality (pretty bad along the sequence but worse at the end of sequences), the per-base sequence content (bad at the beginning of the sequences), and the per-sequence GC content</li>
->    >    <li>The end of sequences must be cut.</li>
->    >    <li>Generally, the 5' end of each sequence read is not of bad quality unless something went wrong. Here, the problem is that the sample was sequenced using the an Illumina sequencing machine, which carries out its calibration while reading fragments that are in the beginning of the flowcell. Unfortunately, the first 100k reads which we selected for the analysis are generated during the calibration, a problem that we don't have with more recent sequencing machines. However, if you adopted one of the latest sequencing machine and still experience bad quality bases at the beginning of the reads, please don't just trim them, but consider investigating the problem further</li>
+>    >    <li>塩基ごとの配列のクオリティ（配列を通してかなり悪いが配列の末端が特に悪い）、塩基ごとの配列の含有量（配列の先頭が悪い）、そして配列ごとの GC 含有量に関して赤色の警告が出ています</li>
+>    >    <li>配列の末端はカットしなければなりません。</li>
+>    >    <li>一般に、シークエンスリードの5'末端は何かが間違っていなければクオリティは悪くなりません。ここで問題となるのは Illumina シークエンシング装置を使用してサンプルをシークエンスし、フローセルの先頭にあるフラグメントを読み取ってキャリブレーションを実行していることです。残念ながら、キャリブレーション中に生成された解析用に選択した100kのリードは、最近のシークエンシング装置では発生しない問題です。しかし、最新のシークエンシング装置を採用しても、リードの開始地点でクオリティの悪い塩基である場合は、それらをトリミングするだけではなく、他に問題があるかどうかを調査することを検討してください</li>
 >    >    </ol>
 >    >    </details>
 >    {: .question}
 >
-> 4. **Trim Galore** {% icon tool %}: Run Run **Trim Galore! Quality and adapter trimmer of reads** on the new dataset to apply the decisions taken at the previous step
-> 5. **FastQC** {% icon tool %}: Re-run **FastQC Read Quality reports** to check the impact of Trim Galore
+> 4. **Trim Galore** {% icon tool %}: 新しいデータセットで **Trim Galore! Quality and adapter trimmer of reads** を実行して前のステップで行った決定を適用する
+> 5. **FastQC** {% icon tool %}: **FastQC Read Quality reports** を再実行して Trim Galore の影響をチェックする
 >
 >    > ### {% icon question %} Questions
 >    >
->    > 1. How many sequences have been removed?
->    > 2. Has sequence quality been improved?
->    > 3. Can you explain why the per-base sequence content is not good now?
+>    > 1. いくつの配列が除去されましたか？ 
+>    > 2. 配列のクオリティは改善されましたか？ 
+>    > 3. なぜ塩基ごとの配列の含有量が良くないのか説明できますか？ 
 >    >
 >    >    <details>
->    >    <summary>Click to view the answers</summary>
+>    >    <summary>クリックして回答を表示</summary>
 >    >    <ol type="1">
->    >    <li>Before Trim Galore the dataset comprised 100,000 sequences. After Trim Galore, there are 97,644 sequences</li>
->    >    <li>The per-base quality score looks better (not red anymore), but the per-base sequence content, even if slightly better, is still red</li>
+>    >    <li>Trim Galore の前はデータセットは100,000配列で構成されていました。Trim Galore の後は、97,644配列になりました</li>
+>    >    <li>塩基ごとのクオリティスコアは良好に見えますが（赤色ではない）、塩基ごとの配列含有量は、わずかに良くなっていても、まだ赤色です</li>
 >    >    </ol>
 >    >    </details>
 >    {: .question}
 {: .hands_on}
 
-# Conclusion
+# 結論
 {:.no_toc}
 
-In this tutorial we checked the quality of two datasets to ensure that their data looks good before inferring any further information. This step is the baseline for any pipeline analysis such as RNA-Seq, ChIP-Seq, or any other OMIC analysis relying on NGS data. Quality control steps are similar for any type of sequencing data:
+このチュートリアルでは2つのデータセットのクオリティをチェックしてその他の情報を推測する前にデータが良いものになるようにしました。このステップは RNA-Seq や、 ChIP-Seq 、または NGS データに基づく他の OMIC 解析などのパイプライン解析のベースラインです。クオリティコントロールのステップはどのようなタイプのシークエンシングデータでも同様です:
 
 ![The quality control tutorial workflow](../../images/dive_into_qc_workflow.png)
