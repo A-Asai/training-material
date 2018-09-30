@@ -1,8 +1,26 @@
 ---
 layout: tutorial_slides
-topic_name: dev
-tutorial_name: toolshed
 logo: "GTN"
+
+title: "Tool Shed: sharing Galaxy tools"
+questions:
+  - "What is a Tool Shed?"
+  - "How to install tools and workflows from a Tool Shed into a Galaxy instance?"
+  - "What are the Tool Shed repository types?"
+  - "How to publish with Planemo?"
+objectives:
+  - "Discover what is a Tool Shed"
+  - "Be able to install tools and workflows from a Tool Shed into a Galaxy instance"
+  - "Be able to publish tools with Planemo"
+time_estimation: "3h"
+key_points:
+  - "Use Planemo"
+  - "Contribute to the Main Tool Shed"
+contributors:
+  - abretaud
+  - loraine-gueguen
+  - slegras
+  - bebatut
 ---
 
 
@@ -19,7 +37,7 @@ logo: "GTN"
 ### ![](../../images/toolShed.jpg) = Galaxy App Store
 
 - Galaxy tools
-- ~~Recipes for installing and compilling tools~~,
+- ~~Recipes for installing and compiling tools~~,
 - Data Managers,
 - Custom datatypes,
 - Exported workflows.
@@ -579,15 +597,20 @@ planemo shed_update --check_diff --shed_target testtoolshed
 
 #### Checklist (3/3)
 
-<p style="text-align: left;">
-  <input type="checkbox"/> Initiate the `.shed.yml` file with <br/>
-  ```planemo shed_init``` <br/>
-  <input type="checkbox"/> Create the repository on ToolShed with <br/>
-  ```planemo shed_create```<br/>
-  <input type="checkbox"/> Install and test the wrapper on a Galaxy instance <br/>
-  <input type="checkbox"/> Improve the wrapper and push modification on toolshed <br/>
-  ```planemo shed_update``` <br/>
-</p>
+- Initiate the `.shed.yml` file with
+```bash
+planemo shed_init
+```
+- Create the repository on ToolShed with
+```bash
+planemo shed_create
+```
+- Install and test the wrapper on a Galaxy instance
+- Improve the wrapper and push modification on toolshed
+```bash
+planemo shed_update
+```
+
 
 ---
 
@@ -597,7 +620,7 @@ planemo shed_update --check_diff --shed_target testtoolshed
 
 ### Contributing to a community
 
-Many tools developped by the community on GitHub repositories
+Many tools developed by the community on GitHub repositories
 - [Intergalactic Utilities Commission](https://github.com/galaxyproject/tools-iuc)
 - [GalaxyP](https://github.com/galaxyproteomics/tools-galaxyp)
 - ...
@@ -654,20 +677,20 @@ Using planemo by hand
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 ![](../../images/exercise.png)
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+###  Hands-on
 
 #### The goal
 Publish your tool (seqtk_seq) in your local toolshed with Planemo
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Step 1: Start and configure your toolshed
 - Start your toolshed (in galaxy home directory):
@@ -681,25 +704,21 @@ login: galaxy/azerty
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Step 2: Use planemo to publish your tool
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Step 2: Use planemo to publish your tool
-- `planemo config_init`
-- `planemo shed_init`
-- `planemo shed_lint`
-- `planemo shed_create`
 
-<aside class="notes">
 ```bash
 planemo config_init
 ```
   - Creates file `.planemo.yml` in your home directory.
+
 ```yml
 [...]  local:
 #key: "<TODO>"
@@ -718,26 +737,22 @@ planemo shed_create --shed_target local
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Step 3: Update your tool and then use planemo to update your tool on the Tool Shed
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Step 3: Update your tool and then use planemo to update your tool on the Tool Shed
-- `planemo shed_diff`
-- `planemo shed_update`
 
-<aside class="notes">
 ```bash
 planemo shed_diff --shed_target local
 ```
 ```bash
 planemo shed_update --check_diff --shed_target local
 ```
-</aside>
 
 ---
 

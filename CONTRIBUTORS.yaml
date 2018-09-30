@@ -12,8 +12,19 @@
 #
 # collection names should be equal to github username, if not, add github: false tag
 ---
+a-asai:
+    name: Atsushi Asai
+    email: tbudcm7zk@i.softbank.jp
+
 abretaud:
     name: Anthony Bretaudeau
+    email: anthony.bretaudeau@inra.fr
+    twitter: abretau
+    gitter: abretaud
+    orcid: 0000-0003-0914-2470
+
+afgane:
+    name: Enis Afgan
 
 aisanjiangw:
     name: Aisanjiang Wubuli
@@ -22,8 +33,21 @@ andreasrichter:
     name: Andreas Richter
     github: false
 
+annatrigos:
+    name: Anna Trigos
+    github: false
+
+andrewjpage:
+    name: Andrew Page
+    email: andrewjpage@gmail.com
+    twitter: andrewjpage
+    orcid: 0000-0001-6919-6062
+
 annasyme:
     name: Anna Syme
+
+baberlevi:
+    name: Levi Baber
 
 bagnacan:
     name: Andrea Bagnacani
@@ -43,13 +67,34 @@ bernt-matthias:
 bgruening:
     name: Björn Grüning
     email: bjoern.gruening@gmail.com
+    twitter: bjoerngruening
+    gitter: bgruening
+    orcid: 0000-0002-3079-6586
+    linkedin: bgruening
 
 blankclemens:
     name: Clemens Blank
     email: blankclemens@gmail.com
 
+blankenberg:
+    name: Daniel Blankenberg
+    twitter: dblankenberg
+    orcid: 0000-0002-6833-9049
+
+bphipson:
+    name: Belinda Phipson
+
+charitylaw:
+    name: Charity Law
+
+claresloggett:
+    name: Clare Sloggett
+
 cmonjeau:
     name: Cyril Monjeaud
+
+cganote:
+    name: Carrie Ganote
 
 daltis20012009:
     name: Krzys Poterlowicz
@@ -61,6 +106,9 @@ dannon:
 delphine-l:
     name: Delphine Lariviere
     email: delphine.lariviere@galaxy.org
+    
+dmaticzka:
+    name: Daniel Maticzka
 
 dpryan79:
     name: Devon Ryan
@@ -72,16 +120,34 @@ dyusuf:
     name: Dilmurat Yusuf
 
 erasche:
-    name: Eric Rasche
+    name: Helena Rasche
+    email: hxr@hx42.org
+    orcid: 0000-0001-9760-8992
 
 erxleben:
     name: Anika Erxleben
+    email: anikaerxleben@gmail.com
+    orcid: 0000-0002-7427-6478
+
+fabio-cumbo:
+    name: Fabio Cumbo
+    email: fabio.cumbo@gmail.com
+    twitter: cumbofabio
+    linkedin: fabiocumbo
+    gitter: fabio-cumbo
+    orcid: 0000-0003-2920-5838
 
 fidelram:
     name: Fidel Ramirez
+    
+Florian-H-Lab:
+    name: Florian Heyl
 
 fmareuil:
     name: Fabien Mareuil
+
+frederikcoppens:
+    name: Frederik Coppens
 
 friedue:
     name: Friederike Dündar
@@ -89,11 +155,28 @@ friedue:
 guerler:
     name: Aysam Guerler
 
+hdashnow:
+    name: Harriet Dashnow
+
 hmenager:
     name: Hervé Ménager
 
 hrhotz:
     name: Hans-Rudolf Hotz
+    email: hrhotz@googlemail.com
+    twitter: hrhotz
+    gitter: hrhotz
+    orcid: 0000-0002-2799-424X
+    linkedin: hans-rudolf-hotz-542b31
+
+jennaj:
+    name: Jennifer Hillman-Jackson
+    maintainer_contact: https://biostar.usegalaxy.org
+    email: jen@galaxyproject.org
+    gitter: jennaj
+    twitter: jenhjackson
+    linkedin: jennifer.hillman.jackson
+    orcid: 0000-0003-4012-8116
 
 jennydg:
     name: Jennifer Del Giudice
@@ -116,11 +199,30 @@ joachimwolff:
     name: Joachim Wolff
     email: wolffj@informatik.uni-freiburg.de
 
+jpmaree:
+
+jxtx:
+    name: James Taylor
+
+katrinleinweber:
+    name: Katrin Leinweber
+    email: katrin.leinweber@tib.eu
+    orcid: 0000-0001-5135-5758
+
 lecorguille:
     name: Gildas Le Corguillé
 
+LeilyR:
+    name: Leily Rabbani
+
 loraine-gueguen:
     name: Loraine Guéguen
+
+natefoo:
+    name: Nate Coraor
+    gitter: natefoo
+    twitter: natefoo
+    email: nate@bx.psu.edu
 
 malloryfreeberg:
     name: Mallory Freeberg
@@ -132,8 +234,28 @@ martenson:
     name: Martin Čech
     email: marten@bx.psu.edu
 
+marziacremona:
+    name: Marzia A Cremona
+    email: mac78@psu.edu
+
+mblue9:
+    name: Maria Doyle
+
+mccalluc:
+    name: Chuck McCallum
+
+moffmade:
+    name: Cory Maughmer
+
 moheydarian:
     name: Mo Heydarian
+    email: mheydarian@gmail.com
+
+mritchie:
+    name: Matt Ritchie
+
+mvdbeek:
+    name: Marius van den Beek
 
 mwolfien:
     name: Markus Wolfien
@@ -142,14 +264,30 @@ nekrut:
     name: Anton Nekrutenko
     email: anton@nekrut.org
 
+nicherndon:
+    name: Nic Herndon
+
+NickSto:
+    name: Nick Stoler
+    twitter: NickStoler
+
 nsoranzo:
     name: Nicola Soranzo
+
+nvk747:
+    name: Vijay
 
 odoppelt:
     name: Olivia Doppelt-Azeroual
 
 kilpert:
     name: Fabian Kilpert
+
+kpbioteam:
+    name: Katarzyna Murat
+
+kpoterlowicz:
+    name: Krzysztof Poterlowicz
 
 pajanne:
     name: Anne Pajon
@@ -167,9 +305,16 @@ pratikdjagtap:
 pavanvidem:
     name: Pavankumar Videm
 
+reginaesinamabotsi:
+    name: Regina Esinam Abotsi
+
+sarah-peter:
+    name: Sarah Peter
+
 shiltemann:
     name: Saskia Hiltemann
-    email: zazkia@gmail.com
+    maintainer_contact: gitter
+    email: saskia.hiltemann@gmail.com
     twitter: shiltemann
     linkedin: shiltemann
     gitter: shiltemann
@@ -186,6 +331,10 @@ stortebecker:
     name: Florian Christoph Sigloch
     email: sigloch+github@mailbox.org
 
+subinamehta:
+    name: Subina Mehta
+    email: subinamehta@gmail.com
+
 tealiie:
 
 thomasmanke:
@@ -196,11 +345,17 @@ timothygriffin:
     email: tgriffin@umn.edu
     github: false
 
+tizzir:
+    name: Matthew Spelchak
+
 tnabtaf:
     name: Dave Clements
 
 torhou:
     name: Torsten Houwaart
+
+tseemann:
+    name: Torsten Seemann
 
 valentinmarcon:
     name: Valentin Marcon

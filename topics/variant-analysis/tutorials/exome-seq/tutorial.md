@@ -1,7 +1,26 @@
 ---
 layout: tutorial_hands_on
-topic_name: variant-analysis
-tutorial_name: exome-seq
+
+title: "Exome sequencing data analysis"
+zenodo_link: "https://doi.org/10.5281/zenodo.60520"
+questions:
+  - "How to identify the genetic variation with the use of exome sequencing?"
+  - "What is the pipeline of the process of finding genetic variation which caused the disease?"
+objectives:
+  - "Identification of the genetic variation using the exome sequencing"
+  - "Using FreeBayes calls for variants generating"
+  - "Variant analysis and GEMINI queries"
+time_estimation: "1d/3h/6h"
+key_points:
+  - "With exome sequencing, one can identify genetic variation that is responsible for some diseases"
+  - "Exome sequencing is the most efficient way to identify the genetic variants in all of an individual's genes"
+  - "One can use GEMINI queries to access database with all the genetic variants"
+  - "In order to generate such database one can use FreeBayes"
+contributors:
+  - bebatut
+  - torhou
+  - erxleben
+  - bgruening
 ---
 
 # Introduction
@@ -109,8 +128,8 @@ for each family member, we will start with one BAM file with mapping results.
 > ### {% icon hands_on %} Hands-on: Data pre-processing
 >
 > 1.  Import all 3 BAM's into a new history:
->     - [Father](https://zenodo.org/record/60520/files/father.bam)  
->     - [Mother](https://zenodo.org/record/60520/files/mother.bam)  
+>     - [Father](https://zenodo.org/record/60520/files/father.bam)
+>     - [Mother](https://zenodo.org/record/60520/files/mother.bam)
 >     - [Child = Patient](https://zenodo.org/record/60520/files/patient.bam)
 > 2. Specify the used genome for mapping (for each dataset)
 >     1. Click on **Edit attributes** (pencil icon on right panel)
@@ -142,9 +161,10 @@ substitution events) smaller than the length of a short-read sequencing alignmen
 > 1. Select **FreeBayes** in the tool menu (left panel of Galaxy's interface)
 > 2. Run **FreeBayes**{% icon tool %}:
 >    1. Load reference genome from local cache
->    2. Use `Human (Homo sapiens): hg19` as reference genome
->    3. Choose other default settings
->    4. Execute
+>    2. Select the father data as the BAM dataset
+>    3. Use `Human (Homo sapiens): hg19` as reference genome
+>    4. Choose other default settings
+>    5. Execute
 >
 {: .hands_on}
 
@@ -173,7 +193,7 @@ to simplify the variant representation.
 
 > ### {% icon tip %} Tip:
 >
-> Have a look at the examples which help you constructing the correct expression.
+> Have a look at the examples that can help you construct the correct expression for the Filter criteria.
 {: .tip}
 
 ## Annotate your variants
@@ -245,7 +265,7 @@ Now that we have an annotated VCF file it is time to peek inside our variation d
 >    >
 >    > This creates a sqlite database. To see the content of the database use
 >    > **GEMINI_db_info**
->{: .comment}
+>    {: .comment}
 >
 {: .hands_on}
 

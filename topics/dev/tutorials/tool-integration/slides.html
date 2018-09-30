@@ -1,8 +1,36 @@
 ---
 layout: tutorial_slides
-topic_name: dev
-tutorial_name: tool-integration
 logo: "GTN"
+
+title: "Tool development and integration into Galaxy"
+hands_on: "external"
+hands_on_url: "http://planemo.readthedocs.io/en/latest/writing_standalone.html"
+questions:
+  - "What is a tool for Galaxy?"
+  - "How to build a tool/wrapper with the good practices?"
+  - "How to deal with the tool environment?"
+objectives:
+  - "Discover what is a wrapper and its structure"
+  - "Use the Planemo utilities to develop a good wrapper"
+  - "Deal with the dependencies"
+  - "Write functional tests"
+  - "Make a tool ready for publishing in a ToolShed"
+time_estimation: "6h"
+key_points:
+  - "Galaxy Tool Syntax"
+  - "Use Planemo"
+  - "Use Conda"
+  - "Use GitHub"
+  - "Use Travis"
+  - "No more excuse to develop crappy Galaxy tools"
+contributors:
+  - shiltemann
+  - bebatut
+  - abretaud
+  - jmchilton
+  - nsoranzo
+  - bgruening
+  - lecorguille
 ---
 
 
@@ -300,7 +328,6 @@ class: packed
     rank_of_series=$i
     input_path=${s.input}
     x_column=${s.xcol}
-    y_column=${s.ycol}
 #end for
 ]]></command>
 
@@ -308,14 +335,13 @@ class: packed
     <repeat name="series" title="Series">
         <param name="input" type="data" format="tabular" label="Dataset"/>
         <param name="xcol" type="data_column" data_ref="input" label="Column for x axis"/>
-        <param name="ycol" type="data_column" data_ref="input" label="Column for y axis"/>
     </repeat>
 </inputs>
 ```
 
 ???
 
-It makes sense to use a `<repeat>` block only if it contains multiple related parameters, otherwise adding `multiple="true"` is preferrable.
+It makes sense to use a `<repeat>` block only if it contains multiple related parameters, otherwise adding `multiple="true"` is preferable.
 
 ---
 
@@ -606,7 +632,7 @@ Open http://127.0.0.1:9090/ in your web browser to view your new tool
 ### Functional tests
 
 - Functional testing is a quality assurance (QA) process.
-- The tests confort developers and users that the tools can run across different servers/architectures. And that the latest modifications don't break older features.
+- The tests comfort developers and users that the tools can run across different servers/architectures. And that the latest modifications don't break older features.
 - Tools are tested by feeding them inputs and parameters and verifying the outputs (typically a diff)
 
 ---
@@ -863,13 +889,13 @@ See [Tool Dependencies and Conda](../conda/slides.html)
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 ![](../../images/exercise.png)
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### The Goal
 
@@ -879,7 +905,7 @@ See [Tool Dependencies and Conda](../conda/slides.html)
 
 ---
 
-### <i class="fa fa-pencil" aria-hidden="true"></i> Hands-on
+### {% icon hands_on %} Hands-on
 
 #### Steps
 
@@ -1235,7 +1261,7 @@ blastn -query foo_bar -num_threads 4
 ### Data tables
 
 - They list all reference data used by tools
-- e.g.: Blast databanks, BWA indexes, Fasta files
+- e.g.: Blast databases, BWA indexes, Fasta files
 - Stored in `.loc` files
 - Populated by hand or using Data Managers
 - Data Managers are dedicated kind of Galaxy tools
